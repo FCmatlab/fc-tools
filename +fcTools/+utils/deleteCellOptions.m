@@ -1,7 +1,9 @@
 function NewOptions=deleteCellOptions(Options,delOptions)
+% FUNCTION fcTools.utils.deleteCellOptions
+%   Delete key/value pairs 
+%
+% <COPYRIGHT>
 assert(iscell(Options))
-%assert(iscell(dellOptions))
-%assert(iscellstr(delOptions));
   if ischar(delOptions),delOptions={ delOptions};end
   n=length(Options);
   isupp=[];

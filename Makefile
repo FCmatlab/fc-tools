@@ -3,7 +3,7 @@
 OCOPYRIGHT=%    Parts of GNU Octave <ofcTools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 MCOPYRIGHT=%    Parts of Matlab <mfcTools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
-DEFAULT_TAG=0.0.2
+DEFAULT_TAG=0.0.5
 ifeq ("$(TAG)","")
 TAG=$(DEFAULT_TAG)
 endif
@@ -77,7 +77,11 @@ endif
 
 SEP="***************************************************"
 
-archives : 
+archives: archives_matlab archives_octave
+
+archives_matlab : 
+	@echo $SEP
+	@echo "*** Building OCTAVE archives"
 	@echo "*** Start main Makefile command" 
 	@echo "*** Current directory $(CURRENT_DIR)"
 	@$(eval gitremote := $(shell git config --get remote.origin.url))
@@ -87,21 +91,38 @@ archives :
 	@echo $(SEP)
 	@(cd $(tmpdir) && git clone --quiet $(gitremote) $(FILENAME) )
 	@(cd $(tmpdir)/$(FILENAME) && git checkout --quiet tags/$(TAG) -b temporary )
-	#@echo "***2) set version functions"
-	#@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) setversion && make TAG=$(TAG)  GITCOMMIT && make TAG=$(TAG) setcopyright SETCOPYRIGHT=$(COPYRIGHT))
 	@echo $(SEP)
 	@echo "***2) make MATLAB archives"
 	@echo $(SEP)
 	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(MCOPYRIGHT)" matlabtar)
 	@echo $(SEP)
-	@echo "***3) make OCTAVE archives"
-	@echo $(SEP)
-	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(OCOPYRIGHT)" octavetar)
-	@echo $(SEP)
-	@echo "***4) transfert archives to $(DESTDIR)"
+	@echo "***3) transfert archives to $(DESTDIR)"
 	@echo $(SEP)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
 	@rm -fr $(tmpdir)
+	
+archives_octave : 
+	@echo $SEP
+	@echo "*** Building OCTAVE archives"
+	@echo "*** Start main Makefile command" 
+	@echo "*** Current directory $(CURRENT_DIR)"
+	@$(eval gitremote := $(shell git config --get remote.origin.url))
+	@$(eval tmpdir := $(shell mktemp -d))
+	@echo $(SEP)
+	@echo "***1) Clone $(gitremote) [tag=$(TAG)]\n***    in directory $(tmpdir)/$(FILENAME)"
+	@echo $(SEP)
+	@(cd $(tmpdir) && git clone --quiet $(gitremote) $(FILENAME) )
+	@(cd $(tmpdir)/$(FILENAME) && git checkout --quiet tags/$(TAG) -b temporary )
+	@echo $(SEP)
+	@echo "***2) make OCTAVE archives"
+	@echo $(SEP)
+	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(OCOPYRIGHT)" octavetar)
+	@echo $(SEP)
+	@echo "***3) transfert archives to $(DESTDIR)"
+	@echo $(SEP)
+	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
+	@rm -fr $(tmpdir)
+
 	
 macoui:
 	rsync -av distrib/$(VERSION) macoui:~/public_html/software/codes/fcTools/

@@ -1,7 +1,8 @@
 function c = colorstr2rgb(c)
-  % Convert a color string to an RGB value.
-  % This is cribbed from Matlab's whitebg function.
-  % Why don't they make this a stand-alone function?
+% FUNCTION fcTools.graphics.colorstr2rgb 
+%   Convert a color string to an RGB value.
+%
+% <COPYRIGHT>
   if ~ischar(c);return;end
   rgbspec = [1 0 0;0 1 0;0 0 1;1 1 1;0 1 1;1 0 1;1 1 0;0 0 0];
   cspec = 'rgbwcmyk';

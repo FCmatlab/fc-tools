@@ -1,6 +1,9 @@
 function SaveAllFigsAsFiles(file,varargin)
-  % format can be 'pdf', 'eps', 'png'
-  % Use of export_fig toolbox 
+% FUNCTION fcTools.graphics.SaveAllFigsAsFiles
+%   Save all figures in files
+%   format can be 'pdf', 'epsc', 'png'
+%
+% <COPYRIGHT>
   p = inputParser;
   p=AddParamValue(p,'format','epsc',@(x) ismember(x,{'epsc','pdf','png'}));
   p=AddParamValue(p,'showtitle',true,@islogical);

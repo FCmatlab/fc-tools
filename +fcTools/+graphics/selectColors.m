@@ -1,15 +1,18 @@
 function colors = selectColors(n_colors,varargin)
-% Inspired by the function select_colors (or distinguishable_colors) of
-% Timothy E. Holy 
+%  FUNCTION fcTools.graphics.selectColors
 %
-% Author: FC
-% RGB2LAB est une fonction locale (attention une autre fonction rgb2lab figure dans la Image
-% Processing Toolbox R2015a) qui sert a la gestion des couleurs via le format lab
+%    Inspired by the function select_colors (or distinguishable_colors) of
+%    Timothy E. Holy 
 %
-% Objet: création de couleurs pertinentes
-% background permet d'éliminer des couleurs
-% func est la fonction de conversion des couleurs
+%    RGB2LAB est une fonction locale (attention une autre fonction rgb2lab 
+%    figure dans la Image Processing Toolbox R2015a,...) qui sert a la gestion
+%    des couleurs via le format lab.
 %
+%    Objet: création de couleurs pertinentes
+%    background permet d'éliminer des couleurs
+%    func est la fonction de conversion des couleurs
+%
+% <COPYRIGHT>
   p = inputParser;
   p.addParamValue('background', [1 1 1; 0 0 0; 0.8 0.8 0.8;1,0,1], @isnumeric );
   p.addParamValue('func', @RGB2LAB );

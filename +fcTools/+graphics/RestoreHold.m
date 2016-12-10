@@ -1,6 +1,10 @@
 function RestoreHold(HoldOn)
-if (HoldOn) 
-  hold on
-else
-  hold off
+% FUNCTION fcTools.graphics.RestoreHold
+%
+% <COPYRIGHT>
+  if (HoldOn)
+    hold on
+  else
+    hold off
+  end
 end
