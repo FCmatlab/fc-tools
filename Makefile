@@ -55,7 +55,8 @@ octavetar : setversion GITCOMMIT setcopyright
 	@(cd $(tmpdir) && zip --symlinks -r $(OFILENAME).zip $(OFILENAME))
 	@(cd $(tmpdir) && 7z a $(OFILENAME).7z $(OFILENAME))
 	@(cd $(tmpdir)/$(OFILENAME) && mkdir -p inst; mv $(OCTAVE_INST_MOVE) inst/ )
-	@(cd $(tmpdir) && tar zcvf $(OFILENAME).tar.gz $(OFILENAME))
+	@(cd $(tmpdir) && mv $(OFILENAME) $(OCTAVE_NAME))
+	@(cd $(tmpdir) && tar zcvf $(OFILENAME).tar.gz $(OCTAVE_NAME))
 	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OFILENAME).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
 	@echo "Cleaning"
 	@rm -fr $(tmpdir) octave.tmp 
