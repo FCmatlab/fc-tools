@@ -24,6 +24,7 @@ OCTAVE_NAME=o$(FILENAME)
 
 OFILENAME := $(OCTAVE_NAME)-$(VERSION)
 MFILENAME := $(MATLAB_NAME)-$(VERSION)
+OCTAVE_PKG_VERSION := $(OCTAVE_PKG)-$(VERSION)
 
 OCTAVE_INST_MOVE= +fcTools 
 
@@ -57,11 +58,11 @@ octavetar : setversion GITCOMMIT setcopyright
 	@(cd $(tmpdir) && 7z a $(OFILENAME).7z $(OFILENAME))
 	@(cd $(tmpdir)/$(OFILENAME) && mkdir -p inst; mv $(OCTAVE_INST_MOVE) inst/ )
 	@(cd $(tmpdir) && mv $(OFILENAME) $(OCTAVE_PKG))
-	@(cd $(tmpdir) && tar zcvf $(OFILENAME).tar.gz $(OCTAVE_PKG))
-	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OFILENAME).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
+	@(cd $(tmpdir) && tar zcvf $(OCTAVE_PKG_VERSION).tar.gz $(OCTAVE_PKG))
+	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OCTAVE_PKG_VERSION).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
 	@echo "Cleaning"
 	@rm -fr $(tmpdir) octave.tmp 
-	@echo "\nCreating files\n  -> $(OFILENAME).tar.gz,\n  -> $(OFILENAME).zip,\n  -> $(OFILENAME).7z"
+	@echo "\nCreating files\n  -> $(OCTAVE_PKG_VERSION).tar.gz,\n  -> $(OFILENAME).zip,\n  -> $(OFILENAME).7z"
 	@echo "in directory $(DESTDIR)\n"
 	
 setversion:
