@@ -70,26 +70,36 @@ setversion:
 
 setcopyright:
 ifneq ("$(SETCOPYRIGHT)","")
-	@echo "Set copyright"
+	@echo "Set copyright to :\n$(SETCOPYRIGHT)\n"
 	@$(eval filelist:= $(shell find . -name "*.m"))
-	@echo "toto=$(filelist)"
 	@sed -i "s/% <COPYRIGHT>*/$(SETCOPYRIGHT)/" $(filelist)
 endif
+
+SEP="***************************************************"
 
 archives : 
 	@echo "*** Start main Makefile command" 
 	@echo "*** Current directory $(CURRENT_DIR)"
 	@$(eval gitremote := $(shell git config --get remote.origin.url))
 	@$(eval tmpdir := $(shell mktemp -d))
+	@echo $(SEP)
 	@echo "***1) Clone $(gitremote) [tag=$(TAG)]\n***    in directory $(tmpdir)/$(FILENAME)"
+	@echo $(SEP)
 	@(cd $(tmpdir) && git clone --quiet $(gitremote) $(FILENAME) )
 	@(cd $(tmpdir)/$(FILENAME) && git checkout --quiet tags/$(TAG) -b temporary )
 	#@echo "***2) set version functions"
 	#@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) setversion && make TAG=$(TAG)  GITCOMMIT && make TAG=$(TAG) setcopyright SETCOPYRIGHT=$(COPYRIGHT))
-	@echo "***6) make archives"
-	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT=$(MCOPYRIGHT) matlabtar)
-	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT=$(OCOPYRIGHT) octavetar)
-	@echo "***8) transfert archives to $(DESTDIR)"
+	@echo $(SEP)
+	@echo "***2) make MATLAB archives"
+	@echo $(SEP)
+	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(MCOPYRIGHT)" matlabtar)
+	@echo $(SEP)
+	@echo "***3) make OCTAVE archives"
+	@echo $(SEP)
+	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(OCOPYRIGHT)" octavetar)
+	@echo $(SEP)
+	@echo "***4) transfert archives to $(DESTDIR)"
+	@echo $(SEP)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
 	@rm -fr $(tmpdir)
 	
