@@ -1,4 +1,6 @@
 # tree -i -f
+COPYING
+DESCRIPTION
 ./+fcTools/init.m
 ./+fcTools/version.m
 ./+fcTools/+comp/AddParamValue.m

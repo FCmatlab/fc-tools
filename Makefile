@@ -65,8 +65,8 @@ octavetar : setversion GITCOMMIT setcopyright
 setversion:
 	@echo "Set version to $(TAG)"
 	$(shell sed -i "s/v='.*';/v='$(TAG)';/g" +fcTools/version.m)
-#	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
-#	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
+	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
+	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
 
 setcopyright:
 ifneq ("$(SETCOPYRIGHT)","")
