@@ -26,7 +26,7 @@ MFILENAME := $(MATLAB_NAME)-$(VERSION)
 
 OCTAVE_INST_MOVE= +fcTools 
 
-matlabtar : setversion
+matlabtar : setversion GITCOMMIT setcopyright
 	@python3 extractfiles.py matlab.list > matlab.tmp
 	@echo "\nCreating files $(MFILENAME).tar.gz, $(MFILENAME).zip and $(MFILENAME).7z and size files ...\n"
 	@$(eval tmpdir := $(shell mktemp -d))
@@ -42,7 +42,7 @@ matlabtar : setversion
 	@echo "\nCreating files\n  -> $(MFILENAME).tar.gz,\n  -> $(MFILENAME).zip,\n  -> $(MFILENAME).7z"
 	@echo "in directory $(DESTDIR)\n"
 	
-octavetar : setversion GITCOMMIT
+octavetar : setversion GITCOMMIT setcopyright
 	@python3 extractfiles.py octave.list > octave.tmp
 	@echo "\nCreating files $(OFILENAME).tar.gz, $(OFILENAME).zip and $(OFILENAME).7z and size files ...\n"
 	@$(eval tmpdir := $(shell mktemp -d))
@@ -69,8 +69,8 @@ setversion:
 #	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
 
 setcopyright:
-	@echo "Set copyright"
 ifneq ("$(SETCOPYRIGHT)","")
+	@echo "Set copyright"
 	@$(eval filelist:= $(shell find . -name "*.m"))
 	@echo "toto=$(filelist)"
 	@sed -i "s/% <COPYRIGHT>*/$(SETCOPYRIGHT)/" $(filelist)
@@ -84,10 +84,11 @@ archives :
 	@echo "***1) Clone $(gitremote) [tag=$(TAG)]\n***    in directory $(tmpdir)/$(FILENAME)"
 	@(cd $(tmpdir) && git clone --quiet $(gitremote) $(FILENAME) )
 	@(cd $(tmpdir)/$(FILENAME) && git checkout --quiet tags/$(TAG) -b temporary )
-	@echo "***2) set version functions"
-	@(cd $(tmpdir)/$(FILENAME) && make setversion && make GITCOMMIT && make setcopyright SETCOPYRIGHT=$(COPYRIGHT))
+	#@echo "***2) set version functions"
+	#@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) setversion && make TAG=$(TAG)  GITCOMMIT && make TAG=$(TAG) setcopyright SETCOPYRIGHT=$(COPYRIGHT))
 	@echo "***6) make archives"
-	@(cd $(tmpdir)/$(FILENAME) && make matlabtar && make octavetar)
+	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT=$(MCOPYRIGHT) matlabtar)
+	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT=$(OCOPYRIGHT) octavetar)
 	@echo "***8) transfert archives to $(DESTDIR)"
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
 	@rm -fr $(tmpdir)
