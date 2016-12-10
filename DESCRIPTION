@@ -1,0 +1,11 @@
+Name: ofcTools
+Version: 0.0.2
+Date: 2016-12-10
+Author: François Cuvelier <cuvelier@math.univ-paris13.fr>
+Maintainer: François Cuvelier <cuvelier@math.univ-paris13.fr>
+Title: 
+Description: 
+Depends: general (>= 2.0.0)
+Url: https://www.math.univ-paris13.fr/~cuvelier/software/codes/fcTools/ 
+Categories: tools
+License: GPLv3+
