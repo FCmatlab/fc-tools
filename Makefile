@@ -1,5 +1,8 @@
 # mfcTools : Matlab Toolbox and Octave (>= 4.0.3) package
 
+OCOPYRIGHT=%    Parts of GNU Octave <ofcTools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+MCOPYRIGHT=%    Parts of Matlab <mfcTools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+
 DEFAULT_TAG=0.0.2
 ifeq ("$(TAG)","")
 TAG=$(DEFAULT_TAG)
@@ -65,6 +68,14 @@ setversion:
 #	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
 #	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
 
+setcopyright:
+	@echo "Set copyright"
+ifneq ("$(SETCOPYRIGHT)","")
+	@$(eval filelist:= $(shell find . -name "*.m"))
+	@echo "toto=$(filelist)"
+	@sed -i "s/% <COPYRIGHT>*/$(SETCOPYRIGHT)/" $(filelist)
+endif
+
 archives : 
 	@echo "*** Start main Makefile command" 
 	@echo "*** Current directory $(CURRENT_DIR)"
@@ -74,7 +85,7 @@ archives :
 	@(cd $(tmpdir) && git clone --quiet $(gitremote) $(FILENAME) )
 	@(cd $(tmpdir)/$(FILENAME) && git checkout --quiet tags/$(TAG) -b temporary )
 	@echo "***2) set version functions"
-	@(cd $(tmpdir)/$(FILENAME) && make setversion && make GITCOMMIT)
+	@(cd $(tmpdir)/$(FILENAME) && make setversion && make GITCOMMIT && make setcopyright SETCOPYRIGHT=$(COPYRIGHT))
 	@echo "***6) make archives"
 	@(cd $(tmpdir)/$(FILENAME) && make matlabtar && make octavetar)
 	@echo "***8) transfert archives to $(DESTDIR)"

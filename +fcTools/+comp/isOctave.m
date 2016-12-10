@@ -1,5 +1,8 @@
 function bool=isOctave()
-% function bool=isOctave()
-%   returns true if running under Octave
+% FUNCTION bool=fcTools.comp.isOctave() 
+%   Returns true if running under Octave 
+%
+% <COPYRIGHT>
+%
 log=ver;
 bool=strcmp(log(1).Name,'Octave');
