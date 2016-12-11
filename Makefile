@@ -3,7 +3,7 @@
 OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
-DEFAULT_TAG=0.0.10
+DEFAULT_TAG=0.0.11
 ifeq ("$(TAG)","")
 TAG=$(DEFAULT_TAG)
 endif
