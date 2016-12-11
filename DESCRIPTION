@@ -5,6 +5,7 @@ Author: François Cuvelier <cuvelier@math.univ-paris13.fr>
 Maintainer: François Cuvelier <cuvelier@math.univ-paris13.fr>
 Title: Usefull tools
 Description: Tools used in various packages (ooGmsh, ooMesh, ...)
+Depends: octave (>= 4.0.0)
 Url: https://www.math.univ-paris13.fr/~cuvelier/software/codes/fcTools/ 
 Categories: tools
 License: GPLv3+
