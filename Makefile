@@ -1,9 +1,9 @@
-# mfcTools : Matlab Toolbox and Octave (>= 4.0.3) package
+# fc-tools : Matlab Toolbox and Octave (>= 4.0.3) package
 
-OCOPYRIGHT=%    Parts of GNU Octave <ofcTools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
-MCOPYRIGHT=%    Parts of Matlab <mfcTools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
-DEFAULT_TAG=0.0.5
+DEFAULT_TAG=0.0.10
 ifeq ("$(TAG)","")
 TAG=$(DEFAULT_TAG)
 endif
@@ -15,7 +15,7 @@ CURRENT_DIR = $(shell pwd)
 DESTDIR=distrib/$(VERSION)
 
 # For archive temporary directory
-FILENAME=fcTools
+FILENAME=fc-tools
 OCTAVE_PKG=fc-tools
 
 VERSION=$(TAG)
