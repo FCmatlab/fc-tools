@@ -3,5 +3,5 @@ function v=version()
 %   as a string.
 %
 % <COPYRIGHT>
-  v='0.0.2';
+  v='dev';
 end

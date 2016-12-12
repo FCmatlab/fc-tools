@@ -128,7 +128,7 @@ archives_octave :
 
 	
 macoui:
-	rsync -av distrib/$(VERSION) macoui:~/public_html/software/codes/fcTools/
+	rsync -av distrib/$(VERSION) macoui:~/public_html/software/codes/fc-tools/
 
 GITCOMMIT :
 	@echo "Build GITCOMMIT file"
