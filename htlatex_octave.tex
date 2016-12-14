@@ -1,0 +1,115 @@
+\immediate\write18{mkdir -p \OHTDIR}
+
+\begin{presentation}
+\newline
+The \textbf{fc-tools} Octave package contains some functions used in various packages I develop: \textbf{fc-oogmsh}, \textbf{fc-oomesh}, ...
+\newline
+
+\end{presentation}
+
+\subsubsection{Requirements}
+This package needs \textbf{Octave} version greater or equal to \textbf{4.0.0}.
+
+\subsubsection{Current release}
+
+\immediate\write18{mkdir -p \OHTDIR/0.0.12}
+\begin{tabular}{|M|M|M|M|M|}
+\hline \\ 
+\textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
+0.0.12 & December 14, 2016 &
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/fc-tools-0.0.12.tar.gz}
+                  {\OHTDIR/fc-tools-0.0.12.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+& 
+\begin{tabular}{l}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/ofc-tools-0.0.12.tar.gz}
+                  {\OHTDIR/ofc-tools-0.0.12.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/ofc-tools-0.0.12.zip}
+                  {\OHTDIR/ofc-tools-0.0.12.zip}
+                  {\includegraphics*{images/icons/zip_new40.png}} 
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/ofc-tools-0.0.12.7z}
+                  {\OHTDIR/ofc-tools-0.0.12.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\end{tabular}
+&
+to do!
+\\ \hline
+\end{tabular}
+
+This package was tested under Ubuntu 14.04 LTS with Octave versions 4.0.0 to 4.0.3 and 4.2.0. The installation of Octave is described 
+\href{http://www.math.univ-paris13.fr/~cuvelier/Octave.html}{here}.
+
+\subsubsection{Installation of the fc-tools package}
+
+\begin{itemize}
+\item Download the packages. For example, in a terminal:
+\begin{verbatim}
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.12/fc-tools-0.0.12.tar.gz
+\end{verbatim}
+\item Under Octave :
+\begin{verbatim}
+>> pkg install fc-tools-0.0.12.tar.gz
+\end{verbatim}
+\item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
+\begin{verbatim}
+>> pkg load fc-tools
+\end{verbatim}
+\end{itemize}
+
+\subsubsection{Uninstalling the fc-tools package}
+In an Octave session, unistalling the \texttt{fc-tools} package is done by:
+\begin{verbatim}
+>> pkg uninstall fc-tools
+\end{verbatim}
+
+\subsubsection{Installation from archives}
+The archives are proposed in three formats zip, 7z and tar.gz. These archives are not Octave packages and cannot be installed with \texttt{pkg} command.
+The installation process follows:
+\begin{itemize}
+\item Download one of the archives
+\item Uncompress the archive
+\item Add path to Octave
+\end{itemize}
+
+For example, with the tar.gz file, downloading and uncompressing are done by 
+\begin{verbatim}
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.12/ofc-tools-0.0.12.tar.gz
+$ tar zxvf ofc-tools-0.0.12.tar.gz
+ofc-tools-0.0.12/
+ofc-tools-0.0.12/+fcTools/
+ofc-tools-0.0.12/+fcTools/init.m
+ofc-tools-0.0.12/+fcTools/+graphics/
+ofc-tools-0.0.12/+fcTools/+graphics/SaveAllFigsAsFiles.m
+ofc-tools-0.0.12/+fcTools/+graphics/SetHoldOn.m
+ofc-tools-0.0.12/+fcTools/+graphics/RestoreHold.m
+ofc-tools-0.0.12/+fcTools/+graphics/selectColors.m
+ofc-tools-0.0.12/+fcTools/+graphics/colorstr2rgb.m
+ofc-tools-0.0.12/+fcTools/+utils/
+ofc-tools-0.0.12/+fcTools/+utils/deleteCellOptions.m
+ofc-tools-0.0.12/+fcTools/+sys/
+ofc-tools-0.0.12/+fcTools/+sys/isfileexists.m
+ofc-tools-0.0.12/+fcTools/+comp/
+ofc-tools-0.0.12/+fcTools/+comp/AddRequired.m
+ofc-tools-0.0.12/+fcTools/+comp/isOldParser.m
+ofc-tools-0.0.12/+fcTools/+comp/Parse.m
+ofc-tools-0.0.12/+fcTools/+comp/isOctave.m
+ofc-tools-0.0.12/+fcTools/+comp/AddParamValue.m
+ofc-tools-0.0.12/+fcTools/version.m
+ofc-tools-0.0.12/DESCRIPTION
+ofc-tools-0.0.12/COPYING
+$
+\end{verbatim}
+Then under Octave, one can use \texttt{addpath} command with the \texttt{ofc-tools-0.0.12} full path:
+\begin{verbatim}
+>> addpath('<FULL PATH>/ofc-tools-0.0.12')
+\end{verbatim}
+ 
+
+
+
+
+
+

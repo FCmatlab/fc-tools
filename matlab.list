@@ -13,3 +13,4 @@
 ./+fcTools/+graphics/SetHoldOn.m
 ./+fcTools/+sys/isfileexists.m
 ./+fcTools/+utils/deleteCellOptions.m
+./COPYING
