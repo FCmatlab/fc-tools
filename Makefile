@@ -59,10 +59,10 @@ octavetar : setversion GITCOMMIT setcopyright
 	@(cd $(tmpdir)/$(OFILENAME) && mkdir -p inst; mv $(OCTAVE_INST_MOVE) inst/ )
 	@(cd $(tmpdir) && mv $(OFILENAME) $(OCTAVE_PKG))
 	@(cd $(tmpdir) && tar zcvf $(OCTAVE_PKG_VERSION).tar.gz $(OCTAVE_PKG))
-	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OCTAVE_PKG_VERSION).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
+	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OCTAVE_PKG_VERSION).tar.gz $(tmpdir)/$(OFILENAME).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
 	@echo "Cleaning"
 	@rm -fr $(tmpdir) octave.tmp 
-	@echo "\nCreating files\n  -> $(OCTAVE_PKG_VERSION).tar.gz,\n  -> $(OFILENAME).zip,\n  -> $(OFILENAME).7z"
+	@echo "\nCreating files\n  -> $(OCTAVE_PKG_VERSION).tar.gz,\n  -> $(OFILENAME).tar.gz,\n  -> $(OFILENAME).zip,\n  -> $(OFILENAME).7z"
 	@echo "in directory $(DESTDIR)\n"
 	
 setversion:
