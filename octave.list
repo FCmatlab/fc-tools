@@ -13,5 +13,6 @@ DESCRIPTION
 ./+fcTools/+graphics/SaveAllFigsAsFiles.m
 ./+fcTools/+graphics/selectColors.m
 ./+fcTools/+graphics/SetHoldOn.m
+./+fcTools/+sys/getSoftware.m
 ./+fcTools/+sys/isfileexists.m
 ./+fcTools/+utils/deleteCellOptions.m
