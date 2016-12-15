@@ -5,15 +5,15 @@ function SaveAllFigsAsFiles(file,varargin)
 %
 % <COPYRIGHT>
   p = inputParser;
-  p=AddParamValue(p,'format','epsc',@(x) ismember(x,{'epsc','pdf','png'}));
-  p=AddParamValue(p,'showtitle',true,@islogical);
-  p=AddParamValue(p,'verbose',false,@islogical);
-  p=AddParamValue(p,'dir','.',@ischar);
-  p=AddParamValue(p,'pdfcrop',false,@islogical);
-  p=AddParamValue(p,'tag',false,@islogical);
-  p=Parse(p,varargin{:});
+  p.addParamValue('format','epsc',@(x) ismember(x,{'epsc','pdf','png'}));
+  p.addParamValue('showtitle',true,@islogical);
+  p.addParamValue('verbose',false,@islogical);
+  p.addParamValue('dir','.',@ischar);
+  p.addParamValue('pdfcrop',false,@islogical);
+  p.addParamValue('tag',false,@islogical);
+  p.parse(varargin{:});
   R=p.Results;
-  if R.tag, [Softname,Release]=getSoftware();end
+  if R.tag, [Softname,Release]=fcTools.sys.getSoftware();end
   %if isOctave, more off;end  
   figHandles = get(0,'Children');
   for i=1:length(figHandles)
@@ -33,7 +33,7 @@ function SaveAllFigsAsFiles(file,varargin)
     else
       filename=[R.dir,filesep,file,'_fig',num2str(nfig),'.',R.format];
     end
-    if isOctave()
+    if fcTools.comp.isOctave()
       %fprintf('save figure handle:%g in %s \n',h,filename)
       set(h,'position',[100,50,800,600])
       %set(h,'visible','off')
@@ -66,7 +66,7 @@ function SaveAllFigsAsFiles(file,varargin)
       fprintf('  Save figure %d in %s\n',nfig,filename);
     end
   end
-  if isOctave() %BUG1:
+  if fcTools.comp.isOctave() %BUG1:
     for i=1:length(figHandles)
       %nfig=figHandles(i);
       %h=figure(nfig); % utiliser le label...
