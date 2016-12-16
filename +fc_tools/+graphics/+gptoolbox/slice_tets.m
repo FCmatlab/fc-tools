@@ -133,14 +133,14 @@ function [U,G,J,BC] = slice_tets(V,T,plane,varargin)
   end
   G = [G13;size(U13,1)+[G31;size(U31,1)+[G22;]]];
   J = [find(I13);find(I31);repmat(find(I22),2,1)];
-  N = fcTools.graphics.gptoolbox.normals(U,G);
+  N = fc_tools.graphics.gptoolbox.normals(U,G);
   flip = sum(bsxfun(@times,N,plane(1:3)),2)<0;
   G(flip,:) = fliplr(G(flip,:));
 
   if manifold
     % should be able to do this combinatorially
-    bbd = fcTools.graphics.gptoolbox.normrow(max(V)-min(V));
-    [U,I,IM] = fcTools.graphics.gptoolbox.remove_duplicate_vertices(U,1e-14*bbd);
+    bbd = fc_tools.graphics.gptoolbox.normrow(max(V)-min(V));
+    [U,I,IM] = fc_tools.graphics.gptoolbox.remove_duplicate_vertices(U,1e-14*bbd);
     if construct_BC
       BC = BC(I,:);
     end

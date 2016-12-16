@@ -1,5 +1,5 @@
 function colors = selectColors(n_colors,varargin)
-%  FUNCTION fcTools.graphics.selectColors
+%  FUNCTION fc_tools.graphics.selectColors
 %
 %    Inspired by the function select_colors (or distinguishable_colors) of
 %    Timothy E. Holy 

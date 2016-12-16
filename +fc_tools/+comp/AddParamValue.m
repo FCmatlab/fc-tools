@@ -1,5 +1,5 @@
 function p=AddParamValue(p,varargin)
-% FUNCTION p=fcTools.comp.AddParamValue(p,varargin)
+% FUNCTION p=fc_tools.comp.AddParamValue(p,varargin)
 %   Alternative function for addParamValue - Suitable for Matlab and any 
 %   Octave version.
 %   Adds a name-value argument to the input scheme.

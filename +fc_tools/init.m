@@ -1,5 +1,5 @@
 function varargout=init(varargin)
-% FUNCTION fcTools.init: For 'compatibility' with my other codes.
+% FUNCTION fc_tools.init: For 'compatibility' with my other codes.
 %  Can return the pathname of the toolbox.
 %
 % <COPYRIGHT>
@@ -11,7 +11,7 @@ function varargout=init(varargin)
   I=strfind(fullname,filesep);
   mypath=fullname(1:(I(end-1)-1));
   if p.Results.verbose>0
-    fprintf('Using mfcTools toolbox [%s]\n',fcTools.version());
+    fprintf('Using mfc_tools toolbox [%s]\n',fc_tools.version());
     if p.Results.verbose>1, fprintf('   locate in %s\n',mypath);end
   end
   if nargout==1

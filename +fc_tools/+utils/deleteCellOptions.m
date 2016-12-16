@@ -1,5 +1,5 @@
 function NewOptions=deleteCellOptions(Options,delOptions)
-% FUNCTION fcTools.utils.deleteCellOptions
+% FUNCTION fc_tools.utils.deleteCellOptions
 %   Delete key/value pairs 
 %
 % <COPYRIGHT>

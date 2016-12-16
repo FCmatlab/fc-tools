@@ -1,5 +1,5 @@
 function SaveAllFigsAsFiles(file,varargin)
-% FUNCTION fcTools.graphics.SaveAllFigsAsFiles
+% FUNCTION fc_tools.graphics.SaveAllFigsAsFiles
 %   Save all figures in files
 %   format can be 'pdf', 'epsc', 'png'
 %
@@ -13,7 +13,7 @@ function SaveAllFigsAsFiles(file,varargin)
   p.addParamValue('tag',false,@islogical);
   p.parse(varargin{:});
   R=p.Results;
-  if R.tag, [Softname,Release]=fcTools.sys.getSoftware();end
+  if R.tag, [Softname,Release]=fc_tools.sys.getSoftware();end
   %if isOctave, more off;end  
   figHandles = get(0,'Children');
   for i=1:length(figHandles)
@@ -33,7 +33,7 @@ function SaveAllFigsAsFiles(file,varargin)
     else
       filename=[R.dir,filesep,file,'_fig',num2str(nfig),'.',R.format];
     end
-    if fcTools.comp.isOctave()
+    if fc_tools.comp.isOctave()
       %fprintf('save figure handle:%g in %s \n',h,filename)
       set(h,'position',[100,50,800,600])
       %set(h,'visible','off')
@@ -58,7 +58,7 @@ function SaveAllFigsAsFiles(file,varargin)
       set(Title,'Visible','on')
     end
     if R.pdfcrop
-      if ~isOctave()
+      if ~fc_tools.comp.isOctave()
       system(sprintf('pdfcrop %s %s',filename,filename));   
       end
     end
@@ -66,7 +66,7 @@ function SaveAllFigsAsFiles(file,varargin)
       fprintf('  Save figure %d in %s\n',nfig,filename);
     end
   end
-  if fcTools.comp.isOctave() %BUG1:
+  if fc_tools.comp.isOctave() %BUG1:
     for i=1:length(figHandles)
       %nfig=figHandles(i);
       %h=figure(nfig); % utiliser le label...

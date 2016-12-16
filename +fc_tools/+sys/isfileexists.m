@@ -1,5 +1,5 @@
 function bool=isfileexists(file)
-% FUNCTION fcTools.sys.isfileexists
+% FUNCTION fc_tools.sys.isfileexists
 %   Retuen true if if file exists, false otherwise.
 %
 % <COPYRIGHT>

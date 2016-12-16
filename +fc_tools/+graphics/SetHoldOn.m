@@ -1,5 +1,5 @@
 function pIH=SetHoldOn(HoldOn)
-% FUNCTION fcTools.graphics.SetHoldOn
+% FUNCTION fc_tools.graphics.SetHoldOn
 %
 % <COPYRIGHT>
 pIH=ishold;

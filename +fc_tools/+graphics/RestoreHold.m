@@ -1,5 +1,5 @@
 function RestoreHold(HoldOn)
-% FUNCTION fcTools.graphics.RestoreHold
+% FUNCTION fc_tools.graphics.RestoreHold
 %
 % <COPYRIGHT>
   if (HoldOn)

@@ -1,5 +1,5 @@
 function bool=isOctave()
-% FUNCTION bool=fcTools.comp.isOctave() 
+% FUNCTION bool=fc_tools.comp.isOctave() 
 %   Returns true if running under Octave 
 %
 % <COPYRIGHT>

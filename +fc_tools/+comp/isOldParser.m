@@ -1,5 +1,5 @@
 function bool=isOldParser()
-% function bool=fcTools.comp.isOldParser()
+% function bool=fc_tools.comp.isOldParser()
 %   To determine if the parser is old or not for Octave
 %   
 % Return values:

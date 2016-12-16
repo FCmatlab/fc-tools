@@ -1,5 +1,5 @@
 function c = colorstr2rgb(c)
-% FUNCTION fcTools.graphics.colorstr2rgb 
+% FUNCTION fc_tools.graphics.colorstr2rgb 
 %   Convert a color string to an RGB value.
 %
 % <COPYRIGHT>

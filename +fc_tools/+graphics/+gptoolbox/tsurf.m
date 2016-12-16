@@ -86,7 +86,7 @@ function t = tsurf(F,V,varargin)
 
   if tets
     t_copy = tetramesh(F,V,'FaceAlpha',0.5);
-    FC = fcTools.graphics.gptoolbox.barycenter(V,F);
+    FC = fc_tools.graphics.gptoolbox.barycenter(V,F);
     if(face_indices==1)
       text(FC(:,1),FC(:,2),FC(:,3),num2str((1:size(F,1))'),'BackgroundColor',[.7 .7 .7]);
     elseif(face_indices)
@@ -95,7 +95,7 @@ function t = tsurf(F,V,varargin)
     set(gcf,'Renderer','OpenGL');
   else
     t_copy = trisurf(F,V(:,1),V(:,2),V(:,3));
-    FC = fcTools.graphics.gptoolbox.barycenter(V,F);
+    FC = fc_tools.graphics.gptoolbox.barycenter(V,F);
     if(face_indices==1)
       text(FC(:,1),FC(:,2),FC(:,3),num2str((1:size(F,1))'),'BackgroundColor',[.7 .7 .7]);
     elseif(face_indices)

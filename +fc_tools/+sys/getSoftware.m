@@ -1,12 +1,12 @@
 function [Softname,Release]=getSoftware()
-% FUNCTION fcTools.sys.getSoftware
+% FUNCTION fc_tools.sys.getSoftware
 %   Returns used software (Matlab or Octave) and its release.
 %
 % USAGE
 %   [Softname,Release]=getSoftware()
 %
 % <COPYRIGHT>
-if fcTools.comp.isOctave()
+if fc_tools.comp.isOctave()
   Softname='Octave';
   Release=version;
 else

@@ -1,5 +1,5 @@
 function p=AddRequired(p,varargin)
-% FUNCTION p=fcTools.comp.AddRequired(p,varargin)
+% FUNCTION p=fc_tools.comp.AddRequired(p,varargin)
 %   Alternative function for addRequired - Suitable for Matlab and any 
 %   Octave version.
 %   Adds a required argument to the input scheme.
