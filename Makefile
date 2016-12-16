@@ -26,7 +26,7 @@ OFILENAME := $(OCTAVE_NAME)-$(VERSION)
 MFILENAME := $(MATLAB_NAME)-$(VERSION)
 OCTAVE_PKG_VERSION := $(OCTAVE_PKG)-$(VERSION)
 
-OCTAVE_INST_MOVE= +fcTools 
+OCTAVE_INST_MOVE= +fc_tools 
 
 matlabtar : setversion GITCOMMIT setcopyright
 	@python3 extractfiles.py matlab.list > matlab.tmp
@@ -67,7 +67,7 @@ octavetar : setversion GITCOMMIT setcopyright
 	
 setversion:
 	@echo "Set version to $(TAG)"
-	$(shell sed -i "s/v='.*';/v='$(TAG)';/g" +fcTools/version.m)
+	$(shell sed -i "s/v='.*';/v='$(TAG)';/g" +fc_tools/version.m)
 	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
 	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
 
