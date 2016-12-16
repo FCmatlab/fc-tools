@@ -2,12 +2,57 @@
 
 \begin{presentation}
 \newline
-The \textbf{fc-tools} Matlab toolbox contains some functions used in various packages I develop: \textbf{fc-oogmsh}, \textbf{fc-oomesh}, ...
+The \textbf{fc-tools} Matlab toolbox contains some functions used in various packages I develop: \textbf{fc-oogmsh}, \textbf{fc-simesh}, ...
 \newline
 
 \end{presentation}
 
-\subsubsection{Current release}
+\subsubsection{Current development release}
+
+\immediate\write18{mkdir -p \OHTDIR/0.0.13}
+\begin{tabular}{|M|M|M|M|}
+\hline \\ 
+\textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
+0.0.13 & December 15, 2016 & 
+\begin{tabular}{l}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.tar.gz}
+                  {\OHTDIR/mfc-tools-0.0.13.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.zip}
+                  {\OHTDIR/mfc-tools-0.0.13.zip}
+                  {\includegraphics*{images/icons/zip_new40.png}} 
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.7z}
+                  {\OHTDIR/mfc-tools-0.0.13.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\end{tabular}
+&
+to do!
+\\ \hline
+\end{tabular}
+
+This package was tested under Ubuntu 14.04 LTS with Matlab release 2015a to 2016b.
+
+\subsubsection{Installation from archives}
+The toolbox archives are proposed in three formats zip, 7z and tar.gz. The installation process follows:
+\begin{itemize}
+\item Download one of the archives
+\item Uncompress the archive
+\item Add path to Matlab
+\end{itemize}
+
+For example, with the tar.gz file, downloading and uncompressing are done by 
+\begin{verbatim}
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.13/mfc-tools-0.0.13.tar.gz
+$ tar zxf mfc-tools-0.0.13.tar.gz
+\end{verbatim}
+Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-tools-0.0.13} full path:
+\begin{verbatim}
+>> addpath('<FULL PATH>/mfc-tools-0.0.13')
+\end{verbatim}
+ 
+\subsubsection{Previous development releases}
 
 \immediate\write18{mkdir -p \OHTDIR/0.0.12}
 \begin{tabular}{|M|M|M|M|}
@@ -31,49 +76,6 @@ The \textbf{fc-tools} Matlab toolbox contains some functions used in various pac
 to do!
 \\ \hline
 \end{tabular}
-
-This package was tested under Ubuntu 14.04 LTS with Matlab release 2015a to 2016b.
-
-\subsubsection{Installation from archives}
-The toolbox archives are proposed in three formats zip, 7z and tar.gz. The installation process follows:
-\begin{itemize}
-\item Download one of the archives
-\item Uncompress the archive
-\item Add path to Matlab
-\end{itemize}
-
-For example, with the tar.gz file, downloading and uncompressing are done by 
-\begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.12/mfc-tools-0.0.12.tar.gz
-$ tar zxvf mfc-tools-0.0.12.tar.gz
-mfc-tools-0.0.12/
-mfc-tools-0.0.12/+fcTools/
-mfc-tools-0.0.12/+fcTools/init.m
-mfc-tools-0.0.12/+fcTools/+graphics/
-mfc-tools-0.0.12/+fcTools/+graphics/SaveAllFigsAsFiles.m
-mfc-tools-0.0.12/+fcTools/+graphics/SetHoldOn.m
-mfc-tools-0.0.12/+fcTools/+graphics/RestoreHold.m
-mfc-tools-0.0.12/+fcTools/+graphics/selectColors.m
-mfc-tools-0.0.12/+fcTools/+graphics/colorstr2rgb.m
-mfc-tools-0.0.12/+fcTools/+utils/
-mfc-tools-0.0.12/+fcTools/+utils/deleteCellOptions.m
-mfc-tools-0.0.12/+fcTools/+sys/
-mfc-tools-0.0.12/+fcTools/+sys/isfileexists.m
-mfc-tools-0.0.12/+fcTools/+comp/
-mfc-tools-0.0.12/+fcTools/+comp/AddRequired.m
-mfc-tools-0.0.12/+fcTools/+comp/isOldParser.m
-mfc-tools-0.0.12/+fcTools/+comp/Parse.m
-mfc-tools-0.0.12/+fcTools/+comp/isOctave.m
-mfc-tools-0.0.12/+fcTools/+comp/AddParamValue.m
-mfc-tools-0.0.12/+fcTools/version.m
-mfc-tools-0.0.12/COPYING
-$
-\end{verbatim}
-Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-tools-0.0.12} full path:
-\begin{verbatim}
->> addpath('<FULL PATH>/mfc-tools-0.0.12')
-\end{verbatim}
- 
 
 
 
