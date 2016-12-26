@@ -21,6 +21,8 @@
 ./+fc_tools/+graphics/+gptoolbox/remove_duplicate_vertices.m
 ./+fc_tools/+graphics/+gptoolbox/slice_isolines.m
 ./+fc_tools/+graphics/+gptoolbox/slice_tets.m
+./+fc_tools/+graphics/+gptoolbox/normals2.m
+./+fc_tools/+graphics/+gptoolbox/slice_tets2.m
 ./+fc_tools/+graphics/+gptoolbox/tsurf.m
 ./+fc_tools/+graphics/+vfield3/license.txt
 ./+fc_tools/+graphics/+vfield3/vfield3.m
