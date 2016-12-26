@@ -11,7 +11,7 @@ function varargout=init(varargin)
   I=strfind(fullname,filesep);
   mypath=fullname(1:(I(end-1)-1));
   if p.Results.verbose>0
-    fprintf('Using mfc_tools toolbox [%s]\n',fc_tools.version());
+    fprintf('Using fc-tools toolbox [%s]\n',fc_tools.version());
     if p.Results.verbose>1, fprintf('   locate in %s\n',mypath);end
   end
   if nargout==1

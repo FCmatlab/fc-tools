@@ -4,5 +4,6 @@ function pIH=SetHoldOn(HoldOn)
 % <COPYRIGHT>
 pIH=ishold;
 if ((~pIH)&&(HoldOn))
+  clf
   hold on
 end

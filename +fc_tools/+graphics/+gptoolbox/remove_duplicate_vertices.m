@@ -27,29 +27,38 @@ function [SV,SVI,SVJ] = remove_duplicate_vertices(V,epsilon,varargin)
   % default values
   whitelist = [];
   % Map of parameter names to variable names
-  params_to_variables = containers.Map( ...
-    {'WhiteList'}, ...
-    {'whitelist'});
-  v = 1;
-  while v <= numel(varargin)
-    param_name = varargin{v};
-    if isKey(params_to_variables,param_name)
-      assert(v+1<=numel(varargin));
-      v = v+1;
-      % Trick: use feval on anonymous function to use assignin to this workspace 
-      feval(@()assignin('caller',params_to_variables(param_name),varargin{v}));
-    else
-      error('Unsupported parameter: %s',varargin{v});
+  if ~fc_tools.comp.isOctave()
+    params_to_variables = containers.Map( ...
+      {'WhiteList'}, ...
+      {'whitelist'});
+    v = 1;
+    while v <= numel(varargin)
+      param_name = varargin{v};
+      if isKey(params_to_variables,param_name)
+        assert(v+1<=numel(varargin));
+        v = v+1;
+        % Trick: use feval on anonymous function to use assignin to this workspace 
+        feval(@()assignin('caller',params_to_variables(param_name),varargin{v}));
+      else
+        error('Unsupported parameter: %s',varargin{v});
+      end
+      v=v+1;
     end
-    v=v+1;
   end
-
   if isempty(whitelist)
     assert(nargin==1 || epsilon >= 0);
     if nargin==1 || epsilon == 0
+      if fc_tools.comp.isOctave()
+      [SV,SVI,SVJ] = unique(V,'rows');
+      else
       [SV,SVI,SVJ] = unique(V,'rows','stable');
+      end
     else
+      if fc_tools.comp.isOctave()
+      [~,SVI,SVJ] = unique(round(V/(10*epsilon)),'rows');
+      else
       [~,SVI,SVJ] = unique(round(V/(10*epsilon)),'rows','stable');
+      end
       SV = V(SVI,:);
     end
   else

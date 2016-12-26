@@ -1,4 +1,4 @@
-function [U,G,J,BC] = slice_tets(V,T,plane,varargin)
+function [U,G,J,BC] = slice_tets2(V,T,plane,varargin)
   % SLICE_TETS Slice through a tet mesh (V,T) along a given plane (via its
   % implicit equation).
   %
@@ -96,27 +96,7 @@ function [U,G,J,BC] = slice_tets(V,T,plane,varargin)
   manifold = false;
   construct_BC = nargout >= 4;
 
-  % Map of parameter names to variable names
-  %if ~fc_tools.comp.isOctave()
-  if 0
-    params_to_variables = containers.Map( ...
-      {'Manifold'}, ...
-      {'manifold'});
-    v = 1;
-    while v <= numel(varargin)
-      param_name = varargin{v};
-      if isKey(params_to_variables,param_name)
-        assert(v+1<=numel(varargin));
-        v = v+1;
-        % Trick: use feval on anonymous function to use assignin to this
-        % workspace
-        feval(@()assignin('caller',params_to_variables(param_name),varargin{v}));
-      else
-        error('Unsupported parameter: %s',varargin{v});
-      end
-      v=v+1;
-    end
-  end
+ 
   % Homogeneous coordinates
   IV = sum(bsxfun(@times,[V ones(size(V,1),1)],plane),2);
   IT = IV(T);
@@ -135,7 +115,7 @@ function [U,G,J,BC] = slice_tets(V,T,plane,varargin)
   end
   G = [G13;size(U13,1)+[G31;size(U31,1)+[G22;]]];
   J = [find(I13);find(I31);repmat(find(I22),2,1)];
-  N = fc_tools.graphics.gptoolbox.normals(U,G);
+  N = fc_tools.graphics.gptoolbox.normals2(U,G);
   flip = sum(bsxfun(@times,N,plane(1:3)),2)<0;
   G(flip,:) = fliplr(G(flip,:));
 

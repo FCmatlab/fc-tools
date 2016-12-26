@@ -93,7 +93,7 @@ v  = reshape(v,nvals,1);
 w  = reshape(w,nvals,1);
 
 speed = sqrt(u.^2+v.^2+w.^2);
-if ~isstr(r)
+if ~ischar(r)
   L = speed.*r;
 else
   L = repmat(str2num(r),size(speed));

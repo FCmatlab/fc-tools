@@ -34,24 +34,16 @@ function SaveAllFigsAsFiles(file,varargin)
       filename=[R.dir,filesep,file,'_fig',num2str(nfig),'.',R.format];
     end
     if fc_tools.comp.isOctave()
-      %fprintf('save figure handle:%g in %s \n',h,filename)
-      set(h,'position',[100,50,800,600])
-      %set(h,'visible','off')
-      %figuresize( 800 , 600 , 'points' )
-      %set(h,'visible','off')
-      %figuresize(h,'scale',2)
-      SaveOctaveFigure(h,filename)
-      %pause
-      set(h,'visible','off') % BUG1: ajout car la derniere figure reste en avant plan avec Octave 4.2.0!
-%        ceval=sprintf('print -f%g  %s',h,filename);
-%        eval(ceval)
-%        eval(ceval) % doublé car soucis (parfois avec 3.8.2)
-      %pause
-      %print(h,filename,['-d',R.format]) % ne marche pas bien avec 3.8.2
+      if str2num(strrep(version,'.',''))>=420 % version 4.2.0
+        print(h,['-d',R.format],filename)
+      else % Don't print "LaTeX" so snapshot
+        set(h,'position',[100,50,800,600])
+        SaveOctaveFigure(nfig,filename)
+        set(h,'visible','off') % BUG1: ajout car la derniere figure reste en avant plan avec Octave 4.2.0!
+      end
     else
     %export_fig(file,'-transparent',['-',R.format])
       %figuresize( 800 , 600 , 'points' )
-      
       print(h,['-d',R.format],filename)
     end
     if ~R.showtitle
@@ -75,7 +67,9 @@ function SaveAllFigsAsFiles(file,varargin)
   end
 end
 
-function SaveOctaveFigure(h,filename)
+function SaveOctaveFigure(nfig,filename)
+  h=figure(nfig);
+  %drawnow
   %S=get(0,'screensize')
   %h=gcf();%figure(fignum)
   set(h,'menubar','none')
@@ -92,6 +86,7 @@ function SaveOctaveFigure(h,filename)
   %set(h,'Visible','off')
   %set(h,'Visible','on')
   drawnow
+  %gcf
   % %0.5
   pause(2);
   system(command)

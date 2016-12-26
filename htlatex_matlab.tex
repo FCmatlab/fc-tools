@@ -1,6 +1,8 @@
 \immediate\write18{mkdir -p \OHTDIR}
-
+\immediate\write18{rsync -av \IHTDIR/logo/mfc-toolsv2_400.png \OHTDIR/}
 \begin{presentation}
+\newline
+\centerline{\includegraphics{\OHTDIR/mfc-toolsv2_400.png}}
 \newline
 The \textbf{fc-tools} Matlab toolbox contains some functions used in various packages I develop: \textbf{fc-oogmsh}, \textbf{fc-simesh}, ...
 \newline
@@ -13,19 +15,19 @@ The \textbf{fc-tools} Matlab toolbox contains some functions used in various pac
 \begin{tabular}{|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
-0.0.13 & December 15, 2016 & 
+0.0.14 & December 16, 2016 & 
 \begin{tabular}{l}
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.tar.gz}
-                  {\OHTDIR/mfc-tools-0.0.13.tar.gz}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.14/mfc-tools-0.0.14.tar.gz}
+                  {\OHTDIR/0.0.14/mfc-tools-0.0.14.tar.gz}
                   {\includegraphics*{images/icons/tar-gz_40.png}}
 \\ 
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.zip}
-                  {\OHTDIR/mfc-tools-0.0.13.zip}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.14/mfc-tools-0.0.14.zip}
+                  {\OHTDIR/0.0.14/mfc-tools-0.0.14.zip}
                   {\includegraphics*{images/icons/zip_new40.png}} 
 \\ 
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.7z}
-                  {\OHTDIR/mfc-tools-0.0.13.7z}
-                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.14/mfc-tools-0.0.14.7z}
+                  {\OHTDIR/0.0.14/mfc-tools-0.0.14.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}
 \end{tabular}
 &
 to do!
@@ -54,22 +56,40 @@ Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-too
  
 \subsubsection{Previous development releases}
 
+\immediate\write18{mkdir -p \OHTDIR/0.0.13}
 \immediate\write18{mkdir -p \OHTDIR/0.0.12}
 \begin{tabular}{|M|M|M|M|}
+0.0.13 & December 15, 2016 & 
+\begin{tabular}{l}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.tar.gz}
+                  {\OHTDIR/0.0.13/mfc-tools-0.0.13.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.zip}
+                  {\OHTDIR/0.0.13/mfc-tools-0.0.13.zip}
+                  {\includegraphics*{images/icons/zip_new40.png}} 
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.13/mfc-tools-0.0.13.7z}
+                  {\OHTDIR/0.0.13/mfc-tools-0.0.13.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\end{tabular}
+&
+to do!
+\\ \hline
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
 0.0.12 & December 14, 2016 & 
 \begin{tabular}{l}
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/mfc-tools-0.0.12.tar.gz}
-                  {\OHTDIR/mfc-tools-0.0.12.tar.gz}
+                  {\OHTDIR/0.0.12/mfc-tools-0.0.12.tar.gz}
                   {\includegraphics*{images/icons/tar-gz_40.png}}
 \\ 
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/mfc-tools-0.0.12.zip}
-                  {\OHTDIR/mfc-tools-0.0.12.zip}
+                  {\OHTDIR/0.0.12/mfc-tools-0.0.12.zip}
                   {\includegraphics*{images/icons/zip_new40.png}} 
 \\ 
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.12/mfc-tools-0.0.12.7z}
-                  {\OHTDIR/mfc-tools-0.0.12.7z}
+                  {\OHTDIR/0.0.12/mfc-tools-0.0.12.7z}
                   {\includegraphics*{images/icons/7z-icon-40.png}}                   
 \end{tabular}
 &
