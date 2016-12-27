@@ -11,6 +11,7 @@
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
 ./+fc_tools/+graphics/selectColors.m
 ./+fc_tools/+graphics/SetHoldOn.m
+./+fc_tools/+graphics/DisplayFigures.m
 ./+fc_tools/+graphics/+columnlegend/columnlegend.m
 ./+fc_tools/+graphics/+columnlegend/license.txt
 ./+fc_tools/+graphics/+gptoolbox/README
