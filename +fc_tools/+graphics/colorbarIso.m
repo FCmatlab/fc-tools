@@ -1,4 +1,4 @@
-function colorbarIso(colors,isorange,format)
+function varargout=colorbarIso(colors,isorange,format)
 % from http://www.mathworks.com/matlabcentral/fileexchange/1135-colorbarf/content/colorbarf.m
   if nargin<3, format='%g';end
 %    if isOctave()
@@ -81,6 +81,7 @@ function colorbarIso(colors,isorange,format)
 
   % set up axes deletefcn
   set(ax,'tag','Colorbar','deletefcn','colorbar(''delete'')')
+  if nargout==1, varargout{1}=ax;end
   if ~isfield(ud,'DeleteProxy'), ud.DeleteProxy = []; end
   if ~isfield(ud,'origPos'), ud.origPos = []; end
   ud.PlotHandle = h;

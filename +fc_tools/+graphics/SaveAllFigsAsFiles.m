@@ -10,6 +10,7 @@ function SaveAllFigsAsFiles(file,varargin)
   p.addParamValue('verbose',false,@islogical);
   p.addParamValue('dir','.',@ischar);
   p.addParamValue('pdfcrop',false,@islogical);
+  p.addParamValue('crop',false,@islogical);
   p.addParamValue('tag',false,@islogical);
   p.parse(varargin{:});
   R=p.Results;
@@ -53,6 +54,9 @@ function SaveAllFigsAsFiles(file,varargin)
       if ~fc_tools.comp.isOctave()
       system(sprintf('pdfcrop %s %s',filename,filename));   
       end
+    end
+    if R.crop
+      fc_tools.graphics.crop.crop(filename);
     end
     if R.verbose
       fprintf('  Save figure %d in %s\n',nfig,filename);
