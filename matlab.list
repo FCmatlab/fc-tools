@@ -11,6 +11,8 @@
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
 ./+fc_tools/+graphics/selectColors.m
 ./+fc_tools/+graphics/SetHoldOn.m
+./+fc_tools/+graphics/+crop/crop.m
+./+fc_tools/+graphics/+crop/license.txt
 ./+fc_tools/+graphics/DisplayFigures.m
 ./+fc_tools/+graphics/+columnlegend/columnlegend.m
 ./+fc_tools/+graphics/+columnlegend/license.txt
@@ -29,6 +31,7 @@
 ./+fc_tools/+graphics/+vfield3/vfield3.m
 ./+fc_tools/+graphics/ColumnLegend.m
 ./+fc_tools/+graphics/FigurePanels.m
+./+fc_tools/+graphics/interpreter.m
 ./+fc_tools/+graphics/LegendPanel.m
 ./+fc_tools/+graphics/PlaneCoefs.m
 ./+fc_tools/+graphics/RGB.m
