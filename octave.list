@@ -41,3 +41,4 @@ DESCRIPTION
 ./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/isfileexists.m
 ./+fc_tools/+utils/deleteCellOptions.m
+./+fc_tools/+utils/isfunhandle.m
