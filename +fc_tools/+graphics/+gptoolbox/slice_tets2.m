@@ -128,5 +128,4 @@ function [U,G,J,BC] = slice_tets2(V,T,plane,varargin)
     end
     G = IM(G);
   end
-
 end
