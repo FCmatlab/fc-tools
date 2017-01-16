@@ -14,12 +14,12 @@ This package needs \textbf{Octave} version greater or equal to \textbf{4.2.0}.
 
 \subsubsection{Current development release}
 
-\def\fcTBversion{0.0.15}
+\def\fcTBversion{0.0.16}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
-\fcTBversion & January 4, 2017 &
+\fcTBversion & January 16, 2017 &
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
                   {\OHTDIR/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
                   {\includegraphics*{images/icons/Octave_pkg_40.png}}
@@ -50,11 +50,11 @@ This package was tested under Ubuntu 14.04 LTS with Octave version 4.2.0. The in
 \begin{itemize}
 \item Download the packages. For example, in a terminal:
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.15/fc-tools-0.0.15.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.16/fc-tools-0.0.16.tar.gz
 \end{verbatim}
 \item Under Octave :
 \begin{verbatim}
->> pkg install fc-tools-0.0.15.tar.gz
+>> pkg install fc-tools-0.0.16.tar.gz
 \end{verbatim}
 \item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
 \begin{verbatim}
@@ -79,20 +79,20 @@ The installation process follows:
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.15/ofc-tools-0.0.15.tar.gz
-$ tar zxvf ofc-tools-0.0.15.tar.gz
-ofc-tools-0.0.15/
-ofc-tools-0.0.15/DESCRIPTION
-ofc-tools-0.0.15/COPYING
-ofc-tools-0.0.15/+fc_tools/
-ofc-tools-0.0.15/+fc_tools/init.m
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.16/ofc-tools-0.0.16.tar.gz
+$ tar zxvf ofc-tools-0.0.16.tar.gz
+ofc-tools-0.0.16/
+ofc-tools-0.0.16/DESCRIPTION
+ofc-tools-0.0.16/COPYING
+ofc-tools-0.0.16/+fc_tools/
+ofc-tools-0.0.16/+fc_tools/init.m
 ...
-ofc-tools-0.0.15/+fc_tools/version.m
+ofc-tools-0.0.16/+fc_tools/version.m
 $
 \end{verbatim}
-Then under Octave, one can use \texttt{addpath} command with the \texttt{ofc-tools-0.0.15} full path:
+Then under Octave, one can use \texttt{addpath} command with the \texttt{ofc-tools-0.0.16} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/ofc-tools-0.0.15')
+>> addpath('<FULL PATH>/ofc-tools-0.0.16')
 \end{verbatim}
  
  
@@ -101,6 +101,27 @@ Then under Octave, one can use \texttt{addpath} command with the \texttt{ofc-too
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
+0.0.15 & January 4, 2017 &
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.15/fc-tools-0.0.15.tar.gz}
+                  {\OHTDIR/0.0.15/fc-tools-0.0.15.tar.gz}
+                  {\includegraphics*{images/icons/Octave_pkg_40.png}}
+& 
+\begin{tabular}{l}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.15/ofc-tools-0.0.15.tar.gz}
+                  {\OHTDIR/0.0.15/ofc-tools-0.0.15.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.15/ofc-tools-0.0.15.zip}
+                  {\OHTDIR/0.0.15/ofc-tools-0.0.15.zip}
+                  {\includegraphics*{images/icons/zip_new40.png}} 
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.15/ofc-tools-0.0.15.7z}
+                  {\OHTDIR/0.0.15/ofc-tools-\fcTBversion.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\end{tabular}
+&
+to do!
+\\ \hline
 0.0.14 & December 16, 2016 &
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.14/fc-tools-0.0.14.tar.gz}
                   {\OHTDIR/0.0.14/fc-tools-0.0.14.tar.gz}
