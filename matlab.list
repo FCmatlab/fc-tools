@@ -41,4 +41,5 @@
 ./+fc_tools/+utils/deleteCellOptions.m
 ./+fc_tools/+utils/isfunhandle.m
 ./+fc_tools/+utils/strversion2num.m
+./+fc_tools/+utils/fun2str.m
 ./COPYING
