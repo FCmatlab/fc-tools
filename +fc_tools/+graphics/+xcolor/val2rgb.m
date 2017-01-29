@@ -7,6 +7,7 @@ function rgb=val2rgb(val,varargin)
   p.parse(varargin{:});
   theme=p.Results.theme;
   all=p.Results.all;
+  rgb=[];
   if isnumeric(val)
     assert(sum(size(val)==[1,3])==2);
     rgb=val;
@@ -21,6 +22,7 @@ function rgb=val2rgb(val,varargin)
   else
     rgb=str2rgb_theme(theme,name);
   end
+  assert(~isempty(rgb),'unknow color %s',name);
 end
 
 function themes=get_themes()
