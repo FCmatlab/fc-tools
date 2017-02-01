@@ -4,6 +4,7 @@ function rgb=val2rgb(val,varargin)
   p = inputParser; 
   p.addParamValue('theme','matlab',@(x) ismember(x,themes));
   p.addParamValue('all',true,@islogical);
+  p.addParamValue('check',true,@islogical);
   p.parse(varargin{:});
   theme=p.Results.theme;
   all=p.Results.all;
@@ -22,7 +23,10 @@ function rgb=val2rgb(val,varargin)
   else
     rgb=str2rgb_theme(theme,name);
   end
-  assert(~isempty(rgb),'unknow color %s',name);
+  if p.Results.check
+    assert(~isempty(rgb),'unknow color %s',name);
+  end
+  if isempty(rgb),rgb=val;end % ex val = 'interp', 'none' (for EdgeColor, FaceColor)
 end
 
 function themes=get_themes()

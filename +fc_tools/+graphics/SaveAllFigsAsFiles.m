@@ -36,7 +36,10 @@ function SaveAllFigsAsFiles(file,varargin)
     end
     if fc_tools.comp.isOctave()
       if str2num(strrep(version,'.',''))>=420 % version 4.2.0
+        drawnow
         print(h,['-d',R.format],filename)
+        %filename
+        pause(0.1) % otherwise sometimes bug with some legends!
       else % Don't print "LaTeX" so snapshot
         set(h,'position',[100,50,800,600])
         SaveOctaveFigure(nfig,filename)
