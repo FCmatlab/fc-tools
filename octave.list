@@ -1,6 +1,7 @@
 # tree -i -f
 COPYING
 DESCRIPTION
+# tree -i -f
 ./+fc_tools/init.m
 ./+fc_tools/version.m
 ./+fc_tools/+comp/AddParamValue.m
@@ -32,15 +33,21 @@ DESCRIPTION
 ./+fc_tools/+graphics/+vfield3/license.txt
 ./+fc_tools/+graphics/+vfield3/vfield3.m
 ./+fc_tools/+graphics/ColumnLegend.m
-./+fc_tools/+graphics/interpreter.m
 ./+fc_tools/+graphics/FigurePanels.m
+./+fc_tools/+graphics/interpreter.m
 ./+fc_tools/+graphics/LegendPanel.m
 ./+fc_tools/+graphics/PlaneCoefs.m
 ./+fc_tools/+graphics/RGB.m
 ./+fc_tools/+graphics/colorbarIso.m
+./+fc_tools/+graphics/CheckAlpha.m
 ./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/isfileexists.m
 ./+fc_tools/+utils/deleteCellOptions.m
 ./+fc_tools/+utils/isfunhandle.m
 ./+fc_tools/+utils/strversion2num.m
 ./+fc_tools/+utils/fun2str.m
+./+fc_tools/+graphics/+xcolor/color_varargin.m
+./+fc_tools/+graphics/+xcolor/matlab.m
+./+fc_tools/+graphics/+xcolor/svg.m
+./+fc_tools/+graphics/+xcolor/val2rgb.m
+./+fc_tools/+graphics/+xcolor/X11.m

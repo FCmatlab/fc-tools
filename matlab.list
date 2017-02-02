@@ -36,10 +36,16 @@
 ./+fc_tools/+graphics/PlaneCoefs.m
 ./+fc_tools/+graphics/RGB.m
 ./+fc_tools/+graphics/colorbarIso.m
+./+fc_tools/+graphics/CheckAlpha.m
 ./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/isfileexists.m
 ./+fc_tools/+utils/deleteCellOptions.m
 ./+fc_tools/+utils/isfunhandle.m
 ./+fc_tools/+utils/strversion2num.m
 ./+fc_tools/+utils/fun2str.m
+./+fc_tools/+graphics/+xcolor/color_varargin.m
+./+fc_tools/+graphics/+xcolor/matlab.m
+./+fc_tools/+graphics/+xcolor/svg.m
+./+fc_tools/+graphics/+xcolor/val2rgb.m
+./+fc_tools/+graphics/+xcolor/X11.m
 ./COPYING
