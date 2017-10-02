@@ -133,6 +133,7 @@ archives_octave :
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(OCTAVE_DESTDIR)/* $(OCTAVE_DESTDIR))
 	@rm -fr $(tmpdir)
 
+macoui: macoui_matlab macoui_octave
 	
 macoui_matlab:
 	ssh macoui 'mkdir -p ~/public_html/software/codes/Matlab/fc-tools'
@@ -140,7 +141,7 @@ macoui_matlab:
 	
 macoui_octave:
 	ssh macoui 'mkdir -p ~/public_html/software/codes/Octave/fc-tools'
-	rsync -av $(MATLAB_DESTDIR) macoui:~/public_html/software/codes/Octave/fc-tools/
+	rsync -av $(OCTAVE_DESTDIR) macoui:~/public_html/software/codes/Octave/fc-tools/
 
 last_tag:
 	@echo "$(NAME): "$(shell git describe --abbrev=0)

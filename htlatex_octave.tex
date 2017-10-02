@@ -4,7 +4,8 @@
 \newline
 \centerline{\includegraphics{\OHTDIR/ofc-toolsv3_400.png}}
 \newline
-The \textbf{fc-tools} Octave package contains some functions used in various packages I develop: \textbf{fc-oogmsh}, \textbf{fc-simesh}, ...
+The \textbf{fc-tools} Octave package contains some functions used in various packages I develop: 
+\textbf{fc-hypermesh}, \textbf{fc-oogmsh}, \textbf{fc-simesh}, ...
 \newline
 
 \end{presentation}
@@ -14,31 +15,36 @@ This package needs \textbf{Octave} version greater or equal to \textbf{4.2.0}.
 
 \subsubsection{Current development release}
 
-\def\fcTBversion{0.0.17}
-\immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
-\begin{tabular}{|M|M|M|M|M|}
-\hline \\ 
-\textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
-\fcTBversion & January 16, 2017 &
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
-                  {\OHTDIR/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
+\providecommand\fcInsertVersion{}
+\renewcommand{\fcInsertVersion}[2]{
+#1 & #2 & 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/Octave/#1/fc-tools-#1.tar.gz}
+                  {\OHTDIR/#1/fc-tools-#1.tar.gz}
                   {\includegraphics*{images/icons/Octave_pkg_40.png}}
 & 
 \begin{tabular}{l}
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.tar.gz}
-                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.tar.gz}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/Octave/#1/ofc-tools-#1.tar.gz}
+                  {\OHTDIR/#1/ofc-tools-#1.tar.gz}
                   {\includegraphics*{images/icons/tar-gz_40.png}}
 \\ 
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.zip}
-                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.zip}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/Octave/#1/ofc-tools-#1.zip}
+                  {\OHTDIR/#1/ofc-tools-#1.zip}
                   {\includegraphics*{images/icons/zip_new40.png}} 
 \\ 
-\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.7z}
-                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.7z}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/Octave/#1/ofc-tools-#1.7z}
+                  {\OHTDIR/#1/ofc-tools-#1.7z}
                   {\includegraphics*{images/icons/7z-icon-40.png}}                   
 \end{tabular}
 &
 to do!
+}
+
+\def\fcTBversion{0.0.18}
+\immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
+\begin{tabular}{|M|M|M|M|M|}
+\hline \\ 
+\textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
+\fcInsertVersion{\fcTBversion}{October 2, 2017}
 \\ \hline
 \end{tabular}
 
@@ -50,11 +56,11 @@ This package was tested under Ubuntu 14.04 LTS with Octave version 4.2.0. The in
 \begin{itemize}
 \item Download the packages. For example, in a terminal:
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.16/fc-tools-0.0.16.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/fc-tools/0.0.18/fc-tools-0.0.18.tar.gz
 \end{verbatim}
 \item Under Octave :
 \begin{verbatim}
->> pkg install fc-tools-0.0.16.tar.gz
+>> pkg install fc-tools-0.0.18.tar.gz
 \end{verbatim}
 \item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
 \begin{verbatim}
@@ -103,6 +109,27 @@ Then under Octave, one can use \texttt{addpath} command with the \texttt{ofc-too
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
+0.0.17 & January 16, 2017 &
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
+                  {\OHTDIR/\fcTBversion/fc-tools-\fcTBversion.tar.gz}
+                  {\includegraphics*{images/icons/Octave_pkg_40.png}}
+& 
+\begin{tabular}{l}
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.tar.gz}
+                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.tar.gz}
+                  {\includegraphics*{images/icons/tar-gz_40.png}}
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.zip}
+                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.zip}
+                  {\includegraphics*{images/icons/zip_new40.png}} 
+\\ 
+\BuildLinkWithSizeInKo{\IHTDIR/distrib/\fcTBversion/ofc-tools-\fcTBversion.7z}
+                  {\OHTDIR/\fcTBversion/ofc-tools-\fcTBversion.7z}
+                  {\includegraphics*{images/icons/7z-icon-40.png}}                   
+\end{tabular}
+&
+to do!
+\\ \hline
 0.0.16 & January 16, 2017 &
 \BuildLinkWithSizeInKo{\IHTDIR/distrib/0.0.16/fc-tools-0.0.16.tar.gz}
                   {\OHTDIR/0.0.16/fc-tools-0.0.16.tar.gz}
