@@ -16,6 +16,8 @@ TAGTIME := $(shell $(TAGTIMEcmd) )
 
 CURRENT_DIR = $(shell pwd)
 DESTDIR=distrib/$(VERSION)
+MATLAB_DESTDIR=distrib/Matlab/$(VERSION)
+OCTAVE_DESTDIR=distrib/Octave/$(VERSION)
 
 # For archive temporary directory
 FILENAME=fc-tools
@@ -41,11 +43,11 @@ matlabtar : setversion GITCOMMIT setcopyright
 	@(cd $(tmpdir) && tar zcf $(MFILENAME).tar.gz $(MFILENAME) )
 	@(cd $(tmpdir) && zip --symlinks -r $(MFILENAME).zip $(MFILENAME) )
 	@(cd $(tmpdir) && 7z a $(MFILENAME).7z $(MFILENAME) )
-	@mkdir -p $(DESTDIR)
-	@(mv -f $(tmpdir)/$(MFILENAME).7z $(tmpdir)/$(MFILENAME).tar.gz $(tmpdir)/$(MFILENAME).zip $(DESTDIR))
+	@mkdir -p $(MATLAB_DESTDIR)
+	@(mv -f $(tmpdir)/$(MFILENAME).7z $(tmpdir)/$(MFILENAME).tar.gz $(tmpdir)/$(MFILENAME).zip $(MATLAB_DESTDIR))
 	@rm -fr $(tmpdir)
 	@echo "\nCreating files\n  -> $(MFILENAME).tar.gz,\n  -> $(MFILENAME).zip,\n  -> $(MFILENAME).7z"
-	@echo "in directory $(DESTDIR)\n"
+	@echo "in directory $(MATLAB_DESTDIR)\n"
 	
 octavetar : setversion GITCOMMIT setcopyright
 	@python3 extractfiles.py octave.list > octave.tmp
@@ -56,17 +58,17 @@ octavetar : setversion GITCOMMIT setcopyright
 	@(mkdir -p $(tmpdir)/$(OFILENAME))
 	@(tar zxf $(tmpdir)/octavetmp.tar.gz -C $(tmpdir)/$(OFILENAME))
 	@(cd $(tmpdir) && tar zcf $(OFILENAME).tar.gz $(OFILENAME))
-	@mkdir -p $(DESTDIR)
+	@mkdir -p $(OCTAVE_DESTDIR)
 	@(cd $(tmpdir) && zip --symlinks -r $(OFILENAME).zip $(OFILENAME))
 	@(cd $(tmpdir) && 7z a $(OFILENAME).7z $(OFILENAME))
 	@(cd $(tmpdir)/$(OFILENAME) && mkdir -p inst; mv $(OCTAVE_INST_MOVE) inst/ )
 	@(cd $(tmpdir) && mv $(OFILENAME) $(OCTAVE_PKG))
 	@(cd $(tmpdir) && tar zcvf $(OCTAVE_PKG_VERSION).tar.gz $(OCTAVE_PKG))
-	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OCTAVE_PKG_VERSION).tar.gz $(tmpdir)/$(OFILENAME).tar.gz $(tmpdir)/$(OFILENAME).zip $(DESTDIR))
+	@(mv -f $(tmpdir)/$(OFILENAME).7z $(tmpdir)/$(OCTAVE_PKG_VERSION).tar.gz $(tmpdir)/$(OFILENAME).tar.gz $(tmpdir)/$(OFILENAME).zip $(OCTAVE_DESTDIR))
 	@echo "Cleaning"
 	@rm -fr $(tmpdir) octave.tmp 
 	@echo "\nCreating files\n  -> $(OCTAVE_PKG_VERSION).tar.gz,\n  -> $(OFILENAME).tar.gz,\n  -> $(OFILENAME).zip,\n  -> $(OFILENAME).7z"
-	@echo "in directory $(DESTDIR)\n"
+	@echo "in directory $(OCTAVE_DESTDIR)\n"
 	
 setversion:
 	@echo "Set version to $(TAG)"
@@ -102,9 +104,9 @@ archives_matlab :
 	@echo $(SEP)
 	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(MCOPYRIGHT)" matlabtar)
 	@echo $(SEP)
-	@echo "***3) transfert archives to $(DESTDIR)"
+	@echo "***3) transfert archives to $(MATLAB_DESTDIR)"
 	@echo $(SEP)
-	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
+	@(rsync -av $(tmpdir)/$(FILENAME)/$(MATLAB_DESTDIR)/* $(MATLAB_DESTDIR))
 	@rm -fr $(tmpdir)
 	
 archives_octave : 
@@ -124,14 +126,19 @@ archives_octave :
 	@echo $(SEP)
 	@(cd $(tmpdir)/$(FILENAME) && make TAG=$(TAG) SETCOPYRIGHT="$(OCOPYRIGHT)" octavetar)
 	@echo $(SEP)
-	@echo "***3) transfert archives to $(DESTDIR)"
+	@echo "***3) transfert archives to $(OCTAVE_DESTDIR)"
 	@echo $(SEP)
-	@(rsync -av $(tmpdir)/$(FILENAME)/$(DESTDIR)/* $(DESTDIR))
+	@(rsync -av $(tmpdir)/$(FILENAME)/$(OCTAVE_DESTDIR)/* $(OCTAVE_DESTDIR))
 	@rm -fr $(tmpdir)
 
 	
-macoui:
-	rsync -av distrib/$(VERSION) macoui:~/public_html/software/codes/fc-tools/
+macoui_matlab:
+	ssh macoui 'mkdir -p ~/public_html/software/codes/Matlab/fc-tools'
+	rsync -av $(MATLAB_DESTDIR) macoui:~/public_html/software/codes/Matlab/fc-tools/
+	
+macoui_octave:
+	ssh macoui 'mkdir -p ~/public_html/software/codes/Octave/fc-tools'
+	rsync -av $(MATLAB_DESTDIR) macoui:~/public_html/software/codes/Octave/fc-tools/
 
 last_tag:
 	@echo "$(NAME): "$(shell git describe --abbrev=0)
