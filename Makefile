@@ -3,6 +3,9 @@
 OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
+NAME=fc_tools
+GIT_REPO=/home/cuvelier/Travail/Recherch/Matlab
+
 DEFAULT_TAG=0.0.13
 ifeq ("$(TAG)","")
 TAG=$(DEFAULT_TAG)
@@ -130,6 +133,9 @@ archives_octave :
 macoui:
 	rsync -av distrib/$(VERSION) macoui:~/public_html/software/codes/fc-tools/
 
+last_tag:
+	@echo "$(NAME): "$(shell git describe --abbrev=0)
+	
 GITCOMMIT :
 	@echo "Build GITCOMMIT file"
 	@git config --get remote.origin.url > GITCOMMIT

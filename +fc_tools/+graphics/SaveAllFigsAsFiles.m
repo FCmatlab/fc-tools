@@ -5,7 +5,7 @@ function SaveAllFigsAsFiles(file,varargin)
 %
 % <COPYRIGHT>
   p = inputParser;
-  p.addParamValue('format','epsc',@(x) ismember(x,{'epsc','pdf','png'}));
+  p.addParamValue('format','epsc',@(x) ismember(x,{'epsc','pdf','png','pdflatex'}));
   p.addParamValue('showtitle',true,@islogical);
   p.addParamValue('verbose',false,@islogical);
   p.addParamValue('dir','.',@ischar);
