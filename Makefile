@@ -106,6 +106,7 @@ archives_matlab :
 	@echo $(SEP)
 	@echo "***3) transfert archives to $(MATLAB_DESTDIR)"
 	@echo $(SEP)
+	@mkdir -p $(MATLAB_DESTDIR)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(MATLAB_DESTDIR)/* $(MATLAB_DESTDIR))
 	@rm -fr $(tmpdir)
 	
@@ -128,6 +129,7 @@ archives_octave :
 	@echo $(SEP)
 	@echo "***3) transfert archives to $(OCTAVE_DESTDIR)"
 	@echo $(SEP)
+	@mkdir -p $(OCTAVE_DESTDIR)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(OCTAVE_DESTDIR)/* $(OCTAVE_DESTDIR))
 	@rm -fr $(tmpdir)
 
