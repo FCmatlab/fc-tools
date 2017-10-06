@@ -24,8 +24,8 @@ FILENAME=fc_tools
 OCTAVE_PKG=fc-tools
 
 VERSION=$(TAG)
-MATLAB_NAME=m$(FILENAME)
-OCTAVE_NAME=o$(FILENAME)
+MATLAB_NAME=$(FILENAME)
+OCTAVE_NAME=$(FILENAME)
 
 OFILENAME := $(OCTAVE_NAME)-$(VERSION)
 MFILENAME := $(MATLAB_NAME)-$(VERSION)
@@ -85,7 +85,7 @@ endif
 
 SEP="***************************************************"
 
-archives: archives_matlab archives_octave
+archives: archives_matlab archives_octave macoui
 
 archives_matlab : 
 	@echo $SEP
@@ -136,10 +136,12 @@ archives_octave :
 macoui: macoui_matlab macoui_octave
 	
 macoui_matlab:
+	@echo "Transfert Matlab/fc-tools -> MACOUI"
 	ssh macoui 'mkdir -p ~/public_html/software/codes/Matlab/fc-tools'
 	rsync -av $(MATLAB_DESTDIR) macoui:~/public_html/software/codes/Matlab/fc-tools/
 	
 macoui_octave:
+	@echo "Transfert Octave/fc-tools -> MACOUI"
 	ssh macoui 'mkdir -p ~/public_html/software/codes/Octave/fc-tools'
 	rsync -av $(OCTAVE_DESTDIR) macoui:~/public_html/software/codes/Octave/fc-tools/
 
