@@ -15,12 +15,12 @@ TAGTIMEcmd := git log --tags --simplify-by-decoration --pretty="format:%ci %d" |
 TAGTIME := $(shell $(TAGTIMEcmd) )
 
 CURRENT_DIR = $(shell pwd)
-DESTDIR=distrib/$(VERSION)
+#DESTDIR=distrib/$(VERSION)
 MATLAB_DESTDIR=distrib/Matlab/$(VERSION)
 OCTAVE_DESTDIR=distrib/Octave/$(VERSION)
 
 # For archive temporary directory
-FILENAME=fc-tools
+FILENAME=fc_tools
 OCTAVE_PKG=fc-tools
 
 VERSION=$(TAG)
