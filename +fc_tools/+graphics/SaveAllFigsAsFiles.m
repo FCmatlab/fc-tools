@@ -11,6 +11,7 @@ function SaveAllFigsAsFiles(file,varargin)
   p.addParamValue('dir','.',@ischar);
   p.addParamValue('pdfcrop',false,@islogical);
   p.addParamValue('crop',false,@islogical);
+  p.addParamValue('pause',2,@isscalar);
   p.addParamValue('tag',false,@islogical);
   p.parse(varargin{:});
   R=p.Results;
@@ -71,6 +72,10 @@ function SaveAllFigsAsFiles(file,varargin)
       %h=figure(nfig); % utiliser le label...
       set(figHandles(i),'visible','on') 
     end
+  end
+  if R.pause>0
+    fprintf('[fc-tools] waiting %g(s) to finish saving figures\n',R.pause) % Add for BUG in Matlab/Ubuntu 14.04 LTS
+    pause(R.pause)
   end
 end
 
