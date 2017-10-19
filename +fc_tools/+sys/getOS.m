@@ -55,6 +55,7 @@ function distrib = getOSdistrib()
  else
    if ismac()
      [~,distrib]=system('sw_vers -productVersion');
+     distrib=strtrim(distrib);
    else
      distrib='';
    end
