@@ -12,6 +12,6 @@ else if ismac()
         RAM=strtrim(RAM);
     else
         [user,sys]=memory(); % on Windows
-        RAM=sys.PhysicalMemory/(1024^2);
+        RAM=sys.PhysicalMemory.Total/(1024^2);
     end
 end

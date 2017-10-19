@@ -44,7 +44,10 @@ function info = callWMIC( alias )
 % Call the MS-DOS WMIC (Windows Management) command
 olddir = pwd();
 cd( tempdir );
-sysinfo = evalc( sprintf( '!wmic %s get /value', alias ) );
+%sysinfo = evalc( sprintf( '!wmic %s get /value', alias ) );
+
+[status,sysinfo] = system(sprintf('wmic %s get /value',alias)); 
+%evalc( sprintf( 'system(''wmic %s get /value'')', alias ) );
 cd( olddir );
 fields = textscan( sysinfo, '%s', 'Delimiter', '\n' ); fields = fields{1};
 fields( cellfun( 'isempty', fields ) ) = [];
