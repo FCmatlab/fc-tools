@@ -18,7 +18,7 @@ end
 
 function RAM=getRAM_macOS()
   [status,result]=fc_tools.sys.sec_system('sysctl -n hw.memsize');
-  RAM=str2num(strtrim(result))/(1024^2);
+  RAM=str2num(strtrim(result))/(1024^3);
 end
 
 function RAM=getRAM_Windows()
