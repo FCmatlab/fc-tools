@@ -24,5 +24,5 @@ end
 function RAM=getRAM_Windows()
   [status,result]=fc_tools.sys.sec_system('wmic ComputerSystem get  TotalPhysicalMemory /value');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );Lines=Lines{1};
-  RAM=str2num(fc_tools.sys.find_keyvalue('TotalPhysicalMemory','=',Lines))/(1024^2);
+  RAM=str2num(fc_tools.sys.find_keyvalue('TotalPhysicalMemory','=',Lines))/(1024^3);
 end

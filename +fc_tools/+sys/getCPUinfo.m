@@ -35,7 +35,6 @@ function cpu=getCPUinfo_Windows()
   Lines=Lines{1};
   cpu.name=fc_tools.sys.find_keyvalue('Name','=',Lines);
   
-  cpu.nthreadspercore=int32(str2num(fc_tools.sys.find_keyvalue('Thread(s) per core',':',Lines)));
   cpu.ncoreperproc=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfCores','=',Lines)));
   NumberOfLogicalProcessors=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfLogicalProcessors',':',Lines)));
   cpu.nthreadspercore=NumberOfLogicalProcessors/cpu.ncoreperproc;
