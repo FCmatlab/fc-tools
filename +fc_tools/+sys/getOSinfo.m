@@ -15,12 +15,12 @@ end
 
 function OS=getOSinfo_Unix()
   [status,result]=fc_tools.sys.sec_system('lsb_release -a');
-  lines = textscan( result, '%s', 'Delimiter', '\n' );
-  lines=lines{1};
-  OS.distributor=find_keyvalue('Distributor ID:*',lines);
-  OS.description=find_keyvalue('Description:*',lines);
-  OS.release=find_keyvalue('Release:*',lines);
-  OS.codename=find_keyvalue('Codename:*',lines);
+  Lines = textscan( result, '%s', 'Delimiter', '\n' );
+  Lines=Lines{1};
+  OS.distributor=find_keyvalue('Distributor ID',':',Lines);
+  OS.description=find_keyvalue('Description',':',Lines);
+  OS.release=find_keyvalue('Release',':',Lines);
+  OS.codename=find_keyvalue('Codename',':',Lines);
   [status,result]=fc_tools.sys.sec_system('uname -m');
   OS.arch=strtrim(result);
 end
@@ -29,23 +29,23 @@ function OS=getOSinfo_Windows()
   [status,result]=fc_tools.sys.sec_system('wmic os get /value');
   lines = textscan( result, '%s', 'Delimiter', '\n' );
   lines=lines{1};
-  OS.distributor=find_keyvalue('Manufacturer=*',lines);
-  OS.description=find_keyvalue('Caption=*',lines);
-  OS.codename=find_keyvalue('BuildNumber=*',lines);
-  OS.release=find_keyvalue('Version=*',lines);
-  OS.arch=find_keyvalue('OSArchitecture=*',lines);
+  OS.distributor=find_keyvalue('Manufacturer','=',lines);
+  OS.description=find_keyvalue('Caption','=',lines);
+  OS.codename=find_keyvalue('BuildNumber','=',lines);
+  OS.release=find_keyvalue('Version','=',lines);
+  OS.arch=find_keyvalue('OSArchitecture','=',lines);
 end
 
 function OS=getOSinfo_macOS()
   [status,result]=fc_tools.sys.sec_system('sw_vers');
   % Try also  'system_profiler SPSoftwareDataType'
   %[status,result]=fc_tools.sys.sec_system('sysctl -ea');
-  lines = textscan( result, '%s', 'Delimiter', '\n' );
-  lines=lines{1};
+  Lines = textscan( result, '%s', 'Delimiter', '\n' );
+  Lines=Lines{1};
   OS.distributor='Apple Inc.';%find_keyvalue('Manufacturer=*',lines);
-  OS.description=find_keyvalue('ProductName:*',lines);
-  OS.codename=find_keyvalue('BuildVersion:*',lines);
-  OS.release=find_keyvalue('ProductVersion:*',lines);
+  OS.description=find_keyvalue('ProductName',':',Lines);
+  OS.codename=find_keyvalue('BuildVersion',':',Lines);
+  OS.release=find_keyvalue('ProductVersion',':',Lines);
   
 %    [status,result]=fc_tools.sys.sec_system('uname -s -r -m');
 %    S=strsplit(strtrim(result),' ');
@@ -56,12 +56,16 @@ function OS=getOSinfo_macOS()
   OS.arch=strtrim(result);
 end
 
-function value=find_keyvalue(key,lines)
-% key='Distributor ID:*'
-  C=regexp(lines,key,'split');
-  idx=find(cellfun(@(x) length(x)==2,C));
+function value=find_keyvalue(key,sep,Lines)
+% key='Distributor ID' sep=':'
+  %C=regexp(lines,key,'split');
+  %idx=find(cellfun(@(x) length(x)==2,C));
+  fkey=[key,sep];
+  idx=find(strncmp(Lines,fkey,length(fkey)));
+  assert(length(idx)<=1)
   if ~isempty(idx)
-    value=strtrim(C{idx(1)}{2});
+    is=strfind(Lines{idx},sep);
+    value=strtrim(Lines{idx}(is+1:end));
   else
     warning('Unable to find key: ''%s''',key);
   end
