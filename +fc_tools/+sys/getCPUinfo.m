@@ -34,9 +34,8 @@ function cpu=getCPUinfo_Windows()
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
   cpu.name=fc_tools.sys.find_keyvalue('Name','=',Lines);
-  
   cpu.ncoreperproc=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfCores','=',Lines)));
-  NumberOfLogicalProcessors=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfLogicalProcessors',':',Lines)));
+  NumberOfLogicalProcessors=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfLogicalProcessors','=',Lines)));
   cpu.nthreadspercore=NumberOfLogicalProcessors/cpu.ncoreperproc;
   [status,result]=fc_tools.sys.sec_system('wmic computersystem get numberofprocessors /value');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
