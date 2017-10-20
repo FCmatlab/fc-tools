@@ -24,9 +24,9 @@ function cpu=getCPUinfo_Unix()
   cpu.name=strtrim(Lines(i+1:end));
   [status,result]=fc_tools.sys.sec_system('LANGUAGE=English lscpu');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );Lines=Lines{1};
-  cpu.nthreadspercore=fc_tools.sys.find_keyvalue('Thread(s) per core',':',Lines);
-  cpu.ncoreperproc=fc_tools.sys.find_keyvalue('Core(s) per socket',':',Lines);
-  cpu.nprocs=fc_tools.sys.find_keyvalue('Socket(s)',':',Lines);
+  cpu.nthreadspercore=int32(str2num(fc_tools.sys.find_keyvalue('Thread(s) per core',':',Lines)));
+  cpu.ncoreperproc=int32(str2num(fc_tools.sys.find_keyvalue('Core(s) per socket',':',Lines)));
+  cpu.nprocs=int32(str2num(fc_tools.sys.find_keyvalue('Socket(s)',':',Lines)));
 end
 
 function cpu=getCPUinfo_Windows()
@@ -35,14 +35,14 @@ function cpu=getCPUinfo_Windows()
   lines=lines{1};
   cpu.name=fc_tools.sys.find_keyvalue('Name','=',Lines);
   
-  cpu.nthreadspercore=fc_tools.sys.find_keyvalue('Thread(s) per core',':',Lines);
-  cpu.ncoreperproc=fc_tools.sys.find_keyvalue('NumberOfCores','=',Lines);
-  NumberOfLogicalProcessors=fc_tools.sys.find_keyvalue('NumberOfLogicalProcessors',':',Lines);
+  cpu.nthreadspercore=int32(str2num(fc_tools.sys.find_keyvalue('Thread(s) per core',':',Lines)));
+  cpu.ncoreperproc=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfCores','=',Lines)));
+  NumberOfLogicalProcessors=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfLogicalProcessors',':',Lines)));
   cpu.nthreadspercore=NumberOfLogicalProcessors/cpu.ncoreperproc;
   [status,result]=fc_tools.sys.sec_system('wmic computersystem get numberofprocessors /value');
   lines = textscan( result, '%s', 'Delimiter', '\n' );
   lines=lines{1};
-  cpu.nprocs=fc_tools.sys.find_keyvalue('NumberOfProcessors','=',Lines);
+  cpu.nprocs=int32(str2num(fc_tools.sys.find_keyvalue('NumberOfProcessors','=',Lines)));
 end
 
 function cpu=getCPUinfo_macOS()
@@ -51,12 +51,12 @@ function cpu=getCPUinfo_macOS()
   [status,result]=fc_tools.sys.sec_system('sysctl hw');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
-  cpu.ncoreperproc=fc_tools.sys.find_keyvalue('hw.physicalcpu',':',Lines);
-  NumberOfLogicalProcessors=fc_tools.sys.find_keyvalue('hw.logicalcpu',':',Lines);
+  cpu.ncoreperproc=int32(str2num(fc_tools.sys.find_keyvalue('hw.physicalcpu',':',Lines)));
+  NumberOfLogicalProcessors=int32(str2num(fc_tools.sys.find_keyvalue('hw.logicalcpu',':',Lines)));
   cpu.nthreadspercore=NumberOfLogicalProcessors/cpu.ncoreperproc;
   
   [status,result]=fc_tools.sys.sec_system('system_profiler SPHardwareDataType');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
-  cpu.nprocs=fc_tools.sys.find_keyvalue('Number of Processors',':',Lines);
+  cpu.nprocs=int32(str2num(fc_tools.sys.find_keyvalue('Number of Processors',':',Lines)));
 end
