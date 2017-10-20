@@ -1,5 +1,95 @@
 
+Under Ubuntu 14.04.5 LTS
+------------------------
+
+>> [status,result]=system('lsb_release -a');            
+>> result
+
+result =
+
+    'LSB Version:       core-2.0-amd64:core-2.0-noarch:core-3.0-amd64:core-3.0-noarch:core-3.1-amd64:core-3.1-noarch:core-3.2-amd64:core-3.2-noarch:core-4.0-amd64:core-4.0-noarch:core-4.1-amd64:core-4.1-noarch:security-4.0-amd64:security-4.0-noarch:security-4.1-amd64:security-4.1-noarch
+     Distributor ID:    Ubuntu
+     Description:       Ubuntu 14.04.5 LTS
+     Release:   14.04
+     Codename:  trusty
+     '
+     
+>> [status,result]=system('lscpu')          
+
+status =
+
+     0
+
+
+result =
+
+    'Architecture:          x86_64
+     Mode(s) opératoire(s) des processeurs :32-bit, 64-bit
+     Byte Order:            Little Endian
+     CPU(s):                8
+     On-line CPU(s) list:   0-7
+     Thread(s) par cœur : 2
+     Cœur(s) par socket : 4
+     Socket(s):             1
+     Nœud(s) NUMA :       1
+     Identifiant constructeur :GenuineIntel
+     Famille de processeur :6
+     Modèle :             60
+     Révision :           3
+     Vitesse du processeur en MHz :800.000
+     BogoMIPS:              5387.12
+     Virtualisation :      VT-x
+     Cache L1d :           32K
+     Cache L1i :           32K
+     Cache L2 :            256K
+     Cache L3 :            6144K
+     NUMA node0 CPU(s):     0-7
+     '
+
+     
+$ more /proc/cpuinfo 
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 60
+model name      : Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz
+stepping        : 3
+microcode       : 0x16
+cpu MHz         : 800.000
+cache size      : 6144 KB
+physical id     : 0
+siblings        : 8
+core id         : 0
+cpu cores       : 4
+apicid          : 0
+initial apicid  : 0
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 13
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr 
+sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonsto
+p_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 s
+se4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dth
+erm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips        : 5387.12
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 39 bits physical, 48 bits virtual
+power management:
+
+processor       : 1
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 60
+model name      : Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz
+stepping        : 3
+microcode       : 0x16
+...
+
+
 Under Windows 10:
+-----------------
 
 [status,result]=system('wmic os get /value');
 result=
