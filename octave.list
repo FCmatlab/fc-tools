@@ -52,4 +52,10 @@ DESCRIPTION
 ./+fc_tools/+graphics/+xcolor/svg.m
 ./+fc_tools/+graphics/+xcolor/val2rgb.m
 ./+fc_tools/+graphics/+xcolor/X11.m
+./+fc_tools/+sys/find_keyvalue.m
+./+fc_tools/+sys/sec_system.m
+./+fc_tools/+sys/getRelease.m
+./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/getRAM.m
+./+fc_tools/+sys/getOSinfo.m
+./+fc_tools/+sys/getCPUinfo.m
