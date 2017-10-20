@@ -52,7 +52,7 @@ function cpu=getCPUinfo_macOS()
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
   cpu.ncoreperproc=fc_tools.sys.find_keyvalue('hw.physicalcpu',':',Lines);
-  NumberOfLogicalProcessors=fc_tools.sys.find_keyvalue('kw.logicalcpu',':',Lines);
+  NumberOfLogicalProcessors=fc_tools.sys.find_keyvalue('hw.logicalcpu',':',Lines);
   cpu.nthreadspercore=NumberOfLogicalProcessors/cpu.ncoreperproc;
   
   [status,result]=fc_tools.sys.sec_system('system_profiler SPHardwareDataType');
