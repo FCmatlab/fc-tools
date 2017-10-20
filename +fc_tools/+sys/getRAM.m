@@ -1,17 +1,27 @@
 function RAM = getRAM()
-% getMemory returns the RAM in Mo of the machine
+% getRAM returns the RAM in Go of the machine
 % RAM = getRAM()
-%
-%
-%
-if isunix() && ~ismac()
-    [status,RAM] = system('free -m|grep "Mem:"|awk ''{print $2}''');
-    RAM=str2num(RAM);
-else if ismac()
-        [status,RAM] = system('sysctl -n hw.memsize | awk ''{print $0/1073741824" GB RAM"}''');
-        RAM=strtrim(RAM);
-    else
-        [user,sys]=memory(); % on Windows
-        RAM=sys.PhysicalMemory.Total/(1024^2);
-    end
+  RAM=[];
+  if isunix() && ~ismac()
+    RAM=getRAM_Unix();
+  elseif ismac()
+    RAM=getRAM_macOS();
+  elseif ispc()
+    RAM=getRAM_Windows();
+  end
+end
+
+function RAM=getRAM_Unix()
+  [status,result]=fc_tools.sys.sec_system('grep MemTotal: /proc/meminfo');
+  RAM=str2num(result(regexp(strtrim(result),['\d'])))/(1024^2);
+end
+
+function RAM=getRAM_macOS()
+  [status,result]=fc_tools.sys.sec_system('sysctl -n hw.memsize');
+  RAM=str2num(strtrim(result))/(1024^2);
+end
+
+function RAM=getRAM_Windows()
+  [status,result]=fc_tools.sys.sec_system('wmic ComputerSystem get  TotalPhysicalMemory');
+  RAM=str2num(strtrim(result))/(1024^2);
 end

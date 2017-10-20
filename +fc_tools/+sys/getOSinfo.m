@@ -17,10 +17,10 @@ function OS=getOSinfo_Unix()
   [status,result]=fc_tools.sys.sec_system('lsb_release -a');
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
-  OS.distributor=find_keyvalue('Distributor ID',':',Lines);
-  OS.description=find_keyvalue('Description',':',Lines);
-  OS.release=find_keyvalue('Release',':',Lines);
-  OS.codename=find_keyvalue('Codename',':',Lines);
+  OS.distributor=fc_tools.sys.find_keyvalue('Distributor ID',':',Lines);
+  OS.description=fc_tools.sys.find_keyvalue('Description',':',Lines);
+  OS.release=fc_tools.sys.find_keyvalue('Release',':',Lines);
+  OS.codename=fc_tools.sys.find_keyvalue('Codename',':',Lines);
   [status,result]=fc_tools.sys.sec_system('uname -m');
   OS.arch=strtrim(result);
 end
@@ -29,11 +29,11 @@ function OS=getOSinfo_Windows()
   [status,result]=fc_tools.sys.sec_system('wmic os get /value');
   lines = textscan( result, '%s', 'Delimiter', '\n' );
   lines=lines{1};
-  OS.distributor=find_keyvalue('Manufacturer','=',lines);
-  OS.description=find_keyvalue('Caption','=',lines);
-  OS.codename=find_keyvalue('BuildNumber','=',lines);
-  OS.release=find_keyvalue('Version','=',lines);
-  OS.arch=find_keyvalue('OSArchitecture','=',lines);
+  OS.distributor=fc_tools.sys.find_keyvalue('Manufacturer','=',lines);
+  OS.description=fc_tools.sys.find_keyvalue('Caption','=',lines);
+  OS.codename=fc_tools.sys.find_keyvalue('BuildNumber','=',lines);
+  OS.release=fc_tools.sys.find_keyvalue('Version','=',lines);
+  OS.arch=fc_tools.sys.find_keyvalue('OSArchitecture','=',lines);
 end
 
 function OS=getOSinfo_macOS()
@@ -43,9 +43,9 @@ function OS=getOSinfo_macOS()
   Lines = textscan( result, '%s', 'Delimiter', '\n' );
   Lines=Lines{1};
   OS.distributor='Apple Inc.';%find_keyvalue('Manufacturer=*',lines);
-  OS.description=find_keyvalue('ProductName',':',Lines);
-  OS.codename=find_keyvalue('BuildVersion',':',Lines);
-  OS.release=find_keyvalue('ProductVersion',':',Lines);
+  OS.description=fc_tools.sys.find_keyvalue('ProductName',':',Lines);
+  OS.codename=fc_tools.sys.find_keyvalue('BuildVersion',':',Lines);
+  OS.release=fc_tools.sys.find_keyvalue('ProductVersion',':',Lines);
   
 %    [status,result]=fc_tools.sys.sec_system('uname -s -r -m');
 %    S=strsplit(strtrim(result),' ');
@@ -56,74 +56,17 @@ function OS=getOSinfo_macOS()
   OS.arch=strtrim(result);
 end
 
-function value=find_keyvalue(key,sep,Lines)
-% key='Distributor ID' sep=':'
-  %C=regexp(lines,key,'split');
-  %idx=find(cellfun(@(x) length(x)==2,C));
-  fkey=[key,sep];
-  idx=find(strncmp(Lines,fkey,length(fkey)));
-  assert(length(idx)<=1)
-  if ~isempty(idx)
-    is=strfind(Lines{idx},sep);
-    value=strtrim(Lines{idx}(is+1:end));
-  else
-    warning('Unable to find key: ''%s''',key);
-  end
-end
-
-function type = getOStype()
-% getOSdistrib returns the type of the machine OS
-% type = getOStype()
-%
- type='unknow';
- if isunix() && ~ismac()
-   type='Linux';
- elseif ismac()
-   type='Mac';
- elseif ispc()
-   type='Windows';
- end
-end
-
-function arch = getOSarch()
-% getOSarch returns the architecture of the machine
-% arch = getOSarch()
-%
- if isunix()
-   [status,arch]=system('uname -m');
-   arch=strtrim(arch);
- end
-end
-
-function distrib = getOSdistrib()
-% getOSdistrib returns the type of the machine OS distrib
-% distrib = getOSdistrib()
-%
-%
-
- if isunix() && ~ismac()
-   % vérifier si la distrib' est debian ou Ubuntu sinon pas de dpkg (yum)!!
-   % test
-   %% lsb is a string to check is lsb-release is installed
-   %%[status,lsb]=system('dpkg -l lsb-release|grep ^ii');
-   %
-   % use of /etc/*release files
-   if exist('/etc/os-release','file')
-     [status,distrib]=system('a=`cat /etc/os-release|grep ^ID=|cut -d= -f2`;b=`cat /etc/os-release|grep ^VERSION=|cut -d\" -f2`;echo $a $b');
-   elseif exist('/etc/redhat-release','file')
-     [status,distrib]=system('cat /etc/redhat-release');
-   else
-   %%elseif regexp(lsb,'ii','start')
-     % lsb_release is already installed
-     [status,distrib]=system('lsb_release -a|grep ^Description|cut -d: -f2');
-   end
-   distrib=strtrim(distrib);
- else
-   if ismac()
-     [~,distrib]=system('sw_vers -productVersion');
-     distrib=strtrim(distrib);
-   else
-     distrib='';
-   end
- end
-end
+%  function value=find_keyvalue(key,sep,Lines)
+%  % key='Distributor ID' sep=':'
+%    %C=regexp(lines,key,'split');
+%    %idx=find(cellfun(@(x) length(x)==2,C));
+%    fkey=[key,sep];
+%    idx=find(strncmp(Lines,fkey,length(fkey)));
+%    assert(length(idx)<=1)
+%    if ~isempty(idx)
+%      is=strfind(Lines{idx},sep);
+%      value=strtrim(Lines{idx}(is+1:end));
+%    else
+%      warning('Unable to find key: ''%s''',key);
+%    end
+%  end
