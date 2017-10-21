@@ -23,6 +23,7 @@ function OS=getOSinfo_Unix()
   OS.codename=fc_tools.sys.find_keyvalue('Codename',':',Lines);
   [status,result]=fc_tools.sys.sec_system('uname -m');
   OS.arch=strtrim(result);
+  OS.shortname=OS.distributor;
 end
 
 function OS=getOSinfo_Windows()
@@ -34,6 +35,7 @@ function OS=getOSinfo_Windows()
   OS.codename=fc_tools.sys.find_keyvalue('BuildNumber','=',lines);
   OS.release=fc_tools.sys.find_keyvalue('Version','=',lines);
   OS.arch=fc_tools.sys.find_keyvalue('OSArchitecture','=',lines);
+  OS.shortname='Windows';
 end
 
 function OS=getOSinfo_macOS()
@@ -46,6 +48,7 @@ function OS=getOSinfo_macOS()
   OS.description=fc_tools.sys.find_keyvalue('ProductName',':',Lines);
   OS.codename=fc_tools.sys.find_keyvalue('BuildVersion',':',Lines);
   OS.release=fc_tools.sys.find_keyvalue('ProductVersion',':',Lines);
+  OS.shortname='macOS';
   
 %    [status,result]=fc_tools.sys.sec_system('uname -s -r -m');
 %    S=strsplit(strtrim(result),' ');
