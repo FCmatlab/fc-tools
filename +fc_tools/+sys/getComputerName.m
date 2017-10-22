@@ -2,39 +2,28 @@ function name = getComputerName()
 % GETCOMPUTERNAME returns the name of the computer (hostname)
 % name = getComputerName()
 %
-% WARN: output string is converted to lower case
-%
-%
-% See also SYSTEM, GETENV, ISPC, ISUNIX
-%
-% m j m a r i n j (AT) y a h o o (DOT) e s
-% (c) MJMJ/2007
-%
-if fc_tools.comp.isOctave()
-  name=lower(gethostname());
-else
-  [ret, name] = system('hostname');   
-
-  if ret ~= 0,
-    fprintf(' hostname command return : <%s>\n',name);
-    if ispc
-	name = getenv('COMPUTERNAME');
-    else      
-	name = getenv('HOSTNAME');      
-    end
-  end
-  name = lower(name);
-  I=strfind(name,'.');
-  if ~isempty(I)
-    name=name(1:I(1)-1);
-  end
-  I=strfind(name,char(10));
-  if ~isempty(I)
-    name=name(1:I(1)-1);
-  end
-  %if ( name(end) == 10 )
-  %  name=name(1:end-1);
-  %end
+% output string is converted to lower case
+ name='unknow';
+ if isunix() && ~ismac()
+   name=get_Unix();
+ elseif ismac()
+   name=get_macOS();
+ elseif ispc()
+   name=get_Windows();
+ end
 end
 
+function name=get_Unix()
+  [status,result]=fc_tools.sys.sec_system('hostname -s');
+  if status==0, name=strtrim(result);else name='unkown';end
+end
 
+function name=get_macOS()
+  [status,result]=fc_tools.sys.sec_system('hostname -s');
+  if status==0, name=strtrim(result);else name='unkown';end
+end
+
+function name=get_Windows()
+  [status,result]=fc_tools.sys.sec_system('hostname');
+  if status==0, name=strtrim(result);else name='unkown';end
+end
