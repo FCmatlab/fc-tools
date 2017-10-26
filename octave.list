@@ -1,9 +1,10 @@
-# tree -i -f
+# tree -i -f ./
 COPYING
 DESCRIPTION
 # tree -i -f
 ./+fc_tools/init.m
 ./+fc_tools/version.m
+./+fc_tools/get_path.m
 ./+fc_tools/+comp/AddParamValue.m
 ./+fc_tools/+comp/AddRequired.m
 ./+fc_tools/+comp/isOctave.m
