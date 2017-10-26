@@ -137,6 +137,10 @@ add = repmat(add',1,size(fff,1));
 add = reshape(add',prod(size(add)),1);
 add = repmat(add,1,size(fff,2));
 
+% -> Add by F.C. to improve performance under Octave
+fff = repmat(fff,nvals,1);
+fff = fff+add;
+% <-
 if ~useColor
   if ~useC
     C = speed;
@@ -145,17 +149,21 @@ if ~useColor
   end
   C = repmat(C,1,3*n+2);
   C = reshape(C',prod(size(C)),1);
-
-  p=patch(x,y,z,C);
+  
+  p=patch(x,y,z,C,'faces',fff,'edgecolor','none'); % Modify by F.C. to improve performance under Octave
+                                                   % old: p=patch(x,y,z,C);
 else
-  p=patch(x,y,z,color);
+  p=patch(x,y,z,color,'faces',fff,'edgecolor','none'); % Modify by F.C. to improve performance under Octave
+                                                       % old p=patch(x,y,z,color);
 end
 
-fff = repmat(fff,nvals,1);
-fff = fff+add;
-
-set(p,'faces',fff);
-set(p,'edgecolor','none');
+% -> Modify by F.C. to improve performance under Octave
+%  fff = repmat(fff,nvals,1);
+%  fff = fff+add;
+%  
+%  set(p,'faces',fff);
+%  set(p,'edgecolor','none');
+% <- 
 theHandle = p;
 
 function [x2,y2,z2]=rot3d(x,y,z,tt,fi)
