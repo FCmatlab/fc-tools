@@ -12,6 +12,7 @@
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
 ./+fc_tools/+graphics/selectColors.m
 ./+fc_tools/+graphics/SetHoldOn.m
+./+fc_tools/+graphics/view3D.m
 ./+fc_tools/+graphics/+crop/crop.m
 ./+fc_tools/+graphics/+crop/license.txt
 ./+fc_tools/+graphics/DisplayFigures.m
