@@ -15,6 +15,10 @@ function rgb=val2rgb(val,varargin)
     return;
   end
   name=val;
+  if strcmp(upper(name),'NONE')
+    rgb='None';
+    return
+  end
   if all
     for i=1:length(themes)
       rgb=str2rgb_theme(themes{i},name);

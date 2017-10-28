@@ -4,6 +4,7 @@ function varargout=init(varargin)
 %
 % <COPYRIGHT>
   p = inputParser;
+  p.KeepUnmatched=true;
   p.addParamValue('verbose',0,@isscalar);
   p.parse(varargin{:});
   R=p.Results;

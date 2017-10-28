@@ -1,7 +1,7 @@
 # fc-tools : Matlab Toolbox and Octave (>= 4.0.3) package
 
-OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
-MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016-2017 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
+MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016-2017 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
 NAME=fc_tools
 GIT_REPO=/home/cuvelier/Travail/Recherch/Matlab
