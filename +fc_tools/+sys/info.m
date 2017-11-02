@@ -10,16 +10,23 @@ function info()
   print_struct(fc_tools.sys.getCPUinfo())
   fprintf('------ RAM\n')
   fprintf('%15s: %.2f\n','in Go',fc_tools.sys.getRAM())
+  fprintf('------ GRAPHIC\n')
+  if fc_tools.comp.isOctave()
+    fprintf('%15s: %s\n','Graphics Toolkit',graphics_toolkit())
+  else
+    print_struct(opengl('data'),'%30s')
+  end
 end
 
-function print_struct(S)
+function print_struct(S,format)
+  if nargin==1,format='%15s';end
   F=fieldnames(S);
   for i=1:length(F)
     V=getfield(S,F{i});
     if ischar(V)
-      fprintf('%15s: %s\n',F{i},getfield(S,F{i}))
+      fprintf([format,': %s\n'],F{i},getfield(S,F{i}))
     elseif isscalar(V)
-      fprintf('%15s: %g\n',F{i},getfield(S,F{i}))
+      fprintf([format,': %g\n'],F{i},getfield(S,F{i}))
     else
     end
   end
