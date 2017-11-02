@@ -39,9 +39,9 @@
 ./+fc_tools/+graphics/RGB.m
 ./+fc_tools/+graphics/colorbarIso.m
 ./+fc_tools/+graphics/CheckAlpha.m
-./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/isfileexists.m
 ./+fc_tools/+utils/deleteCellOptions.m
+./+fc_tools/+utils/is_fcPackage.m
 ./+fc_tools/+utils/isfunhandle.m
 ./+fc_tools/+utils/strversion2num.m
 ./+fc_tools/+utils/getNumVersion.m
@@ -54,9 +54,12 @@
 ./+fc_tools/+graphics/+xcolor/X11.m
 ./+fc_tools/+sys/find_keyvalue.m
 ./+fc_tools/+sys/sec_system.m
+./+fc_tools/+sys/getComputerName.m
+./+fc_tools/+sys/getUserName.m
 ./+fc_tools/+sys/getRelease.m
 ./+fc_tools/+sys/getSoftware.m
 ./+fc_tools/+sys/getRAM.m
 ./+fc_tools/+sys/getOSinfo.m
 ./+fc_tools/+sys/getCPUinfo.m
+./+fc_tools/+sys/info.m
 ./COPYING
