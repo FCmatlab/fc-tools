@@ -1,44 +1,44 @@
-function options=DisplayFigures(varargin)
-p = inputParser; 
-p.addParameter('nfig',0,@isscalar); 
-p.parse(varargin{:});
-R=p.Results;
-%set(0,'Units','normalized')
-mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
-if R.nfig<=0 && nargin>0 
- options=BuildOptions(mFontSize,oFontSize);
- return;
-end
+function varargout=DisplayFigures(varargin)
+  p = inputParser; 
+  p.addParameter('nfig',0,@isscalar); 
+  p.parse(varargin{:});
+  R=p.Results;
+  %set(0,'Units','normalized')
+  mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
+  if R.nfig<=0 && nargin>0 
+  options=BuildOptions(mFontSize,oFontSize);
+  return;
+  end
 
-Pos=get(0,'ScreenSize');
-x=Pos(1);y=Pos(2);
-w=min(1920,Pos(3)); % For multiscreen under Octave
-h=min(1080,Pos(4));
-for i=1:R.nfig,figure(i);end
+  Pos=get(0,'ScreenSize');
+  x=Pos(1);y=Pos(2);
+  w=min(1920,Pos(3)); % For multiscreen under Octave
+  h=min(1080,Pos(4));
+  for i=1:R.nfig,figure(i);end
 
-figHandles = get(0,'Children');
-nf=length(figHandles);
+  figHandles = get(0,'Children');
+  nf=length(figHandles);
 
-if nf==1,return;end
-if nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
-elseif nf<=6, nrow=2;ncol=3;oFontSize=[12,10,10,10];
-elseif nf<=9, nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
-elseif nf<=12, nrow=3;ncol=4;
-elseif nf<=16, nrow=4;ncol=4;
-elseif nf<=20, nrow=4;ncol=5;
-elseif nf<=25, nrow=5;ncol=5;
-else, error('to many figures');end
-options=BuildOptions(mFontSize,oFontSize);
+  if nf==1,return;end
+  if nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
+  elseif nf<=6, nrow=2;ncol=3;oFontSize=[12,10,10,10];
+  elseif nf<=9, nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
+  elseif nf<=12, nrow=3;ncol=4;
+  elseif nf<=16, nrow=4;ncol=4;
+  elseif nf<=20, nrow=4;ncol=5;
+  elseif nf<=25, nrow=5;ncol=5;
+  else, error('to many figures');end
+  options=BuildOptions(mFontSize,oFontSize);
 
 
-w=3/4*w;h=3/4*h;
-wp=w/ncol;
-hp=h/nrow;
-toolbar_height = 77;
-if fc_tools.comp.isOctave(), toolbar_height=toolbar_height+60;end
-window_border  = 5;
+  w=3/4*w;h=3/4*h;
+  wp=w/ncol;
+  hp=h/nrow;
+  toolbar_height = 77;
+  if fc_tools.comp.isOctave(), toolbar_height=toolbar_height+60;end
+  window_border  = 5;
 
-% To sort figures
+  % To sort figures
   if strcmp(class(figHandles(1)),'matlab.ui.Figure')
     I={figHandles(:).Number};
     [~,J]=sort(cell2mat(I));
@@ -55,7 +55,8 @@ window_border  = 5;
       else % old version
         nfig=figHandles(J(num));
       end
-      h=figure(nfig); 
+      h=figure(nfig);
+      [xp yp wp hp];
       set(h,'position',[xp yp wp hp])
       PrevPos=get(h,'position');
       xp=PrevPos(1)+PrevPos(3)+window_border;
@@ -65,6 +66,7 @@ window_border  = 5;
     yp=PrevPos(2)+PrevPos(4)+toolbar_height+window_border;
   end
   drawnow
+  if nargout==1,varargout{1}=options;end
 end
 
 function options=BuildOptions(mFontSize,oFontSize)
