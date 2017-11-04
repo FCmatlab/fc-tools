@@ -45,7 +45,7 @@ function varargout=DisplayFigures(varargin)
   else
     if fc_tools.comp.isOctave(),J=nf:-1:1;else, J=1:nf;end
   end
-  get(figHandles(1),'position')
+  %get(figHandles(1),'position')
   num=1;yp=20;
   for i=1:nrow
     xp=100;
