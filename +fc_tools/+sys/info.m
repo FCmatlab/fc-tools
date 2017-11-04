@@ -23,6 +23,21 @@ function print_struct(S,format)
   F=fieldnames(S);
   for i=1:length(F)
     V=getfield(S,F{i});
+    if ~fc_tools.comp.isOctave() && isdatetime(V) % Only under Windows!
+      fprintf([format,': %s\n'],F{i},datestr(getfield(S,F{i}))) 
+    elseif ischar(V)
+      fprintf([format,': %s\n'],F{i},getfield(S,F{i}))
+    elseif isscalar(V)
+      fprintf([format,': %g\n'],F{i},getfield(S,F{i}))
+    end
+  end
+end
+
+function print_struct_old(S,format)
+  if nargin==1,format='%15s';end
+  F=fieldnames(S);
+  for i=1:length(F)
+    V=getfield(S,F{i});
     if ischar(V)
       fprintf([format,': %s\n'],F{i},getfield(S,F{i}))
     elseif isscalar(V)

@@ -45,7 +45,7 @@ function varargout=DisplayFigures(varargin)
   else
     if fc_tools.comp.isOctave(),J=nf:-1:1;else, J=1:nf;end
   end
-
+  get(figHandles(1),'position')
   num=1;yp=20;
   for i=1:nrow
     xp=100;
@@ -56,7 +56,6 @@ function varargout=DisplayFigures(varargin)
         nfig=figHandles(J(num));
       end
       h=figure(nfig);
-      [xp yp wp hp];
       set(h,'position',[xp yp wp hp])
       PrevPos=get(h,'position');
       xp=PrevPos(1)+PrevPos(3)+window_border;
