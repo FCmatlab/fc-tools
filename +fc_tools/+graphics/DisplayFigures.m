@@ -19,7 +19,7 @@ function varargout=DisplayFigures(varargin)
   figHandles = get(0,'Children');
   nf=length(figHandles);
 
-  if nf==1,return;end
+  if nf<=1,return;end
   if nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
   elseif nf<=6, nrow=2;ncol=3;oFontSize=[12,10,10,10];
   elseif nf<=9, nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
@@ -29,7 +29,7 @@ function varargout=DisplayFigures(varargin)
   elseif nf<=25, nrow=5;ncol=5;
   else, error('to many figures');end
   options=BuildOptions(mFontSize,oFontSize);
-
+  if nargout==1,varargout{1}=options;end
 
   w=3/4*w;h=3/4*h;
   wp=w/ncol;
@@ -65,7 +65,7 @@ function varargout=DisplayFigures(varargin)
     yp=PrevPos(2)+PrevPos(4)+toolbar_height+window_border;
   end
   drawnow
-  if nargout==1,varargout{1}=options;end
+  
 end
 
 function options=BuildOptions(mFontSize,oFontSize)
