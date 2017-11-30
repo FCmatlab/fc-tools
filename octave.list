@@ -43,6 +43,7 @@ DESCRIPTION
 ./+fc_tools/+graphics/colorbarIso.m
 ./+fc_tools/+graphics/CheckAlpha.m
 ./+fc_tools/+sys/isfileexists.m
+./+fc_tools/+utils/cleaning.m
 ./+fc_tools/+utils/deleteCellOptions.m
 ./+fc_tools/+utils/is_fcPackage.m
 ./+fc_tools/+utils/isfunhandle.m
