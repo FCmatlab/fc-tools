@@ -93,7 +93,7 @@ archives: archives_matlab archives_octave macoui
 
 archives_matlab : 
 	@echo $SEP
-	@echo "*** Building OCTAVE archives"
+	@echo "*** Building MATLB archives"
 	@echo "*** Start main Makefile command" 
 	@echo "*** Current directory $(CURRENT_DIR)"
 	@$(eval gitremote := $(shell git config --get remote.origin.url))
@@ -113,6 +113,12 @@ archives_matlab :
 	@mkdir -p $(MATLAB_DESTDIR)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(MATLAB_DESTDIR)/* $(MATLAB_DESTDIR))
 	@rm -fr $(tmpdir)
+ifneq ("$(HOSTNAME)","hercule")
+	@echo "********************************************"
+	@echo "DON'T FORGET TO UPDATE TO <hercule> COMPUTER"
+	@echo "********************************************"
+	@echo "         make TAG=$(TAG) hercule"
+endif
 	
 archives_octave : 
 	@echo $SEP
@@ -136,8 +142,20 @@ archives_octave :
 	@mkdir -p $(OCTAVE_DESTDIR)
 	@(rsync -av $(tmpdir)/$(FILENAME)/$(OCTAVE_DESTDIR)/* $(OCTAVE_DESTDIR))
 	@rm -fr $(tmpdir)
+ifneq ("$(HOSTNAME)","hercule")
+	@echo "********************************************"
+	@echo "DON'T FORGET TO UPDATE TO <hercule> COMPUTER"
+	@echo "********************************************"
+	@echo "         make TAG=$(TAG) hercule"
+endif
 
 macoui: macoui_matlab macoui_octave
+ifneq ("$(HOSTNAME)","hercule")
+	@echo "********************************************"
+	@echo "DON'T FORGET TO UPDATE TO <hercule> COMPUTER"
+	@echo "********************************************"
+	@echo "         make TAG=$(TAG) hercule"
+endif
 	
 macoui_matlab:
 	@echo "Transfert Matlab/fc-tools -> MACOUI"
@@ -153,10 +171,11 @@ hercule:
 ifeq ("$(HOSTNAME)","hercule")
 	@echo "Nothing to I'm hercule computer!"
 else
-	@echo "*** Synchronize  $(DISTRIB_DIR)"
+	@echo "*** Synchronize  $(MATLAB_DESTDIR)"
 	@ssh 192.168.0.14 "mkdir -p ~/Travail/Recherch/Matlab/$(NAME)/$(MATLAB_DESTDIR)"
 	@rsync -avz $(MATLAB_DESTDIR)/* 192.168.0.14:~/Travail/Recherch/Matlab/$(NAME)/$(MATLAB_DESTDIR)/
-	@ssh 192.168.0.14 "mkdir -p ~/Travail/Recherch/Octave/$(NAME)/$(OCTAVE_DESTDIR)"
+	@echo "*** Synchronize  $(OCTAVE_DESTDIR)"
+	@ssh 192.168.0.14 "mkdir -p ~/Travail/Recherch/Matlab/$(NAME)/$(OCTAVE_DESTDIR)"
 	@rsync -avz $(OCTAVE_DESTDIR)/* 192.168.0.14:~/Travail/Recherch/Matlab/$(NAME)/$(OCTAVE_DESTDIR)/
 endif
 
