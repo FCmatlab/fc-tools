@@ -1,5 +1,9 @@
 # fc-tools : Matlab Toolbox and Octave (>= 4.0.3) package
 
+HOSTNAME = $(shell hostname -s)
+USERNAME = $(shell whoami)
+CURRENT_DIR = $(shell pwd)
+
 OCOPYRIGHT=%    Parts of GNU Octave <fc-tools> package.\n%    Copyright (C) 2016-2017 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 MCOPYRIGHT=%    Parts of Matlab <fc-tools> toolbox.\n%    Copyright (C) 2016-2017 Francois Cuvelier <cuvelier@math.univ-paris13.fr>\n%
 
@@ -144,6 +148,17 @@ macoui_octave:
 	@echo "Transfert Octave/fc-tools -> MACOUI"
 	ssh macoui 'mkdir -p ~/public_html/software/codes/Octave/fc-tools'
 	rsync -av $(OCTAVE_DESTDIR) macoui:~/public_html/software/codes/Octave/fc-tools/
+	
+hercule:
+ifeq ("$(HOSTNAME)","hercule")
+	@echo "Nothing to I'm hercule computer!"
+else
+	@echo "*** Synchronize  $(DISTRIB_DIR)"
+	@ssh 192.168.0.14 "mkdir -p ~/Travail/Recherch/Matlab/$(NAME)/$(MATLAB_DESTDIR)"
+	@rsync -avz $(MATLAB_DESTDIR)/* 192.168.0.14:~/Travail/Recherch/Matlab/$(NAME)/$(MATLAB_DESTDIR)/
+	@ssh 192.168.0.14 "mkdir -p ~/Travail/Recherch/Octave/$(NAME)/$(OCTAVE_DESTDIR)"
+	@rsync -avz $(OCTAVE_DESTDIR)/* 192.168.0.14:~/Travail/Recherch/Matlab/$(NAME)/$(OCTAVE_DESTDIR)/
+endif
 
 last_tag:
 	@echo "$(NAME): "$(shell git describe --abbrev=0)
