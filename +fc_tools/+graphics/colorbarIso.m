@@ -80,7 +80,10 @@ function varargout=colorbarIso(colors,isorange,format)
   %set(gca,'CLim',[minc maxc])
 
   % set up axes deletefcn
-  set(ax,'tag','Colorbar','deletefcn','colorbar(''delete'')')
+  % F.C. with octave when 'close all' error: get: invalid handle 
+  if ~fc_tools.comp.isOctave()
+    set(ax,'tag','Colorbar','deletefcn','colorbar(''delete'')')
+  end
   if nargout==1, varargout{1}=ax;end
   if ~isfield(ud,'DeleteProxy'), ud.DeleteProxy = []; end
   if ~isfield(ud,'origPos'), ud.origPos = []; end
