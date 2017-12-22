@@ -42,6 +42,7 @@
 ./+fc_tools/+sys/isfileexists.m
 ./+fc_tools/+utils/cleaning.m
 ./+fc_tools/+utils/deleteCellOptions.m
+./+fc_tools/+utils/extractCurrentPath.m
 ./+fc_tools/+utils/is_fcPackage.m
 ./+fc_tools/+utils/isfunhandle.m
 ./+fc_tools/+utils/strversion2num.m
@@ -53,6 +54,7 @@
 ./+fc_tools/+graphics/+xcolor/svg.m
 ./+fc_tools/+graphics/+xcolor/val2rgb.m
 ./+fc_tools/+graphics/+xcolor/X11.m
+./+fc_tools/+linalg/detVec.m
 ./+fc_tools/+sys/find_keyvalue.m
 ./+fc_tools/+sys/sec_system.m
 ./+fc_tools/+sys/getComputerName.m
