@@ -22,7 +22,7 @@ function OS=getOSinfo_Unix()
     OS.description=fc_tools.sys.find_keyvalue('Description',':',Lines);
     OS.release=fc_tools.sys.find_keyvalue('Release',':',Lines);
     OS.codename=fc_tools.sys.find_keyvalue('Codename',':',Lines);
-  elseif exists('/etc/os-release','file')
+  elseif exist('/etc/os-release','file')
       fid=fopen('/etc/os-release','r');
       Lines = textscan( fid, '%s', 'Delimiter', '\n' );
       fclose(fid)
