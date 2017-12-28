@@ -25,10 +25,10 @@ function OS=getOSinfo_Unix()
   elseif exist('/etc/os-release','file')
       fid=fopen('/etc/os-release','r');
       Lines = textscan( fid, '%s', 'Delimiter', '\n' );
-      fclose(fid)
+      fclose(fid);
       Lines=Lines{1};
       OS.distributor=fc_tools.sys.find_keyvalue('ID','=',Lines);
-      OS.description=fc_tools.sys.find_keyvalue('PRETTY_NAME','=',Lines);
+      OS.description=suppress_string_delimiter(fc_tools.sys.find_keyvalue('PRETTY_NAME','=',Lines));
       OS.release=fc_tools.sys.find_keyvalue('VERSION_ID','=',Lines);
       %OS.codename=fc_tools.sys.find_keyvalue('Codename',':',Lines);
       OS.codename='Unknow';
@@ -91,3 +91,9 @@ end
 %      warning('Unable to find key: ''%s''',key);
 %    end
 %  end
+
+function str=suppress_string_delimiter(str)
+  if str(1)=='"' && str(end)=='"'
+    str=str(2:end-1);
+  end
+end
