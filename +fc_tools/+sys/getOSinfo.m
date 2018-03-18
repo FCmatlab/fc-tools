@@ -14,7 +14,7 @@ function OS = getOSinfo()
 end
 
 function OS=getOSinfo_Unix()
-  [status,result]=system('lsb_release -a');
+  [status,result]=system('lsb_release -a 2> /dev/null');
   if status==0
     Lines = textscan( result, '%s', 'Delimiter', '\n' );
     Lines=Lines{1};
