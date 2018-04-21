@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg7322"
+   version="1.1"
+   inkscape:version="0.92.3 (unknown)"
+   sodipodi:docname="mfc-tools-name.svg">
+  <defs
+     id="defs7324">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8039">
+      <stop
+         style="stop-color:#ce5300;stop-opacity:1;"
+         offset="0"
+         id="stop8041" />
+      <stop
+         style="stop-color:#ce5300;stop-opacity:0;"
+         offset="1"
+         id="stop8043" />
+    </linearGradient>
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter3007-3"
+       inkscape:label="Drop Shadow">
+      <feFlood
+         id="feFlood3009-8"
+         flood-opacity="0.5"
+         flood-color="rgb(0,0,0)"
+         result="flood" />
+      <feComposite
+         id="feComposite3011-0"
+         in2="SourceGraphic"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur3013-9"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset3015-2"
+         dx="4"
+         dy="4"
+         result="offset" />
+      <feComposite
+         id="feComposite3017-3"
+         in2="offset"
+         in="SourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4073-8"
+       id="linearGradient7258"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.4259402,-0.23787835,0.30140067,0.55018971,-141.95449,18.456954)"
+       x1="138.88889"
+       y1="597.73254"
+       x2="316.66666"
+       y2="597.73254" />
+    <linearGradient
+       id="linearGradient4073-8">
+      <stop
+         style="stop-color:#29a6cc;stop-opacity:1;"
+         offset="0"
+         id="stop4075-5" />
+      <stop
+         style="stop-color:#28a6cc;stop-opacity:0;"
+         offset="1"
+         id="stop4077-1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8039"
+       id="linearGradient8045"
+       x1="35.387845"
+       y1="230.41096"
+       x2="130.46582"
+       y2="230.41096"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.97561,59.756098)" />
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter3007"
+       inkscape:label="Drop Shadow">
+      <feFlood
+         id="feFlood3009"
+         flood-opacity="0.5"
+         flood-color="rgb(0,0,0)"
+         result="flood" />
+      <feComposite
+         id="feComposite3011"
+         in2="SourceGraphic"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur3013"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset3015"
+         dx="4"
+         dy="4"
+         result="offset" />
+      <feComposite
+         id="feComposite3017"
+         in2="offset"
+         in="SourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.82"
+     inkscape:cx="-134.14635"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="2495"
+     inkscape:window-height="1416"
+     inkscape:window-x="1985"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7327">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0%;font-family:Aquawax;-inkscape-font-specification:'Aquawax Medium';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#c86227;fill-opacity:1;stroke:none;filter:url(#filter3007-3)"
+       x="295.86734"
+       y="395.10529"
+       id="text3050-1"
+       inkscape:export-filename="/home/cuvelier/Travail/Recherch/Matlab/fc-tools/logo/mfc-toolsv3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="matrix(1.1279536,0,0,1.120684,-100.15727,-113.86674)"><tspan
+         sodipodi:role="line"
+         id="tspan3052-8"
+         x="295.86734"
+         y="395.10529"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:72px;line-height:1.25;font-family:Aquawax;-inkscape-font-specification:'Aquawax Medium';text-align:center;text-anchor:middle;fill:#c86227;fill-opacity:1">tools</tspan></text>
+    <path
+       style="fill:url(#linearGradient8045);fill-opacity:1;stroke:none"
+       d="m 82.160887,233.58831 c -5.98422,-0.12549 -11.76413,1.19945 -16.99169,4.11894 -20.910253,11.67791 -25.009521,44.6275 -9.13426,73.60688 15.87525,28.9793 45.706023,43.00214 66.616273,31.32422 20.91024,-11.67799 24.98497,-44.6275 9.10971,-73.60688 -11.90644,-21.73453 -31.64734,-35.06667 -49.600033,-35.44316 z m 4.17426,9.8651 c 13.889073,-0.59038 29.572063,10.20721 38.869733,28.27316 11.90101,23.12444 8.84938,49.41441 -6.82615,58.73292 -15.67553,9.31851 -38.042783,-1.86887 -49.943793,-24.99331 -11.90101,-23.12436 -8.82484,-49.43978 6.8507,-58.75831 3.42902,-2.03842 7.16057,-3.08916 11.04951,-3.25446 z"
+       id="path4039-9-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/cuvelier/Travail/Recherch/Matlab/fc-tools/logo/mfc-toolsv3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:0%;font-family:Aquawax;-inkscape-font-specification:'Aquawax Medium';letter-spacing:0px;word-spacing:0px;fill:#c14b08;fill-opacity:1;stroke:none;filter:url(#filter3007)"
+       x="127.53439"
+       y="313.28281"
+       id="text3050"
+       inkscape:export-filename="/home/cuvelier/Travail/Recherch/Matlab/fc-tools/logo/mfc-toolsv3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="matrix(0.78574305,0,0,0.81361621,-21.381109,48.934469)"><tspan
+         sodipodi:role="line"
+         id="tspan3052"
+         x="127.53439"
+         y="313.28281"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:64px;line-height:1.25;font-family:Aquawax;-inkscape-font-specification:'Aquawax Medium';fill:#c14b08;fill-opacity:1">fc</tspan></text>
+  </g>
+</svg>
