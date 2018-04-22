@@ -1,10 +1,16 @@
+
+\def\logo{mfc-tools3}
+\def\logoname{mfc-tools-name}
 \immediate\write18{mkdir -p \OHTDIR}
-\immediate\write18{rsync -av \IHTDIR/logo/mfc-toolsv3_400.png \OHTDIR/}
+\immediate\write18{rsync -av \IHTDIR/logo/\logo_400.png  \OHTDIR/}
+\immediate\write18{rsync -av \IHTDIR/logo/\logoname_h30.png \OHTDIR/}
+\def\ToolboxName{\text{\includegraphics[height=1cm]{\OHTDIR/\logoname_h30.png}\ }}
+
 \begin{presentation}
 \newline
-\centerline{\includegraphics{\OHTDIR/mfc-toolsv3_400.png}}
+\centerline{\includegraphics[height=5.cm]{\OHTDIR/\logo_400.png}}
 \newline
-The \textbf{fc-tools} Matlab toolbox contains some functions used in various packages I develop: 
+The \ToolboxName Matlab toolbox contains some functions used in various packages I develop: 
 \textbf{fc-hypermesh}, \textbf{fc-oogmsh}, \textbf{fc-simesh}, ...
 \newline
 
@@ -32,12 +38,12 @@ The \textbf{fc-tools} Matlab toolbox contains some functions used in various pac
 to do!
 }
 
-\def\fcTBversion{0.0.20}
+\def\fcTBversion{0.0.21}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
-\fcInsertVersion{0.0.20}{December 28, 2017} 
+\fcInsertVersion{0.0.21}{April 11, 2018} 
 \\ \hline
 \end{tabular}
 
@@ -53,12 +59,12 @@ The toolbox archives are proposed in three formats zip, 7z and tar.gz. The insta
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.20/mfc-tools-0.0.20.tar.gz
-$ tar zxf mfc-tools-0.0.20.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.21/mfc-tools-0.0.21.tar.gz
+$ tar zxf mfc-tools-0.0.21.tar.gz
 \end{verbatim}
-Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-tools-0.0.20} full path:
+Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-tools-0.0.21} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/mfc-tools-0.0.20')
+>> addpath('<FULL PATH>/mfc-tools-0.0.21')
 \end{verbatim}
  
 \subsubsection{Previous development releases}
@@ -68,6 +74,7 @@ Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-too
 \begin{tabular}{|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
+\fcInsertVersion{0.0.20}{December 28, 2017} 
 \fcInsertVersion{0.0.19}{December 8, 2017} \\
 \fcInsertVersion{0.0.18}{November 4, 2017} \\
 0.0.17 & February 1, 2017 & 
