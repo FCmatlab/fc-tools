@@ -3,21 +3,28 @@ function varargout=init(varargin)
 %  Can return the pathname of the toolbox.
 %
 % <COPYRIGHT>
+  if isOctave()
+    warning('off','Octave:shadowed-function')
+    more off
+  end
+
   p = inputParser;
   p.KeepUnmatched=true;
-  p.addParamValue('verbose',0,@isscalar);
+  p.addParamValue('verbose',1,@isscalar);
   p.parse(varargin{:});
   verbose=p.Results.verbose;
   fullname=mfilename('fullpath');
   I=strfind(fullname,filesep);
   mypath=fullname(1:(I(end-1)-1));
+  addpath(mypath);rehash path;
   if nargout==1
     fullname=mfilename('fullpath');
     I=strfind(fullname,filesep);
     varargout{1}=mypath;
   end
-  if verbose>0
-    fprintf('[fc-tools] toolbox/package version [%s] is ready to use!\n',fc_tools.version());
-    if verbose>1, fprintf('   -> locate in %s\n',mypath);end
-  end
+  if verbose>0,fc_tools.info(verbose);end
+end
+
+function bool=isOctave()
+  log=ver;bool=strcmp(log(1).Name,'Octave');
 end
