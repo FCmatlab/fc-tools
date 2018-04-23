@@ -52,6 +52,7 @@
 ./+fc_tools/+utils/getNumVersion.m
 ./+fc_tools/+utils/getThreadsArray.m
 ./+fc_tools/+utils/fun2str.m
+./+fc_tools/+utils/funHandleName.m
 ./+fc_tools/+utils/line_text_delimiter.m
 ./+fc_tools/+graphics/+xcolor/color_varargin.m
 ./+fc_tools/+graphics/+xcolor/matlab.m
