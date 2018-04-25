@@ -5,7 +5,7 @@ function gitinfo()
 %
   tag='';
   commit='';
-  date'='';
+  date='';
   time='';
   S=struct('tag',tag,'commit',commit,'date',date,'time',time);
 end
