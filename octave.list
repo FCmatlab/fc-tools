@@ -78,3 +78,9 @@ DESCRIPTION
 ./+fc_tools/+git/get_tags.m
 ./+fc_tools/+git/get_tagsinfo.m
 ./+fc_tools/+git/get_url.m
+./+fc_tools/+git/get_date.m
+./+fc_tools/+git/get_status.m
+./+fc_tools/+git/get_tag.m
+./+fc_tools/+git/get_time.m
+./+fc_tools/+git/isrepository.m
+./+fc_tools/+git/isup2date.m
