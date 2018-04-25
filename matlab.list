@@ -3,6 +3,7 @@
 ./+fc_tools/version.m
 ./+fc_tools/path.m
 ./+fc_tools/info.m
+./+fc_tools/gitinfo.m
 ./+fc_tools/get_path.m
 ./+fc_tools/+comp/AddParamValue.m
 ./+fc_tools/+comp/AddRequired.m
@@ -70,4 +71,9 @@
 ./+fc_tools/+sys/getOSinfo.m
 ./+fc_tools/+sys/getCPUinfo.m
 ./+fc_tools/+sys/info.m
+./+fc_tools/+git/get_commit.m
+./+fc_tools/+git/get_name.m
+./+fc_tools/+git/get_tags.m
+./+fc_tools/+git/get_tagsinfo.m
+./+fc_tools/+git/get_url.m
 ./COPYING

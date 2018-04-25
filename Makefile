@@ -18,6 +18,17 @@ endif
 TAGTIMEcmd := git log --tags --simplify-by-decoration --pretty="format:%ci %d" |grep -E "($(TAG),|$(TAG)\))" |awk '{print $$1,$$2,$$3 }'
 TAGTIME := $(shell $(TAGTIMEcmd) )
 
+GITTAGNAMEcmd:= git describe --tags
+GITTAGNAME:= $(shell $(GITTAGNAMEcmd))
+GITDATEcmd:=git log -1 --pretty="format:%at" | awk 'BEGIN { FS="|" } ; { t=strftime("%Y-%m-%d",$$1); printf "%s\n", t}'
+GITDATE:= $(shell $(GITDATEcmd))
+GITTIMEcmd:=git log -1 --pretty="format:%at" | awk 'BEGIN { FS="|" } ; { t=strftime("%H:%M:%S",$$1); printf "%s\n", t}'
+GITTIME:= $(shell $(GITTIMEcmd))
+GITCOMMITcmd:=git log -1 --pretty="format:%H"
+GITCOMMIT:= $(shell $(GITCOMMITcmd))
+
+
+
 CURRENT_DIR = $(shell pwd)
 #DESTDIR=distrib/$(VERSION)
 MATLAB_DESTDIR=distrib/Matlab/$(VERSION)
@@ -79,6 +90,10 @@ setversion:
 	$(shell sed -i "s/v='.*';/v='$(TAG)';/g" +fc_tools/version.m)
 	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
 	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
+	@sed -i "s/tag=.*/tag='$(GITTAGNAME)'/g" +fc_tools/gitinfo.m
+	@sed -i "s/commit=.*/commit='$(GITCOMMIT)'/g" +fc_tools/gitinfo.m
+	@sed -i "s/date=.*/date='$(GITDATE)'/g" +fc_tools/gitinfo.m
+	@sed -i "s/time=.*/time='$(GITTIME)'/g" +fc_tools/gitinfo.m
 
 setcopyright:
 ifneq ("$(SETCOPYRIGHT)","")
@@ -181,6 +196,9 @@ endif
 
 last_tag:
 	@echo "$(NAME): "$(shell git describe --abbrev=0)
+	
+GIT:
+	@echo "$(GITTAGNAME):$(GITDATE):$(GITTIME):$(GITCOMMIT)"
 	
 GITCOMMIT :
 	@echo "Build GITCOMMIT file"
