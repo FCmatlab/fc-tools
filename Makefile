@@ -90,10 +90,10 @@ setversion:
 	$(shell sed -i "s/v='.*';/v='$(TAG)';/g" +fc_tools/version.m)
 	$(shell sed -i "s/Version:.*/Version: $(TAG)/g" DESCRIPTION)
 	$(shell sed -i "s/Date:.*/Date: $(TAGTIME)/g" DESCRIPTION)
-	@sed -i "s/tag=.*/tag='$(GITTAGNAME)'/g" +fc_tools/gitinfo.m
-	@sed -i "s/commit=.*/commit='$(GITCOMMIT)'/g" +fc_tools/gitinfo.m
-	@sed -i "s/date=.*/date='$(GITDATE)'/g" +fc_tools/gitinfo.m
-	@sed -i "s/time=.*/time='$(GITTIME)'/g" +fc_tools/gitinfo.m
+	@sed -i "s/tag=.*/tag='$(GITTAGNAME)';/g" +fc_tools/gitinfo.m
+	@sed -i "s/commit=.*/commit='$(GITCOMMIT);'/g" +fc_tools/gitinfo.m
+	@sed -i "s/date=.*/date='$(GITDATE)';/g" +fc_tools/gitinfo.m
+	@sed -i "s/time=.*/time='$(GITTIME)';/g" +fc_tools/gitinfo.m
 
 setcopyright:
 ifneq ("$(SETCOPYRIGHT)","")
