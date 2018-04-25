@@ -1,5 +1,5 @@
-function gitinfo()
-% FUNCTION fc_tools.gitinfo(): Displays some information on the package/toolbox.
+function S=gitinfo()
+% FUNCTION fc_tools.gitinfo(): returns some informations on the package/toolbox.
 %
 %    <COPYRIGHT>
 %
