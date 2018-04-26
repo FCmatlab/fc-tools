@@ -9,7 +9,7 @@ function tag=get_tag(rep)
     if isempty(I)
       tag='';
     else
-      C=strsplit(Res(I(1)+4:end),',')
+      C=strsplit(Res(I(1)+4:end),',');
       tag=strtrim(C{1});
     end
   else
