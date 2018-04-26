@@ -82,5 +82,9 @@
 ./+fc_tools/+git/get_time.m
 ./+fc_tools/+git/isrepository.m
 ./+fc_tools/+git/isup2date.m
+./+fc_tools/+git/print_gitinfo.m
+./+fc_tools/+git/get_info.m
+./+fc_tools/+git/get_remotecommit.m
+
 
 ./COPYING
