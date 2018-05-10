@@ -1,4 +1,6 @@
 # tree -i -f ./
+COPYING ##  -> root of Octave package with #*
+DESCRIPTION ##
 ./+fc_tools/init.m
 ./+fc_tools/version.m
 ./+fc_tools/get_path.m
@@ -84,5 +86,4 @@
 ./+fc_tools/+git/print_gitinfo.m
 ./+fc_tools/+git/get_info.m
 ./+fc_tools/+git/get_remotecommit.m
-./COPYING ##  -> root of Octave package with #*
-./DESCRIPTION ##
+
