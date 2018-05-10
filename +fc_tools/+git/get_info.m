@@ -13,6 +13,6 @@ function S=get_info(rep)
     commit='';
     strdate='';
     strtime='';
-    S=struct('name','fc-bench','tag',tag,'commit',commit,'date',strdate,'time',strtime,'status',-1);
+    S=struct('name','','tag',tag,'commit',commit,'date',strdate,'time',strtime,'status',-1);
   end
 end

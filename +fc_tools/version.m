@@ -3,5 +3,5 @@ function v=version()
 %   as a string.
 %
 % <COPYRIGHT>
-  v='dev';
+  v='<fc-tools>';
 end
