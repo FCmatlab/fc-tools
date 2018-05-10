@@ -1,6 +1,6 @@
 # tree -i -f ./
-COPYING
-DESCRIPTION
+COPYING ##  -> root of Octave package with #*
+DESCRIPTION ##
 # tree -i -f
 ./+fc_tools/init.m
 ./+fc_tools/version.m
