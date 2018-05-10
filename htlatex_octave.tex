@@ -43,12 +43,12 @@ This package needs \textbf{Octave} version greater or equal to \textbf{4.2.0}.
 to do!
 }
 
-\def\fcTBversion{0.0.21}
+\def\fcTBversion{0.0.22}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{pdf} \\ \hline
-\fcInsertVersion{\fcTBversion}{April 11, 2018}\\ \hline
+\fcInsertVersion{\fcTBversion}{April 22, 2018}\\ \hline
 \end{tabular}
 
 
@@ -57,11 +57,11 @@ to do!
 \begin{itemize}
 \item Download the packages. For example, in a terminal:
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.21/fc-tools-0.0.21.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.22/fc-tools-0.0.22.tar.gz
 \end{verbatim}
 \item Under Octave :
 \begin{verbatim}
->> pkg install fc-tools-0.0.21.tar.gz
+>> pkg install fc-tools-0.0.22.tar.gz
 \end{verbatim}
 \item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
 \begin{verbatim}
@@ -86,22 +86,34 @@ The installation process follows:
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.21/fc_tools-0.0.21.tar.gz
-$ tar zxvf fc_tools-0.0.21.tar.gz
-fc_tools-0.0.21/
-fc_tools-0.0.21/DESCRIPTION
-fc_tools-0.0.21/COPYING
-fc_tools-0.0.21/+fc_tools/
-fc_tools-0.0.21/+fc_tools/init.m
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.22/fc_tools-0.0.22.tar.gz
+$ tar zxvf fc_tools-0.0.22.tar.gz
+fc_tools-0.0.22/
+fc_tools-0.0.22/DESCRIPTION
+fc_tools-0.0.22/COPYING
+fc_tools-0.0.22/+fc_tools/
+fc_tools-0.0.22/+fc_tools/init.m
 ...
-fc_tools-0.0.21/+fc_tools/version.m
+fc_tools-0.0.22/+fc_tools/version.m
 $
 \end{verbatim}
-Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.21} full path:
+Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.22} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/fc_tools-0.0.21')
+>> addpath('<FULL PATH>/fc_tools-0.0.22')
 \end{verbatim}
  
+ 
+\subsubsection{Version history}
+
+\begin{itemize}
+\item 0.0.22 (April 26, 2018): 
+\begin{itemize}
+\item Modifying fc_tools.init() to display version of the package used.
+\item Adding functions fc_tools.info and fc_tools.path.
+\item Adding function fc_bench.gitinfo() and fc_bench.git.* for code maintenace purpose.
+\end{itemize}
+\item ...
+\end{itemize} 
  
 \subsubsection{Old development releases} 
 
@@ -135,6 +147,7 @@ to do!
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} &\textbf{User's Guide} \\ \hline
+\fcInsertVersion{0.0.21}{April 11, 2018}\\ \hline
 \fcInsertVersion{0.0.20}{December 28, 2017}\\ \hline
 \fcInsertVersion{0.0.19}{December 8, 2017}\\ \hline
 \fcInsertVersion{0.0.18}{November 4, 2017}\\ \hline
