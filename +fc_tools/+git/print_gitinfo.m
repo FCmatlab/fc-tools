@@ -1,4 +1,4 @@
-function strtime=print_gitinfo(S)
+function print_gitinfo(S)
   sf=fieldnames(S);
   for i=1:length(sf)
     val=getfield(S,sf{i});
