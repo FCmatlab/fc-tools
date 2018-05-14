@@ -1,6 +1,0 @@
-Tools for Matlab/Octave codes
-
-+mfcTools/+sys : system tools
-+mfcTools/+comp : compatibility Matlab/Octave tools 
-+mfcTools/+graphics : graphics tools
-+mfcTools/+utils :
