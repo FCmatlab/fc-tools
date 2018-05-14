@@ -3,6 +3,7 @@ function S=gitinfo()
 %
 %    <COPYRIGHT>
 %
+%<GITINFO> Don't suppress : automaticaly updated
   rep=fc_tools.path();
   if fc_tools.git.isrepository(rep)
     S=struct('name',  fc_tools.git.get_name(rep), ...
