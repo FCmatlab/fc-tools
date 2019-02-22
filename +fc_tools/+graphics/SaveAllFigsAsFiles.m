@@ -12,6 +12,7 @@ function SaveAllFigsAsFiles(file,varargin)
   p.addParamValue('pdfcrop',false,@islogical);
   p.addParamValue('crop',false,@islogical);
   p.addParamValue('pause',2,@isscalar);
+  p.addParamValue('size',[800,600]);
   p.addParamValue('tag',false,@islogical);
   p.parse(varargin{:});
   R=p.Results;
@@ -25,6 +26,8 @@ function SaveAllFigsAsFiles(file,varargin)
       nfig=figHandles(i);
     end
     h=figure(nfig); % utiliser le label...
+    position=get(h,'position');
+    set(h,'position',[position(1),position(2),R.size(1),R.size(2)])
     if ~R.showtitle
       Title=get(gca(),'Title');
       set(Title,'Visible','off')
@@ -42,7 +45,7 @@ function SaveAllFigsAsFiles(file,varargin)
         %filename
         pause(0.1) % otherwise sometimes bug with some legends!
       else % Don't print "LaTeX" so snapshot
-        set(h,'position',[100,50,800,600])
+        set(h,'position',[100,50,R.size(1),R.size(2)])
         SaveOctaveFigure(nfig,filename)
         set(h,'visible','off') % BUG1: ajout car la derniere figure reste en avant plan avec Octave 4.2.0!
       end

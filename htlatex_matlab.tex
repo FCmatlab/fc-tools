@@ -1,5 +1,5 @@
 
-\def\logo{mfc-tools3}
+\def\logo{mfc-tools}
 \def\logoname{mfc-tools-name}
 \immediate\write18{mkdir -p \OHTDIR}
 \immediate\write18{rsync -av \IHTDIR/logo/\logo_400.png  \OHTDIR/}
@@ -38,12 +38,12 @@ The \ToolboxName Matlab toolbox contains some functions used in various packages
 to do!
 }
 
-\def\fcTBversion{0.0.22}
+\def\fcTBversion{0.0.23}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
-\begin{tabular}{|M|M|M|M|}
+\begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
-\textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
-\fcInsertVersion{0.0.22}{April 26, 2018} 
+\textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{install} & \textbf{User guide}\\ \hline
+\fcConfigInsertMatlabVersion*{tools}{0.0.23}{May 14, 2018}{cosmos}{2017a} 
 \\ \hline
 \end{tabular}
 
@@ -59,17 +59,21 @@ The toolbox archives are proposed in three formats zip, 7z and tar.gz. The insta
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.22/mfc-tools-0.0.22.tar.gz
-$ tar zxf mfc-tools-0.0.22.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.23/fc-tools-0.0.23.tar.gz
+$ tar zxf fc-tools-0.0.23.tar.gz
 \end{verbatim}
-Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-tools-0.0.22} full path:
+Then under Matlab, one can use \texttt{addpath} command with the \texttt{fc-tools-0.0.23} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/mfc-tools-0.0.22')
+>> addpath('<FULL PATH>/fc-tools-0.0.23')
 \end{verbatim}
 
 \subsubsection{Version history}
 
 \begin{itemize}
+\item 0.0.23 (Mai 14, 2018):
+\begin{itemize}
+\item Minor internal changes.
+\end{itemize}
 \item 0.0.22 (April 26, 2018): 
 \begin{itemize}
 \item Modifying fc_tools.init() to display versions of the toolboxe used.
@@ -86,6 +90,7 @@ Then under Matlab, one can use \texttt{addpath} command with the \texttt{mfc-too
 \begin{tabular}{|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{pdf} \\ \hline
+\fcInsertVersion{0.0.22}{April 26, 2018} \\
 \fcInsertVersion{0.0.21}{April 11, 2018} \\
 \fcInsertVersion{0.0.20}{December 28, 2017} \\
 \fcInsertVersion{0.0.19}{December 8, 2017} \\
