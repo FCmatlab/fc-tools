@@ -5,7 +5,8 @@ function varargout=configure(varargin)
 %
 % <COPYRIGHT>
   [pkg,pkgs]=fc_tools.packages();
-  for i=1:length(pkgs)
+  n_pkgs=length(pkgs);
+  for i=1:n_pkgs
     eval(sprintf('fc_%s_dir='''';',pkgs{i})); % empty if pkg or toolbox in path
   end
   
@@ -15,7 +16,7 @@ function varargout=configure(varargin)
   end
   p = inputParser;
   p.KeepUnmatched=true;
-  for i=1:length(pkgs)
+  for i=1:n_pkgs
     eval(sprintf('p.addParamValue(''fc_%s_dir'',fc_%s_dir,@ischar);',pkgs{i},pkgs{i}));
   end
   p.addParamValue('verbose', 1, @(x) ismember(x,0:2) ); % level of verbosity 
@@ -23,7 +24,7 @@ function varargout=configure(varargin)
   p.parse(varargin{:});
   R=p.Results;verbose=R.verbose;
   
-  for i=1:length(pkgs)
+  for i=1:n_pkgs
     pkgs_dir{i}=eval(sprintf('get_tbxpath(''%s'',''%s'',R.fc_%s_dir);',pkgs{i},pkg,pkgs{i}));
   end
   A=sprintf(' ''%s'', ',pkgs{:});A(1)='{';A(end-1)='}';
@@ -33,14 +34,20 @@ function varargout=configure(varargin)
   fid=fopen(conffile,'w');
   if (fid==0), error('Unable to open file :\n %s\n',conffile);end
   fprintf(fid,'%% Automaticaly generated with fc_%s.configure()\n',pkg);
-  for i=1:length(pkgs)
-    fprintf(fid,'fc_%s_dir=''%s'';\n',pkgs{i},pkgs_dir{i});
+  if n_pkgs>0
+    for i=1:n_pkgs
+      fprintf(fid,'fc_%s_dir=''%s'';\n',pkgs{i},pkgs_dir{i});
+    end
+    fprintf(fid,'%s;\n',A);
   end
-  fprintf(fid,'%s;\n',A);
   fclose(fid);
-  vprintf(verbose,2,'[fc-%s] configured with\n',pkg);
-  for i=1:length(pkgs)
-    vprintf(verbose,2,'   -> fc_%s_dir=''%s'';\n',pkgs{i},pkgs_dir{i});
+  if n_pkgs>0
+    vprintf(verbose,2,'[fc-%s] configured with\n',pkg);
+    for i=1:n_pkgs
+      vprintf(verbose,2,'   -> fc_%s_dir=''%s'';\n',pkgs{i},pkgs_dir{i});
+    end
+  else
+    vprintf(verbose,2,'[fc-%s] configured without other package\n',pkg);
   end
   vprintf(verbose,2,'[fc-%s] done\n',pkg);
   if nargout==1,varargout{1}=conffile;end

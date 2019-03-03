@@ -6,7 +6,7 @@ function env=environment(varargin)
   [pkg,pkgs]=fc_tools.packages();
   eval(['[conffile,isFileExists]=fc_',pkg,'.getLocalConfFile();'])
   if ~isFileExists
-    fprintf('Try to use default parameters!\n Use fc_%s.configure to configure.',pkg)
+    fprintf('Try to use default parameters!\n Use fc_%s.configure to configure.\n',pkg)
     eval(['fc_',pkg,'.configure();']);
   end
   run(conffile);
