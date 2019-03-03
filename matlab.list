@@ -5,6 +5,8 @@
 ./+fc_tools/info.m
 ./+fc_tools/gitinfo.m
 ./+fc_tools/get_path.m
+./+fc_tools/configure.m
+./+fc_tools/environment.m
 ./+fc_tools/+comp/AddParamValue.m
 ./+fc_tools/+comp/AddRequired.m
 ./+fc_tools/+comp/isOctave.m
