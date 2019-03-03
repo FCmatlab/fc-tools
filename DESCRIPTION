@@ -1,11 +1,11 @@
 Name: fc-tools
-Version: |<fc-tools>|
+Version: 0.0.24
 Date: <DATE>
 Author: François Cuvelier <cuvelier@math.univ-paris13.fr>
 Maintainer: François Cuvelier <cuvelier@math.univ-paris13.fr>
 Title: Usefull tools
 Description: Tools used in various packages (fc-hypermesh, fc-bench, fc-oogmsh ...)
-Depends: octave (>= 4.2.0)
-Url: https://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/ 
+Depends: Octave (>= 4.2.0)
+Url: https://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/
 Categories: tools
 <LICENSE>

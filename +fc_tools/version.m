@@ -1,7 +1,7 @@
-function v=version()
-% FUNCTION fc_tools.version: Returns the version of this toolbox/package 
-%   as a string.
+function pkg_version=version()
+% FUNCTION fc_tools.version: Returns the version of the toolbox/package as string.
 %
-% <COPYRIGHT>
-  v='|<fc-tools>|';
+%    <COPYRIGHT>
+%
+  pkg_version='0.0.24'; % automaticaly written by setpackages.py script
 end
