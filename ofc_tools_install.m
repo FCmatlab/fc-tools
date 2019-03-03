@@ -18,7 +18,8 @@ function ofc_tools_install(varargin)
   p.addParamValue('dir', ['./fc-',pkg,'-full'], @ischar );
   p.addParamValue('verbose', 1, @(x) ismember(x,0:2) ); % level of verbosity 
   p.addParamValue('stage', 1)
-  for i=1:length(pkgs)
+  n_pkgs=length(pkgs);
+  for i=1:n_pkgs
     eval(sprintf('p.addParamValue(''fc_%s'',''%s'',@ischar);',pkgs{i},pkgs_version{i}));
   end
   p.parse(varargin{:});
@@ -26,7 +27,7 @@ function ofc_tools_install(varargin)
   
   vprintf(verbose,1,['Parts of the <fc-',pkg,'> Octave package.\n<COPYRIGHT>\n\n']);
   vprintf(verbose,1,'1- Downloading and extracting the packages\n');
-  for i=1:length(pkgs)
+  for i=1:n_pkgs
     pkgs_version{i}=eval(['p.Results.fc_',pkgs{i}]);
     vprintf(verbose,2,'   -> <fc-%s>[%s] ...',pkgs{i},pkgs_version{i})
     pkgs_dir{i}=get_inst_fc_gen(pkgs{i},pkgs_version{i},p.Results.dir);
@@ -41,18 +42,19 @@ function ofc_tools_install(varargin)
   currentdir=pwd();
   cd(fc_pkg_dir)
   vprintf(verbose,1,['2- Setting the <fc-',pkg,'> package\n']);
-  for i=1:length(pkgs)
+  VarArgin=cell(1,2*n_pkgs);
+  for i=1:n_pkgs
     VarArgin{2*i-1}=['fc_',pkgs{i},'_dir'];
     VarArgin{2*i}=pkgs_dir{i};
   end
   eval(['fc_',pkg,'.configure(VarArgin{:})']);
   cd(currentdir)
-  
-  vprintf(verbose,1,'3- Using packages :\n')
-  for i=1:length(pkgs)
-    vprintf(verbose,1,'   -> %20s : %s\n',['fc-',pkgs{i}],pkgs_version{i})
+  if n_pkgs>0
+    vprintf(verbose,1,'3- Using packages :\n')
+    for i=1:n_pkgs
+      vprintf(verbose,1,'   -> %20s : %s\n',['fc-',pkgs{i}],pkgs_version{i})
+    end
   end
-  
   vprintf(verbose,1,'*** Using instructions \n');
   vprintf(verbose,1,['   To use the <fc-',pkg,'> package:\n']);
   vprintf(verbose,1,'   addpath(''%s'')\n',fc_pkg_dir);

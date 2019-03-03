@@ -26,20 +26,23 @@ function ofc_tools_configure(varargin)
   verbose=p.Results.verbose;
   
   fc_pkg_dir=[p.Results.dir,filesep,'fc_',pkg,'-',pkg_version];
-  
+  n_pkgs=length(pkgs);
   currentdir=pwd;
   cd(fc_pkg_dir)
   vprintf(verbose,1,['1- Setting the <fc-',pkg,'> package\n']);
-  for i=1:length(pkgs)
+  VarArgin=cell(1,2*n_pkgs);
+  for i=1:n_pkgs
     VarArgin{2*i-1}=['fc_',pkgs{i},'_dir'];
     VarArgin{2*i}=[p.Results.dir,filesep,'fc_',pkgs{i},'-',pkgs_version{i}];
   end
   eval(['fc_',pkg,'.configure(VarArgin{:});']);
   cd(currentdir)
   
-  vprintf(verbose,1,'2- Using packages :\n')
-  for i=1:length(pkgs)
-    vprintf(verbose,1,'   -> %20s : %s\n',['fc-',pkgs{i}],pkgs_version{i})
+  if n_pkgs>0
+    vprintf(verbose,1,'2- Using packages :\n')
+    for i=1:n_pkgs
+      vprintf(verbose,1,'   -> %20s : %s\n',['fc-',pkgs{i}],pkgs_version{i})
+    end
   end
     
   vprintf(verbose,1,'*** Using instructions \n');
