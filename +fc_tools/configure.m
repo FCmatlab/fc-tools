@@ -65,7 +65,7 @@ function tbxpath=get_tbxpath(tbxname,tbxfrom,givenpath,varargin) % tbxname is th
   stop=p.Results.stop;verbose=p.Results.verbose;
   tbxpath='';
   if ~isempty(givenpath) 
-    if ~isdir(givenpath) 
+    if ~isDir(givenpath) % isDir function defined below
       vprintf(verbose,1,'[fc-%s] The given path does not exists for <fc-%s>:\n   -> %s\n',tbxfrom,tbxname,givenpath)
       vprintf(verbose,1,'[fc-%s] Use fc_%s.configure(''fc_%s_dir'',<DIR>) to correct this issue\n\n',tbxfrom,tbxfrom,tbxname)
       if stop
@@ -153,3 +153,26 @@ function vprintf(verbose,level,varargin)
   if verbose>=level, fprintf(varargin{:});end
 end
 
+function ver=strversion2num(strv)
+  % convert version string 'x.y.z' in x*10^6+y*10^3+z
+  S=strsplit(strv,'.');
+  assert(length(S)==3);
+  z=str2num(S{3});assert(z<10^3);
+  ver=z;
+  y=str2num(S{2});assert(y<10^3);
+  ver=ver+10^3*y;
+  x=str2num(S{1});assert(x<10^3);
+  ver=ver+10^6*x;
+end
+
+function bool=isOctave()
+  log=ver;bool=strcmp(log(1).Name,'Octave');
+end
+
+function bool=isDir(x)
+  if isOctave()
+    if strversion2num(version)<strversion2num('5.1.0'), bool=isdir(x); else, bool=isfolder(x);end
+  else % 9.3.0 == 2017b
+    if  verLessThan('matlab','9.3.0'), bool=isdir(x); else, bool=isfolder(x);end
+  end
+end
