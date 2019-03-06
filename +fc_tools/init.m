@@ -24,7 +24,6 @@ end
 
 function init_package(strpkg,env,tname)
   pkgdir=eval(sprintf('env.fc_%s_dir',strpkg));
-  end
   if isDir(pkgdir), addpath(pkgdir);rehash path;end % isDir function defined below
   try
      eval(sprintf('fc_%s.init(''verbose'',0)',strpkg))
