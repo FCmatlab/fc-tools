@@ -48,6 +48,7 @@
 ./+fc_tools/+graphics/CheckAlpha.m
 ./+fc_tools/+graphics/is2Dview.m
 ./+fc_tools/+sys/isfileexists.m
+./+fc_tools/+sys/isfolder.m
 ./+fc_tools/+utils/cleaning.m
 ./+fc_tools/+utils/deleteCellOptions.m
 ./+fc_tools/+utils/extractCurrentPath.m
