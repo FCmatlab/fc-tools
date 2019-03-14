@@ -43,12 +43,12 @@ This package needs \textbf{Octave} version greater or equal to \textbf{4.2.0}.
 to do!
 }
 
-\def\fcTBversion{0.0.23}
+\def\fcTBversion{0.0.25}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{install} & \textbf{User guide} \\ \hline
-\fcConfigInsertOctaveVersion*{tools}{0.0.23}{May 14, 2018}{cosmos}{4.4.0}
+\fcConfigInsertOctaveVersion*{tools}{0.0.25}{March 6, 2019}{cosmos}{5.1.0}
 \\ \hline
 \end{tabular}
 
@@ -58,11 +58,11 @@ to do!
 \begin{itemize}
 \item Download the packages. For example, in a terminal:
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.23/fc-tools-0.0.23.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.25/fc-tools-0.0.25.tar.gz
 \end{verbatim}
 \item Under Octave :
 \begin{verbatim}
->> pkg install fc-tools-0.0.23.tar.gz
+>> pkg install fc-tools-0.0.25.tar.gz
 \end{verbatim}
 \item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
 \begin{verbatim}
@@ -87,27 +87,28 @@ The installation process follows:
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.23/fc_tools-0.0.23.tar.gz
-$ tar zxvf fc_tools-0.0.23.tar.gz
-fc_tools-0.0.23/
-fc_tools-0.0.23/DESCRIPTION
-fc_tools-0.0.23/COPYING
-fc_tools-0.0.23/+fc_tools/
-fc_tools-0.0.23/+fc_tools/init.m
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.25/fc_tools-0.0.25.tar.gz
+$ tar zxvf fc_tools-0.0.25.tar.gz
+fc_tools-0.0.25/
+fc_tools-0.0.25/DESCRIPTION
+fc_tools-0.0.25/COPYING
+fc_tools-0.0.25/+fc_tools/
+fc_tools-0.0.25/+fc_tools/init.m
 ...
-fc_tools-0.0.23/+fc_tools/version.m
+fc_tools-0.0.25/+fc_tools/version.m
 $
 \end{verbatim}
-Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.23} full path:
+Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.25} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/fc_tools-0.0.23')
+>> addpath('<FULL PATH>/fc_tools-0.0.25')
 \end{verbatim}
  
  
 \subsubsection{Version history}
 
 \begin{itemize}
-\item 0.0.23 (Mai 14, 2018):
+\item 0.0.25 (March 7, 2019): Some improvement
+\item 0.0.23 (May 14, 2018):
 \begin{itemize}
 \item Minor internal changes.
 \end{itemize}
@@ -149,6 +150,13 @@ to do!
 \immediate\write18{mkdir -p \OHTDIR/0.0.14}
 \immediate\write18{mkdir -p \OHTDIR/0.0.15}
 \immediate\write18{mkdir -p \OHTDIR/0.0.16}
+\begin{tabular}{|M|M|M|M|M|M|}
+\hline \\ 
+\textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{install} & \textbf{User guide} \\ \hline
+\fcConfigInsertOctaveVersion{tools}{0.0.23}{May 14, 2018}{cosmos}{4.4.0}
+\\ \hline
+\end{tabular}
+
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} &\textbf{User's Guide} \\ \hline

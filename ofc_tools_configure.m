@@ -13,7 +13,7 @@ function ofc_tools_configure(varargin)
   pkg='tools'; % automaticaly written by setpackages.py script
   pkgs={}; % automaticaly written by setpackages.py script
   pkgs_version={}; % automaticaly written by setpackages.py script
-  pkg_version='0.0.25'; % automaticaly written by setpackages.py script
+  pkg_version='0.0.26'; % automaticaly written by setpackages.py script
   
   ff=mfilename('fullpath');
   I=strfind(ff,filesep);

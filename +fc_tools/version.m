@@ -3,5 +3,5 @@ function pkg_version=version()
 %
 %    <COPYRIGHT>
 %
-  pkg_version='0.0.25'; % automaticaly written by setpackages.py script
+  pkg_version='0.0.26'; % automaticaly written by setpackages.py script
 end
