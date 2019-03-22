@@ -11,12 +11,14 @@ end
 
 function info1(pkg,pkgs)
   n_pkgs=length(pkgs);
-  fprintf('Using %s with ',fc_tools.utils.fcpackagestr(['fc_',pkg],1))
   if n_pkgs>0
+    fprintf('Using %s with ',fc_tools.utils.fcpackagestr(['fc_',pkg],1))
     for i=1:n_pkgs-1
       fprintf('%s, ',fc_tools.utils.fcpackagestr(['fc_',pkgs{i}],1))  
     end
     fprintf('%s.\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{end}],1))  
+  else
+    fprintf('Using %s\n',fc_tools.utils.fcpackagestr(['fc_',pkg],1))
   end
 end
 
