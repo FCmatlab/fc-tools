@@ -53,6 +53,7 @@ function mfc_tools_install(varargin)
     for i=1:n_pkgs
       vprintf(verbose,1,'   -> %20s : %s\n',['fc-',pkgs{i}],pkgs_version{i})
     end
+    vprintf(verbose,1,' with %20s : %s\n',['fc-',pkg],pkg_version)
   end
   
   vprintf(verbose,1,'*** Using instructions \n');
