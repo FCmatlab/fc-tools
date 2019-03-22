@@ -12,17 +12,34 @@ end
 function info1(pkg,pkgs)
   n_pkgs=length(pkgs);
   fprintf('Using %s with ',fc_tools.utils.fcpackagestr(['fc_',pkg],1))
-  for i=1:n_pkgs-1
-    fprintf('%s, ',fc_tools.utils.fcpackagestr(['fc_',pkgs{i}],1))  
+  if n_pkgs>0
+    for i=1:n_pkgs-1
+      fprintf('%s, ',fc_tools.utils.fcpackagestr(['fc_',pkgs{i}],1))  
+    end
+    fprintf('%s.\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{end}],1))  
   end
-  fprintf('%s.\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{end}],1))  
 end
 
 function info2(pkg,pkgs)
   n_pkgs=length(pkgs);
-  fprintf('Using %s with:\n',fc_tools.utils.fcpackagestr(['fc_',pkg],2))
-  for i=1:n_pkgs-1
-    fprintf('    %s,\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{i}],2))  
+  ExcludeCells={'pkg','pkgs','Path'};k=4;
+  
+  if n_pkgs>0
+    fprintf('Using %s with:\n',fc_tools.utils.fcpackagestr(['fc_',pkg],2))
+    for i=1:n_pkgs-1
+      fprintf('    %s,\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{i}],2)) 
+      ExcludeCells{k}=['fc_',pkgs{i},'_dir'];k=k+1;
+    end
+    fprintf('   %s.\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{end}],2))
+    ExcludeCells{k}=['fc_',pkgs{end},'_dir'];k=k+1;
+  else
+    fprintf('Using %s \n',fc_tools.utils.fcpackagestr(['fc_',pkg],2))
   end
-  fprintf('   %s.\n',fc_tools.utils.fcpackagestr(['fc_',pkgs{end}],2))  
+  eval(sprintf('E=fc_%s.environment();',pkg))
+  fnames = fieldnames(E);
+  for i=1:length(fnames)
+    if ~ismember(fnames{i},ExcludeCells)
+      fprintf('    %15s: %s\n',fnames{i},getfield(E,fnames{i}));
+    end
+  end
 end
