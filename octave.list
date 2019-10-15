@@ -46,6 +46,7 @@ DESCRIPTION ## -> root of Octave package
 ./+fc_tools/+graphics/FigurePanels.m
 ./+fc_tools/+graphics/interpreter.m
 ./+fc_tools/+graphics/LegendPanel.m
+./+fc_tools/+graphics/markers.m
 ./+fc_tools/+graphics/PlaneCoefs.m
 ./+fc_tools/+graphics/RGB.m
 ./+fc_tools/+graphics/colorbarIso.m
@@ -66,6 +67,7 @@ DESCRIPTION ## -> root of Octave package
 ./+fc_tools/+utils/funHandleName.m
 ./+fc_tools/+utils/line_text_delimiter.m
 ./+fc_tools/+utils/replaceValueOfCellOptions.m
+./+fc_tools/+graphics/+xcolor/ColorSelected.m
 ./+fc_tools/+graphics/+xcolor/color_varargin.m
 ./+fc_tools/+graphics/+xcolor/matlab.m
 ./+fc_tools/+graphics/+xcolor/svg.m
