@@ -13,6 +13,7 @@ function SaveAllFigsAsFiles(file,varargin)
   p.addParamValue('crop',false,@islogical);
   p.addParamValue('pause',2,@isscalar);
   p.addParamValue('size',[800,600]);
+  p.addParamValue('visible','off');
   p.addParamValue('tag',false,@islogical);
   p.parse(varargin{:});
   R=p.Results;
@@ -22,21 +23,26 @@ function SaveAllFigsAsFiles(file,varargin)
   for i=1:length(figHandles)
     if strcmp(class(figHandles(1)),'matlab.ui.Figure')
       nfig=figHandles(i).Number;
+      figname=num2str(nfig);
+      h=figHandles(i);
     else % old version
       nfig=figHandles(i);
+      figname=num2str(nfig);
+      h=figHandles(i);
     end
-    h=figure(nfig); % utiliser le label...
+    %h=figure(nfig); % utiliser le label...
     position=get(h,'position');
     set(h,'position',[position(1),position(2),R.size(1),R.size(2)])
     if ~R.showtitle
+      
       Title=get(gca(),'Title');
       set(Title,'Visible','off')
     end
     set(h,'Color',[1,1,1]) % white backgroup for print
     if R.tag
-      filename=[R.dir,filesep,file,'_fig',num2str(nfig),'_',Softname,strrep(Release,'.',''),'.',R.format];
+      filename=[R.dir,filesep,file,'_fig',figname,'_',Softname,strrep(Release,'.',''),'.',R.format];
     else
-      filename=[R.dir,filesep,file,'_fig',num2str(nfig),'.',R.format];
+      filename=[R.dir,filesep,file,'_fig',figname,'.',R.format];
     end
     if fc_tools.comp.isOctave()
       if str2num(strrep(version,'.',''))>=420 % version 4.2.0
@@ -55,7 +61,7 @@ function SaveAllFigsAsFiles(file,varargin)
       print(h,['-d',R.format],filename)
     end
     if ~R.showtitle
-      set(Title,'Visible','on')
+      set(Title,'Visible',R.visible)
     end
     if R.pdfcrop
       if ~fc_tools.comp.isOctave()
@@ -73,7 +79,7 @@ function SaveAllFigsAsFiles(file,varargin)
     for i=1:length(figHandles)
       %nfig=figHandles(i);
       %h=figure(nfig); % utiliser le label...
-      set(figHandles(i),'visible','on') 
+      set(figHandles(i),'visible',R.visible) 
     end
   end
   if R.pause>0

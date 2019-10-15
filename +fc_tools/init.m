@@ -2,6 +2,7 @@ function init(varargin)
   p = inputParser;
   p.KeepUnmatched=true;
   p.addParamValue('verbose', 1, @(x) ismember(x,0:2) ); % level of verbosity 
+  p.addParamValue('without',{},@iscell);
   p.parse(varargin{:});
   R=p.Results;verbose=R.verbose;
   [pkg,pkgs]=fc_tools.packages();
@@ -14,7 +15,11 @@ function init(varargin)
   end
   eval(['env=fc_',pkg,'.environment();']);
   
-  for i=1:length(pkgs), init_package(pkgs{i},env,tname);end
+  for i=1:length(pkgs)
+    if ~ismember(pkgs{i},R.without) 
+      init_package(pkgs{i},env,tname,pkgs);
+    end
+  end
   if verbose>0, eval(['fc_',pkg,'.info(verbose)']);end
 end
 
@@ -22,11 +27,11 @@ function bool=isOctave()
   log=ver;bool=strcmp(log(1).Name,'Octave');
 end
 
-function init_package(strpkg,env,tname)
+function init_package(strpkg,env,tname,exclude_pkgs)
   pkgdir=eval(sprintf('env.fc_%s_dir',strpkg));
   if isDir(pkgdir), addpath(pkgdir);rehash path;end % isDir function defined below
   try
-     eval(sprintf('fc_%s.init(''verbose'',0)',strpkg))
+     eval(sprintf('fc_%s.init(''verbose'',0,''without'',exclude_pkgs)',strpkg))
   catch ME
     fprintf('[fc-%s] Unable to load the <fc-%s> %s!\n',strpkg,strpkg,tname)
     fprintf('        directory: %s\n',pkgdir)

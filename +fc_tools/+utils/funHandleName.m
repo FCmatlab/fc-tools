@@ -1,4 +1,4 @@
-function str=funHandleName(f)
+function str=funHandleName(f,varargin)
   % f=@sin return 'sin'
   % f=@(A,b) gmres(A,b,...) return gmres 
   if fc_tools.utils.isfunhandle(f)
@@ -17,5 +17,12 @@ function str=funHandleName(f)
     end
   else
     error('Parameter must be a function handle')
+  end
+  p = inputParser;
+  p.addParamValue('small', false, @islogical );
+  p.parse(varargin{:});
+  if p.Results.small
+    S=strsplit(str,'.');
+    str=S{end};
   end
 end

@@ -27,6 +27,8 @@ function varargout=DisplayFigures(varargin)
   elseif nf<=16, nrow=4;ncol=4;
   elseif nf<=20, nrow=4;ncol=5;
   elseif nf<=25, nrow=5;ncol=5;
+  elseif nf<=30, nrow=5;ncol=6;
+  elseif nf<=36, nrow=6;ncol=6;
   else, error('to many figures');end
   options=BuildOptions(mFontSize,oFontSize);
   if nargout==1,varargout{1}=options;end
