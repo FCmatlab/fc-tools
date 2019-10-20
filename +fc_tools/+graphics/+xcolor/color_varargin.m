@@ -1,5 +1,5 @@
 function varsin=color_varargin(varsin,ColorListArgs,varargin)
-  L=intersect(lower(ColorListArgs),lower({'EdgeColor','FaceColor','Color'}));
+  L=intersect(lower(ColorListArgs),lower({'EdgeColor','FaceColor','Color','BackgroundColor','MarkerFaceColor','MarkerEdgeColor'}));
   idx=cellfun(@(x) ismember(lower(x),L),{varsin{1:2:end}},'UniformOutput',false);
   idx=find([idx{:}]);
   for i=idx

@@ -1,6 +1,16 @@
 function h=display_colors()
-  %[name,rgb]=fc_tools.graphics.xcolor.X11();
+  [name,rgb]=fc_tools.graphics.xcolor.X11();
+  figure()
+  display(name,rgb)
+  title('X11 colors')
   [name,rgb]=fc_tools.graphics.xcolor.svg();
+  figure()
+  display(name,rgb)
+  title('SVG colors')
+end
+
+function display(name,rgb)  
+  
   clf
   N=length(name);
   % m~=3/4*n
