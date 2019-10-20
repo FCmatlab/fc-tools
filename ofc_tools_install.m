@@ -72,7 +72,7 @@ end
 
 function fulldir=get_inst_fc_gen(name,ver,dir)
   file=sprintf('ofc-%s-%s.tar.gz',name,ver);
-  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
+  urlfile=sprintf('https://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
   urlwrite(urlfile,file);
   try
     untar(file,dir)

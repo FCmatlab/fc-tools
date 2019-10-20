@@ -73,7 +73,7 @@ function vprintf(verbose,level,varargin)
 end
 
 function fulldir=get_inst_fc_gen(name,ver,dir)
-  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
+  urlfile=sprintf('https://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
   try
     untar(urlfile,dir)
   catch
@@ -89,7 +89,7 @@ end
 
 function fulldir=get_install(name,ver,dir,varargin)
   mfile=sprintf('mfc_%s_install',name);
-  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s.m',name,ver,mfile);
+  urlfile=sprintf('https://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s.m',name,ver,mfile);
   try
     urlwrite(urlfile,[mfile,'.m']);
   catch
