@@ -73,9 +73,12 @@ function vprintf(verbose,level,varargin)
 end
 
 function fulldir=get_inst_fc_gen(name,ver,dir)
-  urlfile=sprintf('https://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
+  filename=sprintf('fc_%s-%s.tar.gz',name,ver);
+  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s',name,ver,filename);
   try
-    untar(urlfile,dir)
+    options=weboptions; options.CertificateFilename=(''); % Trouble with certificat and "old" Matlab
+    outputfilename=websave(filename,urlfile,options);
+    untar(outputfilename,dir);
   catch
     error('Unable to get :\n  -> %s\n',urlfile);
   end
@@ -89,9 +92,11 @@ end
 
 function fulldir=get_install(name,ver,dir,varargin)
   mfile=sprintf('mfc_%s_install',name);
-  urlfile=sprintf('https://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s.m',name,ver,mfile);
+  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s.m',name,ver,mfile);
   try
-    urlwrite(urlfile,[mfile,'.m']);
+    options=weboptions; options.CertificateFilename=(''); % Trouble with certificat and "old" Matlab
+    outputfilename=websave([mfile,'.m'],urlfile,options);
+    %urlwrite(urlfile,[mfile,'.m']);
   catch
     error('Unable to get :\n  -> %s\n',urlfile);
   end
