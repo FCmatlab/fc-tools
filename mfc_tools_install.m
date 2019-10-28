@@ -76,7 +76,10 @@ function fulldir=get_inst_fc_gen(name,ver,dir)
   filename=sprintf('fc_%s-%s.tar.gz',name,ver);
   urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s',name,ver,filename);
   try
-    options=weboptions; options.CertificateFilename=(''); % Trouble with certificat and "old" Matlab
+    options=weboptions; 
+    if isprop(options,'CertificateFilename') 
+      options.CertificateFilename=(''); % Trouble with certificat and some "old" Matlab
+    end
     outputfilename=websave(filename,urlfile,options);
     untar(outputfilename,dir);
   catch
