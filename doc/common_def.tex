@@ -1,0 +1,293 @@
+% DON'T CHANGE THIS FILE if not in fc-tools package
+%   automaticaly updated from fc-tools package with update_package command
+% 
+
+\newcommand{\gmsh}{\texttt{gmsh}}
+\newcommand{\METIS}{\texttt{Metis}}
+\newcommand{\Chaco}{\texttt{Chaco}}
+\newcommand{\mooMesh}{\texttt{mooMesh}}
+\newcommand{\fctools}{\fcfname{fc-tools}}
+\newcommand{\fcamat}{\fcfname{fc-amat}}
+\newcommand{\fcbench}{\fcfname{fc-bench}}
+\newcommand{\fcoogmsh}{\fcfname{fc-oogmsh}}
+\newcommand{\fchypermesh}{\fcfname{fc-hypermesh}}
+\newcommand{\fcsimesh}{\fcfname{fc-simesh}}
+\newcommand{\fcpsimesh}{\fcfname{fc-psimesh}}
+\newcommand{\fcsiplt}{\fcfname{fc-siplt}}
+\newcommand{\fcgraphicsformesh}{\fcfname{fc-graphics4mesh}}
+\newcommand{\fcvfempun}{\fcfname{fc-vfemp1}}
+\newcommand{\fcmesh}{\fcfname{fc-mesh}}
+\newcommand{\fcfem}{\fcfname{fc-fem}}
+
+\mdtheorem[linecolor=mypresii,linewidth=2pt,roundcorner=8pt,frametitlebackgroundcolor=mypresii!30,backgroundcolor=mypresii!20]
+          {remark}[theorem]{\vcenteredinclude{\resizebox{0.75\logowidth}{!}{\bcinfo}}~remark}
+
+\def\BaCo{\lambda} % Barycentric coordinates on d-simplex
+\def\BaCoref{\femref{\BaCo}} % Barycentric coordinates on reference d-simplex
+\def\Gradients{Gradients}
+\def\GradientsVec{GradientsVec}
+\def\FoncBase{\varphi}
+\def\BasisFunc{\FoncBase}
+
+
+\def\SaveDir{./figures}
+\immediate\write18{mkdir -p \SaveDir}
+
+
+\def\simpdim{{\rm dim}}
+\def\simpd{{\rm d}}
+
+\def\BDT{\TT{\Gamma}}
+\def\nq{{\mathop{\rm n_q}\nolimits}}
+\def\nqs{{\mathop{\rm n^2_q}\nolimits}}
+\def\nme{{\mathop{\rm n_{me}}\nolimits}}
+\def\nbe{{\mathop{\rm n_{be}}\nolimits}}
+\def\dd{{\rm d}}
+\def\q{{\rm q}}                                   % Nodes
+\def\qL{\Local{\q}}                               % Local nodes
+\def\ql{\mathop{\rm ql}\nolimits}       % Node labels
+\def\me{\mathop{\rm me}\nolimits}                 % Mesh Elements
+\def\mel{\mathop{\rm mel}\nolimits}
+\def\be{\mathop{\rm be}\nolimits}                 % Boundary Elements
+\def\bel{\mathop{\rm bel}\nolimits}                 % Boundary Elements label
+%\def\Taires{\mathop{\rm areas}\nolimits}
+\def\Taires{\mathop{\rm vol}\nolimits}
+\def\areas{{\Taires}}
+\def\ndf{{\mathop{\rm n_{dof}}\nolimits}}
+%\def\ndfe{{\mathop{\rm n_{dfe}}\nolimits}}
+\def\ndfe{{d+1}}
+\def\Ndfe{{(d+1)}}
+\def\ndfes{{\mathop{\rm n^2_{dfe}}\nolimits}}
+\def\ndfs{{\mathop{\rm n^2_{df}}\nolimits}}
+\def\ndof{{\mathop{\rm n_{dof}}\nolimits}}
+
+\def\labels{\mathop{\it labels}\nolimits}  % précedemment lab
+\def\nlabels{\mathop{\rm n_{lab}}\nolimits}
+\newcommand{\Ilabels}[1]{ \SetFont{I}_{\labels}^{#1}}
+
+\def\BasisFuncBa{\vecb{\psi}}    
+\def\BasisFuncBb{\vecb{\psi}}
+\def\area{{\rm area}}
+\def\volume{{\rm vol}}
+\def\volumes{{\rm vols}}
+\newcommand{\modulo}[2]{ {#1}\mod{#2} }
+
+\def\al{\mathop{\rm \nu}\nolimits}
+\def\il{{\rm \alpha}}
+\def\jl{{\rm \beta}}
+\def\kl{{\rm \gamma}}
+\def\ll{{\rm \mu}}
+
+\newcommand{\simplex}{K} % d-simplex simplex element : Quarteroni's notation
+\def\ddmun{{\mathrm{d}{-1}}}
+\def\dsimplex{\rm{d}-simplex\ }
+\def\dsimplices{\rm{d}-simplices\ }
+\def\dmunsimplex{($\ddmun$)-simplex\ }
+\def\dmunsimplices{($\ddmun$)-simplices\ }
+
+% OBJECTS
+\def\ooMeshElmt{\fcfname{siMeshElt}\ }
+\def\siMeshElt{\ooMeshElmt}
+\def\ooMesh{\fcfname{siMesh}\ }
+\def\siMesh{\ooMesh}
+\newcommand{\amat}{\fcfname{amat}\ }
+
+\def\sTh{\texttt{sTh}}
+\def\nsTh{\texttt{nsTh}}
+\def\sThsimp{\texttt{sThsimp}}
+\def\Gammatext{\texttt{Gamma}}
+\def\sThlab{\texttt{sThlab}}
+\def\PhysElmts{\texttt{PhysElts}}
+\def\InterElmts{\texttt{InterElts}}
+\def\toGlobal{\texttt{toGlobal}}
+\def\toParent{\texttt{toParent}}
+\def\nqParents{\texttt{nqParents}}
+\def\toParents{\texttt{toParents}}
+\newcommand{\fcsf}[2]{#1.#2}
+
+\def\DOM{\Omega}
+\def\DOMT{\TT{\Omega}} % \DOM\times[0,T]
+\def\Th{{\cal T}_h}
+\newcommand{\xt}[1]{ {\TT{\vecb{#1}}} }
+\def\DOMH{{\Omega_h}}
+\def\BD{\Gamma}
+\def\BDH{\Gamma_h}
+\newcommand\BDHC[1]{\Gamma_{h,#1}}
+\def\BDMesh{\mathcal{B}_h}
+
+\newcommand{\fcarray}[1]{{\fcvec{\rm #1}}}
+
+% \newcommand{\fcmatlaboutput}[2]{
+% \fclstsetmatlab
+% \begin{center}
+% \fbox{\begin{minipage}{0.95\textwidth}
+% \lstinputlisting[numbers=none,captionpos=t,title={Matlab commands with output}]{#1}
+% \lstinputlisting[
+%   language={},numbers=none,frame=,backgroundcolor=\color{white},identifierstyle=\color{black},
+%   basicstyle=\color{black}\tiny\ttfamily,keywordstyle=\color{black},
+%   columns=flexible,
+%   breaklines=true
+% ]{#2}
+% \end{minipage}}
+% \end{center}
+% \fclstsetmatlab
+% }
+
+\renewcommand{\fclstsetmatlab}{
+ \lstset{language=MATLAB,backgroundcolor=\color{mypresiii!30},prebreak={ ...},breaklines=true,breakatwhitespace=true,basicstyle=\small,captionpos=above}
+}
+
+\definecolor{DarkBlue}{rgb}{.11,.23,.60}
+\mdfdefinestyle{commandline}%
+{
+  leftmargin=5pt, rightmargin=10pt,innerleftmargin=15pt,
+  middlelinecolor=DarkBlue,
+  middlelinewidth=2pt,
+  frametitlerule=false,
+  backgroundcolor=black!10!white,
+  frametitle={Command Window},
+  frametitlefont={\normalfont\sffamily\color{white}\hspace{-1em}},
+  frametitlebackgroundcolor=DarkBlue,
+  singleextra={\draw[black!20,line width=12pt] 
+        ($(O)+(7pt,1pt)$) --
+        ($(O|-P)+(7pt,-\mdfframetitleboxtotalheight)-(0,1pt)$);
+        \node[inner sep=0pt,color=black]at ($(O)+(7pt,9pt)$)%
+        {$\scriptstyle f\!x$}; },
+  nobreak=true,
+}
+
+\lstnewenvironment{script}{%
+  \lstset{language=Matlab,basicstyle=\tiny\ttfamily,breaklines=true,%
+          aboveskip=0pt,belowskip=0pt}
+}{}
+\surroundwithmdframed[style=commandline]{script}
+
+\definecolor{DarkGrey}{rgb}{.1,.1,.1}
+
+\mdfdefinestyle{syntaxestyle}{leftmargin=1cm,linecolor=black}%,frametitle={Syntaxe}}
+\lstnewenvironment{syntaxe}{%
+  \lstset{language=Matlab,breaklines=true,frame=,numbers=none,%
+          aboveskip=0pt,belowskip=0pt}
+}{}
+\surroundwithmdframed[style=syntaxestyle]{syntaxe}
+
+\ifthenelse{\equal{\fccmdname}{Octave}}{
+\def\ToolboxPackageName{package}
+\def\ToolboxPackageNames{packages}
+}{
+\def\ToolboxPackageName{toolbox}
+\def\ToolboxPackageNames{toolboxes}
+}
+
+\mdfdefinestyle{terminalcommand}%
+{
+  leftmargin=0pt, rightmargin=0pt,innerleftmargin=5pt,
+  middlelinecolor=mypresii,
+  middlelinewidth=2pt,
+  frametitlerule=false,
+  backgroundcolor=white,
+  nobreak=true,
+}
+
+\lstnewenvironment{ShellVerbatim}[1][] {%
+  \lstset{language=bash,breaklines=true,frame=,numbers=none,basicstyle=\scriptsize\ttfamily,%
+          aboveskip=0pt,belowskip=0pt,backgroundcolor=\color{white},#1}
+}{}
+\surroundwithmdframed[style=terminalcommand]{ShellVerbatim}
+
+\definecolor{DarkBlue}{rgb}{.11,.23,.60}
+\mdfdefinestyle{matlablike}%
+{
+  leftmargin=0pt, rightmargin=0pt,innerleftmargin=5pt,
+  middlelinecolor=mypresii,
+  middlelinewidth=2pt,
+  frametitlerule=false,
+  backgroundcolor=mypresii!10!white,
+  nobreak=true,
+}
+\mdfdefinestyle{matlaboutput}%
+{
+  leftmargin=0pt, rightmargin=0pt,innerleftmargin=5pt,
+  middlelinecolor=mypresii,
+  middlelinewidth=1pt,
+  frametitlerule=false,
+  backgroundcolor=white,
+  nobreak=true,
+}
+
+\lstnewenvironment{MatlabVerbatim}[1][]{%
+  \lstset{language=bash,breaklines=true,basicstyle=\scriptsize\ttfamily,%
+          aboveskip=0pt,belowskip=0pt,#1}
+}{}
+\surroundwithmdframed[style=matlablike]{MatlabVerbatim}
+
+\lstnewenvironment{MatlabOutput}[1][]{%
+  \lstset{language=bash,breaklines=true,basicstyle=\scriptsize\ttfamily,%
+          aboveskip=0pt,belowskip=0pt,#1}
+}{}
+\surroundwithmdframed[style=matlaboutput]{MatlabOutput}
+
+\mdfdefinestyle{octavelike}%
+{
+  leftmargin=0pt, rightmargin=0pt,innerleftmargin=5pt,
+  middlelinecolor=mypresii!30,
+  middlelinewidth=2pt,
+  frametitlerule=false,
+  backgroundcolor=mypresii!10!white,
+  nobreak=true,
+}
+
+\lstnewenvironment{OctaveVerbatim}[1][]{%
+  \lstset{language=Matlab,basicstyle=\scriptsize\ttfamily,breaklines=true,%
+          aboveskip=0pt,belowskip=0pt,#1}
+}{}
+\surroundwithmdframed[style=octavelike]{OctaveVerbatim}
+
+\mdfdefinestyle{octaveoutput}%
+{
+  leftmargin=0pt, rightmargin=0pt,innerleftmargin=5pt,
+  middlelinecolor=mypresii,
+  middlelinewidth=1pt,
+  frametitlerule=false,
+  backgroundcolor=white,
+  nobreak=true,
+}
+\lstnewenvironment{OctaveOutput}[1][]{%
+  \lstset{language=bash,breaklines=true,basicstyle=\scriptsize\ttfamily,%
+          aboveskip=0pt,belowskip=0pt,#1}
+}{}
+\surroundwithmdframed[style=octaveoutput]{OctaveOutput}
+
+
+\newcommand{\FClistingresize}[1]{
+\par\noparindent\vspace{-0.25cm}
+\begin{center}\fcresize{0.95}{1.4}{#1}
+\end{center}
+}
+
+
+% #1 : caption
+% #2 : listing
+% #3 : output
+\newcommand{\fcmatlablstwithoutput}[3]{
+  \fclstsetmatlab
+  \begin{center}
+    \fbox{
+      \begin{minipage}{0.95\textwidth}
+        \FClistingresize{
+          \lstinputlisting[captionpos={t},caption={  : #1}]{#2}
+          \lstinputlisting[title={Output},captionpos={t},frame = single,
+            language={},numbers=none,backgroundcolor=\color{white},identifierstyle=\color{black},
+            basicstyle=\color{black}\small\ttfamily,keywordstyle=\color{black},
+            columns=flexible,
+            breaklines=true
+          ]{#3}
+        }
+      \end{minipage}
+    }
+    \fclstsetmatlab
+  \end{center}
+}
+
+% Add for fc-vfemp1
+%\newcommand{\Pk}[1]{\mathbb{#1}}

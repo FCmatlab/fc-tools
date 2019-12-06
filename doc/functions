@@ -1,0 +1,984 @@
+#!/bin/bash
+# DON'T CHANGE THIS FILE if not in fc-oogmsh package
+#   automaticaly updated from fc-oogmsh package with update_package command
+# 
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source ${ROOT_DIR}/vars.sh
+
+# exit_trap () {
+#   local lc="$BASH_COMMAND" rc=$?
+#   echo "Command [$lc] exited with code [$rc]"
+# }
+# 
+# trap exit_trap EXIT
+# set -e
+# Use 'set +e' to disable
+
+#
+#
+# SYSTEM FUNCTIONS
+#
+function getPackageName()
+{
+  A=$( cat ${ROOT_DIR}/../dependencies | cut -d : -f 1 )
+  B=($A)
+  PACKAGENAME=${B[-1]}
+  echo "[getPackageName] PACKAGENAME=$PACKAGENAME"
+}
+
+function getPackageNameArg()
+{
+  PKGDIR=$1
+  A=$( cat ${PKGDIR}/dependencies | cut -d : -f 1 )
+  B=($A)
+  PACKAGENAME=${B[-1]}
+  echo "[getPackageName] PACKAGENAME=$PACKAGENAME"
+}
+
+function setHOSTNAME()
+{
+  if [ "$HOSTNAME" == "" ]; then
+    HOSTNAME=$(hostname -s)
+    if [ "$HOSTNAME" == "" ]; then
+      HOSTNAME=$(hostname)
+    fi
+    echo "[setHOSTNAME] HOSTNAME=$HOSTNAME"
+  fi
+  HOSTNAME=$( echo $HOSTNAME | cut -d'.' -f1)
+}
+
+function setUSERNAME()
+{
+  if [ "$USERNAME" == "" ]; then
+    USERNAME=$(whoami)
+    echo "[setUSERNAME] USERNAME=$USERNAME"
+  fi
+}
+
+function getDATETIME()
+{
+  DATETIME=$(date '+%Y-%m-%d_%H-%M-%S')
+}
+
+function GetWindows()
+{
+  A=$(uname -a | grep Microsoft)
+  if [ "$A" == "" ]; then
+    WINDOWS=0
+  else
+    WINDOWS=1
+  fi
+  echo "[GetWindows] Setting value for WINDOWS"
+}
+
+function GetOS()
+{
+  #  cmd.exe /C 'wmic os get Version /value'
+  # OS_VERSION=$(cmd.exe /C 'wmic os get Version /value' | sed -r 's/Version=([^ ]+)/\1/' | tr -d '[:space:]')
+  set +e
+  A=$(which cmd.exe)
+  if [ -x "$A" ]; then # Windows
+    OS_NAME=Windows
+    OS_VERSION=$(cmd.exe /C "ver" | sed -r 's/.*version ([^ ]+)]/\1/' | tr -d '[:space:]')
+  else
+    A=$(which sw_vers)
+	if [ -x "$A" ]; then # macOS
+	  OS_NAME=macOS
+      OS_VERSION=$(sw_vers -productVersion)
+	else # Linux
+	  OS_NAME=$(lsb_release -s -i)
+      OS_VERSION=$(lsb_release -s -r)
+	fi
+  fi  
+  echo "[GetOSVersion] Setting values for OS_NAME and OS_VERSION"
+  set -e
+}
+
+function set_isMAC()
+{
+  set +e
+  A=$(which sw_vers)
+  if [ -x "$A" ]; then
+    isMAC=1
+  else
+    isMAC=0
+  fi
+  set -e
+}
+
+function set_isWINDOWS()
+{
+  set +e
+  A=$(which cmd.exe)
+  set -e
+  if [ -x "$A" ]; then
+    isWINDOWS=1
+  else
+    isWINDOWS=0
+  fi
+}
+
+function set_REALPATH()
+{
+  set_isMAC
+  if [ isMAC -eq 1 ]; then
+    REALPATH=reallink
+  else
+    REALPATH=realpath
+  fi
+}
+
+function set_GITuptodate()
+{
+  GITUPTODATE=$(git ls-files -m)
+  if [ "$GITUPTODATE" == "" ]; then
+    GITuptodate=1
+  else
+    GITuptodate=0
+  fi
+}
+
+function check_md5sumArgs()
+{
+  FILE1=$1
+  FILE2=$2
+  echo "[check_md5sumArgs] $FILE1 $FILE2"
+  md5sum $FILE1 > $FILE1.md5
+  md5sum $FILE2 > $FILE2.md5
+  set +e
+  RES=$(diff $FILE1.md5 $FILE2.md5)
+  ISDIFF=$?
+  set -e
+  
+  if [ $ISDIFF -eq 1 ]; then
+    echo "diff: $RES"
+    exit
+  fi
+#   if [ "$RES" == "" ]; then
+#     ISDIFF=0
+#   else
+#     ISDIFF=1
+#   fi
+  # ISDIFF=0 , same files, ISDIFF=1, files differ
+  rm $FILE1.md5 $FILE2.md5
+}
+
+function check_diffDirArgs()
+{
+  DIR1=$1
+  DIR2=$2
+  echo "[check_diffDirArgs] $DIR1 $DIR2"
+  set +e
+  RES=$(diff -ur $DIR1 $DIR2)
+  ISDIFF=$?
+  set -e
+  
+#   if [ $ISDIFF -eq 1 ]; then
+#     echo "diff: $RES"
+#     exit
+#   fi
+#   if [ "$RES" == "" ]; then
+#     ISDIFF=0
+#   else
+#     ISDIFF=1
+#   fi
+  # ISDIFF=0 , same files, ISDIFF=1, files differ
+  #rm $FILE1.md5 $FILE2.md5
+}
+
+
+#
+# FC FUNCTIONS (to use with all fc-...)
+#
+function clean_tmpdir()
+{
+  echo "[clean_tmpdir] running"
+  if [ $CLEAN -eq 1 ]; then
+    if [ -d $TMP_DIR ] && [ "$TMP_DIR" != "" ]; then
+      rm -rf $TMP_DIR/*
+    fi
+  fi
+  mkdir -p $TMP_DIR
+}
+
+function setLogFile()
+{
+  echo "[setLogFile] running..."
+  LFILENAME="fc-${PACKAGE}_${HOSTNAME}_${USERNAME}.log"
+  set_isWINDOWS
+  #if [ $isWINDOWS -eq 1 ]; then
+  #RELLOGS_DIR=$(realpath --relative-to=$ROOT_DIR $LOGS_DIR)
+  #else
+  RELLOGS_DIR=$LOGS_DIR
+  #fi
+  LOG_FILE=$RELLOGS_DIR/$LFILENAME
+  mkdir -p $RELLOGS_DIR
+}
+
+function GetRepositoryArg()
+{
+  REPOSITORY=$1
+  
+  CURDIR=$PWD
+  rm -rf $TMP_DIR/fc-$PACKAGE
+  mkdir -p $TMP_DIR
+  cd $TMP_DIR
+  #git clone --quiet $GIT_PYTHON_REP/fc-$PACKAGE $TMP_DIR/fc-$PACKAGE
+  git clone --quiet $REPOSITORY/fc-$PACKAGE 
+  if [ $? -ne 0 ]; then
+    echo "Unable to clone repository:"
+    echo "   $REPOSITORY/fc-$PACKAGE"
+    exit 100
+  fi
+  TMP_REPDIR=$TMP_DIR/fc-$PACKAGE
+  cd $TMP_REPDIR
+  git checkout --quiet tags/$TAG -b temporary
+  if [ $? -ne 0 ]; then
+    echo "Unable to set tag $TAG in repository:"
+    echo "   $REPOSITORY/fc-$PACKAGE"
+    exit 101
+  fi
+  git_tag=$(git describe --tags --exact-match)
+  git_rawdate=$(git log -1 --pretty="%at")
+  git_url=$(git config --get remote.origin.url)
+  git_name=$(basename $git_url)
+  git_commit=$(git rev-parse HEAD)
+  git_modified=$(git ls-files -m)
+  git_isup2date=1
+  if [ "$git_modified" == "" ]; then
+    git_isup2date=0
+  fi
+  set_isWINDOWS
+  if [ $isWINDOWS -eq 1 ]; then
+    RELPATH=$(realpath --relative-to=$CURDIR $TMP_DIR/fc-$PACKAGE)
+  else
+    RELPATH=$TMP_DIR/fc-$PACKAGE
+  fi
+  echo "[GetRepository] Cloning repository with TAG $TAG in: $RELPATH"
+  echo "[GetRepository] Setting value for TMP_REPDIR"
+  cd $CURDIR 
+}
+
+
+#
+# FUNCTIONS to use with MCS/Cuvelier/config repository
+#
+
+function GetConf()
+{
+  echo "[GetConf] Starting ..."
+  setHOSTNAME
+  setUSERNAME
+  conffile=${HOSTNAME}_${USERNAME}.inc
+  #if [ ! -f $(hostname -s)_$(whoami).inc ] || [ "$FORCE" == "1" ]; then
+  if [ ! -f $conffile ] || [ "$FORCE" == "1" ]; then
+    echo "[GetConf] Getting file '$conffile' from git repository"
+    git archive --remote=$1 $2 $conffile | tar -x 
+    chmod 444 $conffile
+  else
+    echo "[GetConf] Using file '$conffile' from directory"
+  fi
+  conffile=$(pwd)/$conffile
+  echo "[GetConf] Setting values for HOSTNAME, USERNAME and conffile"
+}
+
+function GetConfValueArgs()
+{
+  KEY=$1
+  VALUE=`cat $conffile | grep "$KEY" | cut -d'"' -f2`
+  echo "[GetConfValueArgs] KEY=$KEY : VALUE=$VALUE"
+}
+
+# Getdependencies bench 0.0.1
+function GetDependencies()
+{
+  echo "[GetDependencies] Starting ..."
+  rm -f $TMP_DIR/dependencies
+  git archive --remote=$GIT_PYTHON_REP/fc-$1 $2 dependencies | tar -x -C $TMP_DIR/
+#   if [ $? -ne 0 ]; then
+#     echo "Trouble with command:"
+#     echo "  git archive --remote=$GIT_PYTHON_REP/fc-$1 $2 dependencies | tar -x -C $TMP_DIR/"
+# 	exit 11
+#   fi
+  DEPENDENCIES=$TMP_DIR/dependencies
+}
+
+function getSources()
+{
+  echo "Generating config directory"
+  setHOSTNAME
+  setUSERNAME
+  rm -rf config
+  mkdir -p config
+  echo "Getting configuration files from LAGAGIT"
+  git archive --remote=ssh://lagagit/MCS/Cuvelier/config master | tar -x -C ./config
+  DIR="config/"$HOSTNAME"_"$USERNAME
+  if [ ! -d $DIR ]; then
+    echo "Unable to find directory $DIR"
+    exit 10
+  fi
+  SOURCESLIST=$(eval ls $DIR/*.sh)
+  echo "[getSources] SOURCESLIST=$SOURCESLIST"
+}
+
+function GenerateSources()
+{
+  echo "Generating config directory"
+  setHOSTNAME
+  setUSERNAME
+  rm -rf config
+  mkdir -p config
+  echo "Getting configuration files from LAGAGIT"
+  git archive --remote=ssh://lagagit/MCS/Cuvelier/config master | tar -x -C ./config
+  DIR="config/"$HOSTNAME"_"$USERNAME
+  if [ ! -d $DIR ]; then
+    echo "Unable to find directory $DIR"
+    exit 10
+  fi
+  SOURCESLIST=""
+  for file in $DIR/*.sh
+  do
+    filewe="${file%.*}"  # without extension
+    filename="$TMP_DIR/config_${filewe##*/}.sh"
+    echo "Generating $filename"
+    echo "#!/bin/bash" > $filename
+    echo "source $file" >> $filename
+    echo "source pythonpath" >> $filename
+    echo "  To use this environment :"
+    echo "  ->  source $filename"
+    SOURCESLIST="$filename $SOURCESLIST"
+  done
+  echo "[GenerateSources] SOURCESLIST=$SOURCESLIST"
+}
+
+function GetCommand()  # 
+{
+  echo "[GetCommand] Starting with SOFTWARE=$SOFTWARE, RELEASE=$RELEASE"
+  COMMAND=$($PYRUN getcommand.py $SOFTWARE $RELEASE)
+  if [ "$COMMAND" == "" ]; then
+    echo "ERROR : COMMAND ${SOFTWARE}_${RELEASE} NOT FOUND !"
+    exit 2
+  fi
+  echo "[GetCommand] Setting value for COMMAND"
+}
+
+
+function GetCommandArg()  # 
+{
+  SOFTWARE=$1
+  RELEASE=$2
+  if [ "$RELEASE" == "" ]; then
+    echo "[GetCommand] Starting with SOFTWARE=$SOFTWARE"
+    COMMAND=$($PYRUN getcommand.py $SOFTWARE)
+  else
+    echo "[GetCommand] Starting with SOFTWARE=$SOFTWARE, RELEASE=$RELEASE"
+    COMMAND=$($PYRUN getcommand.py $SOFTWARE $RELEASE)
+  fi 
+  if [ $? -ne 0 ]; then
+    echo "WARNING : COMMAND ${SOFTWARE}_${RELEASE} NOT FOUND !"
+    exit 100
+  fi
+  if [ "$COMMAND" == "" ]; then
+    echo "WARNING : COMMAND ${SOFTWARE}_${RELEASE} NOT FOUND !"
+  else
+    echo "[GetCommand] Setting value for COMMAND=$COMMAND"
+  fi
+}
+
+
+#
+# MATLAB FUNCTIONS
+#
+function GetInstallFileMatlab()
+{
+  INSTALL_FILE=mfc_${PACKAGE}_install
+  rm -f ${INSTALL_FILE}.m
+  wget ${WEB_CODES}/Matlab/fc-$PACKAGE/$TAG/${INSTALL_FILE}.m
+  SET_FUNC=mfc_${PACKAGE}_set
+  line="$(head -1 ${INSTALL_FILE}.m)"
+  B=$(echo $line | grep function)
+  if [ "$B" == "" ]; then
+    echo "[GetInstallFileMatlab] ERROR: download incorrect file ${INSTALL_FILE}.m"
+    exit 3
+  fi
+  echo "[GetInstallFileMatlab] Setting values for INSTALL_FILE and SET_FUNC"
+}
+
+function install_fcpackage_MatlabArg()
+{
+  echo "[install_fcpackage_MatlabArg] running"
+  MATLAB_RUN=$1
+  set_isWINDOWS
+  mkdir -p $TMP_DIR/packages
+  cd $TMP_DIR
+  GetInstallFileMatlab
+  if [ $isWINDOWS -eq 1 ]; then
+    MATLAB_COMMAND=${INSTALL_FILE}"('dir','".\\packages"')"
+  else
+    MATLAB_COMMAND=${INSTALL_FILE}"('dir','"./packages"')"
+  fi
+  run_MatlabArg "$MATLAB_RUN" "$MATLAB_COMMAND"
+}
+
+function run_MatlabArg()
+{
+  echo "[run_MatlabArg] running"
+  MATLAB_RUN=$1
+  MATLAB_COMMAND="$2"
+  echo "${MATLAB_COMMAND};exit" > foo.m
+  #eval ${MATLAB_RUN} "-r 'foo'"
+  CMD="${MATLAB_RUN} -r 'foo'"
+  eval $CMD
+  #bash "${MATLAB_RUN} -r 'foo'"
+  rm -f foo.m
+}
+
+function getGitInfo_MatlabArg()
+{
+  rm -f gitinfo.out
+  run_MatlabArg "$MATLAB_RUN" "${SET_FUNC};fid=fopen('gitinfo.out','w');fprintf(fid,'%s',fc_tools.git.str_gitinfo(fc_$PACKAGE.gitinfo()));fclose(fid)"
+  GITINFO=$(cat gitinfo.out)
+}
+
+# synchronization between $DEST_DIR and $TMP_ARCHIVE
+function synchronize_archives()
+{
+  echo "[synchronize_archives] running ..."
+  cd $TMP_DIR
+  rm -f fc_$PACKAGE-$TAG-dest.tar* fc_$PACKAGE-$TAG-tmp.tar*
+  ISDIFF=0
+  if [ -f  $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz ]; then
+    cp $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-dest.tar.gz
+    gunzip fc_$PACKAGE-$TAG-dest.tar.gz
+    if [ -f $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz ]; then
+      cp $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-tmp.tar.gz
+      gunzip fc_$PACKAGE-$TAG-tmp.tar.gz
+      check_md5sumArgs fc_$PACKAGE-$TAG-dest.tar fc_$PACKAGE-$TAG-tmp.tar
+      rm fc_$PACKAGE-$TAG-dest.tar fc_$PACKAGE-$TAG-tmp.tar
+    fi
+  else
+    ISDIFF=1
+  fi
+  if [ $ISDIFF -eq 1 ]; then
+    echo "[synchronize_archives] starting synchronization"
+    mkdir -p $DEST_DIR
+    rsync -av $TMP_ARCHIVE/* $DEST_DIR/
+  else
+    echo "[synchronize_archives] nothing to do"
+  fi
+}
+
+function synchronize_archives_old() # not working
+{
+  echo "[synchronize_archives] running ..."
+  cd $TMP_DIR
+  rm -f fc_$PACKAGE-$TAG-dest.tar* fc_$PACKAGE-$TAG-tmp.tar*
+  ISDIFF=0
+  if [ -f  $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz ]; then
+    cp $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-dest.tar.gz
+    gunzip fc_$PACKAGE-$TAG-dest.tar.gz
+    if [ -f $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz ]; then
+      cp $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-tmp.tar.gz
+      gunzip fc_$PACKAGE-$TAG-tmp.tar.gz
+      check_md5sumArgs fc_$PACKAGE-$TAG-dest.tar fc_$PACKAGE-$TAG-tmp.tar
+      rm fc_$PACKAGE-$TAG-dest.tar fc_$PACKAGE-$TAG-tmp.tar
+    fi
+  else
+    ISDIFF=1
+  fi
+  if [ $ISDIFF -eq 1 ]; then
+    echo "[synchronize_archives] starting synchronization"
+    mkdir -p $DEST_DIR
+    rsync -av $TMP_ARCHIVE/* $DEST_DIR/
+  else
+    echo "[synchronize_archives] nothing to do"
+  fi
+}
+
+function synchronize_archives()
+{
+  echo "[synchronize_archives] running ..."
+  cd $TMP_DIR
+  rm -f fc_$PACKAGE-$TAG-dest.tar* fc_$PACKAGE-$TAG-tmp.tar*
+  ISDIFF=0
+  if [ -f  $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz ]; then
+    tar zxvf $DEST_DIR/fc_$PACKAGE-$TAG.tar.gz
+    mv fc_$PACKAGE-$TAG fc_$PACKAGE-$TAG-dest
+    if [ -f $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz ]; then
+      tar zxvf $TMP_ARCHIVE/fc_$PACKAGE-$TAG.tar.gz
+      mv fc_$PACKAGE-$TAG fc_$PACKAGE-$TAG-tmp
+      check_diffDirArgs fc_$PACKAGE-$TAG-dest fc_$PACKAGE-$TAG-tmp
+      rm -rf fc_$PACKAGE-$TAG-dest fc_$PACKAGE-$TAG-tmp
+    fi
+  else
+    ISDIFF=1
+  fi
+  if [ $ISDIFF -eq 1 ]; then
+    echo "[synchronize_archives] starting synchronization"
+    mkdir -p $DEST_DIR
+    rsync -av $TMP_ARCHIVE/* $DEST_DIR/
+  else
+    echo "[synchronize_archives] nothing to do"
+  fi
+}
+
+
+function remote_synchronize_archivesArg()
+{
+  echo "[synchronize_archivesArg] running ..."
+  REMOTECOMPUTER=$1
+  REMOTEDIR=$2
+  LOCALDIR=$3
+  echo "*** Synchronization with $REMOTECOMPUTER:$REMOTEDIR "
+  cd $TMP_DIR
+  rm -f fc_$PACKAGE-$TAG-remote.tar* fc_$PACKAGE-$TAG-local.tar*
+  set +e
+  scp $REMOTECOMPUTER:$REMOTEDIR/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-remote.tar.gz
+  RES=$?
+  set -e
+  if [ $RES -eq 0 ]; then
+    gunzip fc_$PACKAGE-$TAG-remote.tar.gz
+    cp $LOCALDIR/fc_$PACKAGE-$TAG.tar.gz fc_$PACKAGE-$TAG-local.tar.gz
+    gunzip fc_$PACKAGE-$TAG-local.tar.gz
+    check_md5sumArgs fc_$PACKAGE-$TAG-remote.tar fc_$PACKAGE-$TAG-local.tar
+    rm fc_$PACKAGE-$TAG-remote.tar fc_$PACKAGE-$TAG-local.tar
+  else
+    ISDIFF=1
+  fi
+  if [ $ISDIFF -eq 1 ]; then
+    echo "[synchronize_archivesArg] starting synchronization"
+    ssh $REMOTECOMPUTER "mkdir -p $REMOTEDIR"
+    rsync -av $LOCALDIR/* $REMOTECOMPUTER:$REMOTEDIR/ 
+  else
+    echo "[synchronize_archivesArg] nothing to do"
+  fi
+}
+
+function synchronize_FileArg()
+{
+  echo "[synchronize_FileArg] running ..."
+  REMOTECOMPUTER=$1
+  REMOTEDIR=$2
+  LOCALDIR=$3
+  FILENAME=$4
+  if [ -f $LOCALDIR/$FILENAME ]; then
+    echo "*** Synchronization $FILENAME with $REMOTECOMPUTER:$REMOTEDIR "
+    cd $TMP_DIR
+    rm -f $FILENAME.remote $FILENAME.local
+    cp $LOCALDIR/$FILENAME $FILENAME.local
+    set +e
+    scp $REMOTECOMPUTER:$REMOTEDIR/$FILENAME $FILENAME.remote
+    RES=$?
+    set -e
+    if [ $RES -eq 0 ]; then
+      check_md5sumArgs $FILENAME.local $FILENAME.remote
+      rm $FILENAME.local $FILENAME.remote
+    else
+      ISDIFF=1
+    fi
+    if [ $ISDIFF -eq 1 ]; then
+      echo "[synchronize_FileArg] starting synchronization"
+      ssh $REMOTECOMPUTER "mkdir -p $REMOTEDIR"
+      rsync -av $LOCALDIR/$FILENAME $REMOTECOMPUTER:$REMOTEDIR/ 
+    else
+      echo "[synchronize_FileArg] nothing to do"
+    fi
+  else
+    echo "[synchronize_FileArg] file $FILENAME not avaible"
+  fi
+}
+
+function GetDoc_matlab()
+{
+  echo "[GeDoc] Starting ..."
+  rm -rf $TMP_DOC $TMP_DIR/logo
+  git archive --remote=$GIT_MATLAB_REP/fc-$1 $2 doc logo dependencies | tar -x -C $TMP_DIR/
+  #echo "[GeDoc] DOC_DIR=$DOC_DIR"
+}
+
+function Buildtex_MatlabArgs()
+{
+  COMMAND=$1
+  VERSION=$2
+  PACKAGE=$3
+  TAG=$4
+  TAGDOC=$5
+  latexfile=$TMP_DOC/$LATEXFILE
+  
+  echo "[Buildtex_Matlab] running"
+  echo "   COMMAND  = $COMMAND"
+  echo "   VERSION  = $VERSION"
+  echo "   PACKAGE  = $PACKAGE"
+  echo "   TAG      = $TAG"
+  
+  mkdir -p $TMP_DOC
+  cp mfc_${PACKAGE}_set.m  $TMP_DOC/before.m
+  
+  MATLAB_LOGO=$TMP_DIR/logo/mfc-$PACKAGE.png
+  MATLAB_LOGONAME=$TMP_DIR/logo/mfc-$PACKAGE-name.png
+  if [ ! -f ${MATLAB_LOGO} ] || [ ! -f ${MATLAB_LOGONAME} ]; then
+    echo "Unable to find logos"
+    echo "  MATLAB_LOGO=$MATLAB_LOGO"
+    echo "  MATLAB_LOGONAME=$MATLAB_LOGONAME"
+    exit 100
+  fi
+  
+  echo  '\renewcommand{\fcmatlab}{'$COMMAND'}' > $latexfile
+  echo  '\def\fccmdname{Matlab}' >> $latexfile
+  echo  '\def\fctoolbox{toolbox}' >> $latexfile
+  echo  '\newcommand{\fcrun}{\fcMatlabRunTag}' >> $latexfile
+  echo  '\def\fclogo{'$MATLAB_LOGO'}' >> $latexfile
+  echo  '\def\fclogoname{'$MATLAB_LOGONAME'}' >> $latexfile
+  echo  '\def\fchostname{'$HOSTNAME'}' >> $latexfile
+  echo '\def\fctoolboxdir{'$TMP_DIR/packages/fc_$PACKAGE-$TAG'}' >> $latexfile
+  echo '\def\fccmdversion{'$VERSION'}' >> $latexfile
+  echo '\def\fccmdversionabr{'${VERSION//./}'}' >> $latexfile
+  echo '\def\fctoolboxtag{'$TAG'}' >> $latexfile
+}
+
+#
+# OCTAVE FUNCTIONS
+#
+function GetInstallFileOctave()
+{
+  INSTALL_FILE=ofc_${PACKAGE}_install
+  rm -f ${INSTALL_FILE}.m
+  wget ${WEB_CODES}/Octave/fc-$PACKAGE/$TAG/${INSTALL_FILE}.m
+  SET_FUNC=ofc_${PACKAGE}_set
+  line="$(head -1 ${INSTALL_FILE}.m)"
+  B=$(echo $line | grep function)
+  if [ "$B" == "" ]; then
+    echo "[GetInstallFileOctave] ERROR: download incorrect file ${INSTALL_FILE}.m"
+    exit 3
+  fi
+  echo "[GetInstallFileOctave] Setting values for INSTALL_FILE and SET_FUNC"
+}
+
+function install_fcpackage_OctaveArg()
+{
+  echo "[install_fcpackage_OctaveArg] running"
+  OCTAVE_RUN=$1
+  #clean_tmpdir
+  set_isWINDOWS
+  cd $TMP_DIR
+  if [ $isWINDOWS -eq 1 ]; then
+    echo "TMP_DIR=$TMP_DIR"
+    REL_DIR=$(realpath --relative-to=$ROOT_DIR $TMP_DIR)
+	OCTAVE_COMMAND=${INSTALL_FILE}"('dir','".\\packages"')"
+  else
+    REL_DIR=$TMP_DIR
+	OCTAVE_COMMAND=${INSTALL_FILE}"('dir','"${REL_DIR}/packages"')"
+  fi
+  GetInstallFileOctave
+  echo "OCTAVE_COMMAND=$OCTAVE_COMMAND"
+  run_OctaveArg "$OCTAVE_RUN" "$OCTAVE_COMMAND"
+}
+
+function run_OctaveArg()
+{
+  echo "[run_OctaveArg] running"
+  OCTAVE_RUN=$1
+  OCTAVE_COMMAND="$2"
+  set_isWINDOWS
+  echo "${OCTAVE_COMMAND};exit" > foo.m
+#   if [ $isWINDOWS -eq 1 ]; then
+#     echo "${OCTAVE_COMMAND};exit" > foo.m
+#     CCC="${OCTAVE_RUN} --eval foo "
+#     cmd.exe /C "${CCC}"
+#   else
+#     eval ${OCTAVE_RUN} "--eval '${OCTAVE_COMMAND};exit'"
+#   fi
+   if [ $isWINDOWS -eq 1 ]; then
+#     echo "${OCTAVE_COMMAND};exit" > foo.m
+     CCC="${OCTAVE_RUN} --eval foo "
+	 cmd.exe /C "${CCC}"
+   else
+     eval ${OCTAVE_RUN} "--eval 'foo'"
+   fi
+  rm -f foo.m
+}
+
+function RunOctaveCodeArgs()
+{
+  Package=$1
+  Tag=$2
+  Release=$3
+  Code=$4
+  
+  FULLNAME=fc_$Package-$Tag
+  PKGNAME=fc-$Package-$Tag
+  GetCommandArg OCTAVE $Release
+  OCTAVE_RUN="$COMMAND"
+
+  GetInstallFileOctave 
+  Install_fcpackage_OctaveArg "${OCTAVE_RUN}"
+  cd $TMP_DIR
+  run_OctaveArg "$OCTAVE_RUN" "${SET_FUNC};$Code;"
+}
+
+function getGitInfo_Octave()
+{
+  rm -f gitinfo.out
+  run_OctaveArg "$OCTAVE_RUN" "${SET_FUNC};fid=fopen('gitinfo.out','w');fprintf(fid,'%s',fc_tools.git.str_gitinfo(fc_$PACKAGE.gitinfo()));fclose(fid)"
+  GITINFO=$(cat gitinfo.out)
+}
+
+function Buildtex_OctaveArgs()
+{
+  COMMAND=$1
+  VERSION=$2
+  PACKAGE=$3
+  TAG=$4
+  TAGDOC=$5
+  latexfile=$TMP_DOC/$LATEXFILE
+  
+  echo "[Buildtex_Octave] running"
+  echo "   COMMAND  = $COMMAND"
+  echo "   VERSION  = $VERSION"
+  echo "   PACKAGE  = $PACKAGE"
+  echo "   TAG      = $TAG"
+  
+  mkdir -p $TMP_DOC
+  cp ofc_${PACKAGE}_set.m  $TMP_DOC/before.m
+  
+  OCTAVE_LOGO=$TMP_DIR/logo/ofc-$PACKAGE.png
+  OCTAVE_LOGONAME=$TMP_DIR/logo/ofc-$PACKAGE-name.png
+  if [ ! -f ${OCTAVE_LOGO} ] || [ ! -f ${OCTAVE_LOGONAME} ]; then
+    echo "Unable to find logos"
+    echo "  OCTAVE_LOGO=$OCTAVE_LOGO"
+    echo "  OCTAVE_LOGONAME=$OCTAVE_LOGONAME"
+    exit 100
+  fi
+  
+  echo  '\renewcommand{\fcoctave}{'$COMMAND'}' > $latexfile
+  echo  '\def\fccmdname{Octave}' >> $latexfile
+  echo  '\def\fctoolbox{package}' >> $latexfile
+  echo  '\newcommand{\fcrun}{\fcOctaveRunTag}' >> $latexfile
+  echo  '\def\fclogo{'$OCTAVE_LOGO'}' >> $latexfile
+  echo  '\def\fclogoname{'$OCTAVE_LOGONAME'}' >> $latexfile
+  echo  '\def\fchostname{'$HOSTNAME'}' >> $latexfile
+  echo '\def\fctoolboxdir{'$TMP_DIR/packages/fc_$PACKAGE-$TAG'}' >> $latexfile
+  echo '\def\fccmdversion{'$VERSION'}' >> $latexfile
+  echo '\def\fccmdversionabr{'${VERSION//./}'}' >> $latexfile
+  echo '\def\fctoolboxtag{'$TAG'}' >> $latexfile
+}
+
+#
+# PYTHON FUNCTIONS
+#
+
+# RunDemos source_python_env  
+function RunDemos()
+{
+  source $1
+  
+  VER=$($PYTHON -c "import sys;print(sys.version.split(' ')[0])")
+  VER=$(echo $VER | tr -d '\r')
+  VERSIONS="$VER $VERSIONS"
+  EXEC=$($PYTHON -c "import sys;print(sys.executable)")
+  EXEC=$(echo $EXEC | tr -d '\r')
+  $PYTHON -m pip install --upgrade pip
+  uninstall_fcpackages
+  install_fcpackage
+#   case  "$INSTALL_METHOD" in
+#     0)  eval $PIP install fc_$PACKAGE==$TAG
+#         ;;
+#     1)  eval $PIP install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple fc_$PACKAGE==$TAG
+#         ;;
+#     2) download_allfcpackages
+#        install_fcpackages
+#        ;;
+#     *) echo "INSTALL_METHOD=${INSTALL_METHOD} is not valid. Must be 0,1 or 2"
+#        exit 100
+#        ;;
+#   esac
+  
+  $PYTHON -c "$CODE"
+  GIT_INFO=$($PYTHON -c "import fc_$PACKAGE;print(sorted(fc_$PACKAGE.gitinfo().items()))")
+  GIT_INFO=$(echo ${GIT_INFO} | tr -d '\r')
+  if [ $? -ne 0 ]; then
+    echo "$DATETIME|$TAG|$EXEC|$VER|$OS_NAME|$OS_VERSION|gitinfo() NOT AVAIBLE" >> $LOG_FILE
+  else
+    echo "$DATETIME|$TAG|$EXEC|$VER|$OS_NAME|$OS_VERSION|$GIT_INFO" >> $LOG_FILE
+  fi
+  uninstall_fcpackages
+}
+
+# uninstall_fcpackages 
+function uninstall_fcpackages()
+{
+  set_isMAC
+  if [ $isMAC -eq 1 ]; then
+  LIST=$(cat $DEPENDENCIES | cut -d':' -f1 | tail -r -- )
+  else 
+  LIST=$(cat $DEPENDENCIES | cut -d':' -f1 | tac) # | tac for reverse order
+  fi
+  set +e
+  for var in $LIST
+  do
+    eval $PIP uninstall fc-$var -y
+  done
+  set -e
+}
+
+# download_fcpackage bench 0.0.1
+function download_fcpackage()
+{
+  if [ -f $TMP_DIR/fc_$1-$2.tar.gz ]; then
+    echo "Using file $TMP_DIR/fc_$1-$2.tar.gz already."
+  else
+    echo "Downloading file fc_$1-$2.tar.gz ..."
+    wget $WEB_CODES/Python/fc-$1/fc_$1-$2.tar.gz -P $TMP_DIR
+    if [ $? -ne 0 ]; then
+      echo "Command failed:"
+      echo "   wget $WEB_CODES/Python/fc-$1/fc_$1-$2.tar.gz -P $TMP_DIR"
+      exit 102
+    fi
+  fi
+}
+
+function download_allfcpackages()
+{
+  LIST=$(cat $DEPENDENCIES | cut -d':' -f1 )
+  for var in $LIST
+  do
+    tag=$(cat $DEPENDENCIES | grep $var | cut -d':' -f2)
+    download_fcpackage $var $tag
+  done
+}
+
+# installPackages ListOfPackages
+function install_fcpackages()
+{
+  LIST=$(cat $DEPENDENCIES | cut -d':' -f1 )
+  set_isWINDOWS
+  echo "TMP_DIR=$TMP_DIR"
+    
+  RELPATH="$TMP_DIR"
+  if [ $isWINDOWS -eq 1 ]; then
+    #echo "IN WINDOWS" 
+	#echo "$ROOT_DIR:$TMP_DIR" 
+    RELPATH=$(realpath --relative-to=$ROOT_DIR $TMP_DIR)
+	
+  fi
+  for var in $LIST
+  do
+  #LIST=$(cat $TMP_REPDIR/dependencies | cut -d':' -f1)
+    tag=$(cat $DEPENDENCIES | grep $var | cut -d':' -f2)
+    echo "*** Running: $PIP install $RELPATH/fc_$var-$tag.tar.gz"
+    #echo "TMP_DIR=$TMP_DIR"
+    eval $PIP install $RELPATH/fc_$var-$tag.tar.gz
+	if [ $? -ne 0 ]; then
+	  echo "*** Command failed : $PIP install $RELPATH/fc_$var-$tag.tar.gz"
+	  exit 101
+	fi
+  done
+}
+
+function install_fcpackages()
+{
+  LIST=$(cat $DEPENDENCIES | cut -d':' -f1 )
+  set_isWINDOWS
+  echo "TMP_DIR=$TMP_DIR"
+    
+  RELPATH="$TMP_DIR"
+  if [ $isWINDOWS -eq 1 ]; then
+    #echo "IN WINDOWS" 
+	#echo "$ROOT_DIR:$TMP_DIR" 
+    RELPATH=$(realpath --relative-to=$ROOT_DIR $TMP_DIR)
+	
+  fi
+  for var in $LIST
+  do
+  #LIST=$(cat $TMP_REPDIR/dependencies | cut -d':' -f1)
+    tag=$(cat $DEPENDENCIES | grep $var | cut -d':' -f2)
+    echo "*** Running: $PIP install $RELPATH/fc_$var-$tag.tar.gz"
+    #echo "TMP_DIR=$TMP_DIR"
+    eval $PIP install $RELPATH/fc_$var-$tag.tar.gz
+	if [ $? -ne 0 ]; then
+	  echo "*** Command failed : $PIP install $RELPATH/fc_$var-$tag.tar.gz"
+	  exit 101
+	fi
+  done
+}
+
+function install_fcpackage()
+{
+  set -u
+  case  "$INSTALL_METHOD" in
+    0)  eval $PIP install fc_$PACKAGE==$TAG
+        ;;
+    1)  eval $PIP install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple fc_$PACKAGE==$TAG
+        ;;
+    2) download_allfcpackages
+       install_fcpackages
+       ;;
+    *) echo "INSTALL_METHOD=${INSTALL_METHOD} is not valid. Must be 0,1 or 2"
+       exit 100
+       ;;
+  esac
+  set +u
+}
+
+function GetRepository()
+{
+  CURDIR=$PWD
+  rm -rf $TMP_DIR/fc-$PACKAGE
+  mkdir -p $TMP_DIR
+  cd $TMP_DIR
+  #git clone --quiet $GIT_PYTHON_REP/fc-$PACKAGE $TMP_DIR/fc-$PACKAGE
+  git clone --quiet $GIT_PYTHON_REP/fc-$PACKAGE 
+  if [ $? -ne 0 ]; then
+    echo "Unable to clone repository:"
+    echo "   $GIT_PYTHON_REP/fc-$PACKAGE"
+    exit 100
+  fi
+  TMP_REPDIR=$TMP_DIR/fc-$PACKAGE
+  cd $TMP_REPDIR
+  git checkout --quiet tags/$TAG -b temporary
+  if [ $? -ne 0 ]; then
+    echo "Unable to set tag $TAG in repository:"
+    echo "   $GIT_PYTHON_REP/fc-$PACKAGE"
+    exit 101
+  fi
+  git_tag=$(git describe --tags --exact-match)
+  git_rawdate=$(git log -1 --pretty="%at")
+  git_url=$(git config --get remote.origin.url)
+  git_name=$(basename $git_url)
+  git_commit=$(git rev-parse HEAD)
+  git_modified=$(git ls-files -m)
+  git_isup2date=1
+  if [ "$git_modified" == "" ]; then
+    git_isup2date=0
+  fi
+  set_isWINDOWS
+  if [ $isWINDOWS -eq 1 ]; then
+    RELPATH=$(realpath --relative-to=$CURDIR ${TMP_DIR}/fc-$PACKAGE)
+  else
+    RELPATH=${TMP_DIR}/fc-$PACKAGE
+  fi
+  echo "[GetRepository] Cloning repository with TAG $TAG in: $RELPATH"
+  echo "[GetRepository] Setting value for TMP_REPDIR"
+  cd $CURDIR 
+}
+
+function GetDoc_python()
+{
+  echo "[GeDoc] Starting ..."
+  rm -rf ${TMP_DIR}/doc ${TMP_DIR}/logo
+  git archive --remote=${GIT_PYTHON_REP}/fc-$1 $2 doc logo | tar -x -C ${TMP_DIR}/
+  DOC_DIR=${TMP_DIR}/doc
+  echo "[GeDoc] DOC_DIR=${DOC_DIR}"
+}
+
+function write_fc-config_latex()
+{
+  CONFIG_REMOTE=ssh://lagagit/MCS/Cuvelier/Matlab/fc-config
+  GITCONFIGCOMMIT=$(git ls-remote ${CONFIG_REMOTE} -g HEAD | cut -f 1)
+  
+  echo "Writing file fc-config.tex"
+  echo "  -> commit: ${GITCONFIGCOMMIT}"
+  echo "  -> remote: ${CONFIG_REMOTE}"
+  echo '\def\fcconfigcommit{'${GITCONFIGCOMMIT}'}' > fc-config.tex
+	echo '\def\fcconfigremote{'${CONFIG_REMOTE}'}'>> fc-config.tex
+}

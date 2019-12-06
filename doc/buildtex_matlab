@@ -1,0 +1,119 @@
+#!/bin/bash
+# DON'T CHANGE THIS FILE if not in fc-oogmsh package
+#   automaticaly updated from fc-oogmsh package with update_package command
+# 
+echo "**********************************************"
+echo "  $0 $*"
+echo "**********************************************"
+echo "$(date '+%Y-%m-%d_%H-%M-%S'):$0 $*:" >> $0.log
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $ROOT_DIR
+source functions
+
+# default_MATLABVER=2018a
+# default_PYTHONVER=3.6.6
+mkdir -p special
+latexfile=special/cmd.tex
+makeauto=special/makefile.auto
+if [ -d ../.git ]; then
+TAG=$(git describe --abbrev=0 --tags)
+fi
+
+HELP=0
+INVALID_OPTION=0
+GIT=0
+CLEAN=0
+FORCE=0
+while getopts "t:v:d:hf" opt; do
+    case ${opt} in
+        v) MATLABVER=${OPTARG};;   # Matlab version
+        h) HELP=1;;          # help
+        #d) PACKAGEDIR=${OPTARG};;   # Package directory
+        f) FORCE=1;; # forcing reloading computer conf file
+        d) TAGDOC=${OPTARG};; 
+        t) TAG=${OPTARG};; 
+        *) INVALID_OPTION=1;;
+    esac
+done
+shift $((${OPTIND} - 1))
+COMMAND="$*"
+
+if [ "$TAGDOC" == "" ]; then
+  TAGDOC=$TAG
+fi
+
+getPackageName
+
+PACKAGE=$PACKAGENAME
+
+
+function BuildtexLocal_MatlabArgs()
+{
+  COMMAND=$1
+  VERSION=$2
+  
+  echo "[Buildtex_Matlab] running"
+  echo "   COMMAND  = $COMMAND"
+  echo "   VERSION  = $VERSION"
+  echo "   PACKAGE  = $PACKAGE"
+  echo "   TAG      = $TAG"
+  
+  
+  MATLAB_LOGO=../logo/mfc-$PACKAGE.png
+  MATLAB_LOGONAME=../logo/mfc-$PACKAGE-name.png
+  if [ ! -f ${MATLAB_LOGO} ] || [ ! -f ${MATLAB_LOGONAME} ]; then
+    echo "Unable to find logos"
+    echo "  MATLAB_LOGO=$MATLAB_LOGO"
+    echo "  MATLAB_LOGONAME=$MATLAB_LOGONAME"
+    exit 100
+  fi
+
+  echo '\renewcommand{\fcmatlab}{'$COMMAND'}' > $latexfile
+  echo '\newcommand{\fccmdname}{Matlab}' >> $latexfile
+  echo '\newcommand{\fctoolbox}{toolbox}' >> $latexfile
+  echo '\newcommand{\fctoolboxes}{toolboxes}' >> $latexfile
+  echo '\newcommand{\fcrun}{\fcMatlabRunTag}' >> $latexfile
+  echo '\newcommand{\fccodeoutput}{\fcmatlaboutput}' >> $latexfile
+  echo '\newcommand{\fclogo}{'$MATLAB_LOGO'}' >> $latexfile
+  echo '\newcommand{\fclogoname}{'$MATLAB_LOGONAME'}' >> $latexfile
+  echo '\newcommand{\fchostname}{'$HOSTNAME'}' >> $latexfile
+  echo '\newcommand{\fctoolboxdir}{'..'}' >> $latexfile
+  echo '\newcommand{\fccmdversion}{'$VERSION'}' >> $latexfile
+  echo '\newcommand{\fccmdversionabr}{'${VERSION//./}'}' >> $latexfile
+  echo '\newcommand{\fctoolboxtag}{'$TAG'}' >> $latexfile
+  echo '\newcommand{\fctagdoc}{'$TAGDOC'}' >> $latexfile
+  echo '\renewcommand{\fcpython}{'$PYRUN'}' >> $latexfile
+}
+
+# MATLABVER=$default_MATLABVER
+# PYTHONVER=$default_PYTHONVER
+
+GetConf ssh://lagagit/MCS/Cuvelier/config master
+
+GetCommandArg MATLAB $MATLABVER
+MATLABCMD="${COMMAND}"
+
+# GetCommandArg PYTHON $PYTHONVER
+# PYTHONCMD="${COMMAND}"
+
+BuildtexLocal_MatlabArgs "$MATLABCMD" $MATLABVER 
+
+echo "Writing file $makeauto"
+echo "# automatic writing from builtex_matlab" > $makeauto
+echo "PACKAGENAME=$PACKAGENAME" >> $makeauto
+echo "SETPACKAGE=mfc_${PACKAGENAME}_set" >> $makeauto  # used to build before.m in Makefile
+GetCommandArg SAGE
+echo "SAGE=$COMMAND" >> $makeauto
+GetCommandArg PDFLATEX
+echo "PDFLATEX=$COMMAND" >> $makeauto
+if [ "$(grep bibliography fc-${PACKAGENAME}.tex)" == "" ]; then
+  echo "Configure not to use bibtex (see $makeauto)"
+  echo "BIBTEX=" >> $makeauto
+else
+  echo "Configure to use bibtex (see $makeauto)"
+  echo "BIBTEX=bibtex" >> $makeauto
+fi
+
+
+

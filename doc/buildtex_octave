@@ -1,0 +1,135 @@
+#!/bin/bash
+# DON'T CHANGE THIS FILE if not in fc-oogmsh package
+#   automaticaly updated from fc-oogmsh package with update_package command
+# 
+echo "**********************************************"
+echo "  $0 $*"
+echo "**********************************************"
+echo "$(date '+%Y-%m-%d_%H-%M-%S'):$0 $*:" >> $0.log
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $ROOT_DIR
+source functions
+
+#default_OCTAVEVER=4.4.0
+#default_PYTHONVER=3.6.6
+mkdir -p special
+latexfile=special/cmd.tex
+makeauto=special/makefile.auto
+if [ -d ../.git ]; then
+  TAG=$(git describe --abbrev=0 --tags)
+fi
+HELP=0
+INVALID_OPTION=0
+GIT=0
+CLEAN=0
+FORCE=0
+while getopts "t:d:v:hf" opt; do
+    case ${opt} in
+    v) OCTAVEVER=${OPTARG};;   # Octave version
+#        v) default_OCTAVEVER=${OPTARG};;   # Octave version
+#        P) default_PYTHONVER=${OPTARG};;   # Python version
+    f) FORCE=1;; # forcing reloading computer conf file
+        h) HELP=1;;          # help
+        t) TAG=${OPTARG};; 
+        d) TAGDOC=${OPTARG};; 
+        *) INVALID_OPTION=1;;
+    esac
+done
+shift $((${OPTIND} - 1))
+COMMAND="$*"
+
+if [ "$TAGDOC" == "" ]; then
+  TAGDOC=$TAG
+fi
+
+GetConf ${GIT_SSH_CONFIG} master
+
+getPackageName
+
+PACKAGE=$PACKAGENAME
+
+function BuildtexLocal_OctaveArgs()
+{
+  COMMAND=$1
+  VERSION=$2
+  
+  echo "[Buildtex_Octave] running"
+  echo "   COMMAND  = $COMMAND"
+  echo "   VERSION  = $VERSION"
+  echo "   PACKAGE  = $PACKAGE"
+  echo "   TAG      = $TAG"
+  
+  
+  OCTAVE_LOGO=../logo/ofc-$PACKAGE.png
+  OCTAVE_LOGONAME=../logo/ofc-$PACKAGE-name.png
+  if [ ! -f ${OCTAVE_LOGO} ] || [ ! -f ${OCTAVE_LOGONAME} ]; then
+    echo "Unable to find logos"
+    echo "  OCTAVE_LOGO=$OCTAVE_LOGO"
+    echo "  OCTAVE_LOGONAME=$OCTAVE_LOGONAME"
+    exit 100
+  fi
+
+  echo '\renewcommand{\fcoctave}{'$COMMAND'}' > $latexfile
+  echo '\newcommand{\fccmdname}{Octave}' >> $latexfile
+  echo '\newcommand{\fctoolbox}{package}' >> $latexfile
+  echo '\newcommand{\fctoolboxes}{packages}' >> $latexfile
+  echo '\newcommand{\fcrun}{\fcOctaveRunTag}' >> $latexfile
+  echo '\newcommand{\fccodeoutput}{\fcoctaveoutput}' >> $latexfile
+  echo '\newcommand{\fclogo}{'$OCTAVE_LOGO'}' >> $latexfile
+  echo '\newcommand{\fclogoname}{'$OCTAVE_LOGONAME'}' >> $latexfile
+  echo '\newcommand{\fchostname}{'$HOSTNAME'}' >> $latexfile
+  echo '\newcommand{\fctoolboxdir}{'..'}' >> $latexfile
+  echo '\newcommand{\fccmdversion}{'$VERSION'}' >> $latexfile
+  echo '\newcommand{\fccmdversionabr}{'${VERSION//./}'}' >> $latexfile
+  echo '\newcommand{\fctoolboxtag}{'$TAG'}' >> $latexfile
+  echo '\newcommand{\fctagdoc}{'$TAGDOC'}' >> $latexfile
+  echo '\renewcommand{\fcpython}{'$PYRUN'}' >> $latexfile
+}
+
+#GetBashFunctions
+
+# 
+# OCTAVEVER=$default_OCTAVEVER
+# PYTHONVER=$default_PYTHONVER
+
+GetConf ssh://lagagit/MCS/Cuvelier/config master
+
+GetCommandArg OCTAVE $OCTAVEVER
+OCTAVECMD="${COMMAND}"
+
+#GetCommandArg PYTHON $PYTHONVER
+PYTHONCMD="${PYRUN}"
+
+BuildtexLocal_OctaveArgs "$OCTAVECMD" $OCTAVEVER 
+
+echo "Writing file $makeauto"
+echo "# automatic writing from builtex_octave" > $makeauto
+echo "SETPACKAGE=ofc_${PACKAGENAME}_set" >> $makeauto  # used to build before.m in Makefile
+echo "PACKAGENAME=$PACKAGENAME" >> $makeauto
+GetCommandArg SAGE
+echo "SAGE=$COMMAND" >> $makeauto
+GetCommandArg PDFLATEX
+echo "PDFLATEX=$COMMAND" >> $makeauto
+if [ "$(grep bibliography fc-${PACKAGENAME}.tex)" == "" ]; then
+  echo "Configure not to use bibtex (see $makeauto)"
+  echo "BIBTEX=" >> $makeauto
+else
+  echo "Configure to use bibtex (see $makeauto)"
+  echo "BIBTEX=bibtex" >> $makeauto
+fi
+
+
+
+
+# GetConfValueArgs PYTHON.FC_TOOLS
+# # 
+# # VALUE=`cat $conffile | grep "PYTHON.FC_TOOLS" | cut -d'"' -f2`
+# echo $VALUE
+# echo 'import sys' > python_auto.py
+# echo "sys.path.append('"$VALUE"')" >> python_auto.py
+# echo "Writing python_auto.py ..."
+
+
+
+

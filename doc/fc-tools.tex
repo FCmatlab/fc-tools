@@ -1,0 +1,325 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{etex}
+\reserveinserts{28}
+\usepackage{amscd}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{t1enc}
+\usepackage{array}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{scrextend}
+
+\usepackage{pdfpages}
+
+\usepackage{fcenv}
+\usepackage{fcalgo}
+\usepackage{fcmaths,fcinfo,fcutils,fcexrun}
+%\input{fcgmsh}
+
+\usepackage{ifthen}
+\usepackage{fancyvrb}
+\usepackage{hyperref}
+
+\input{special/cmd.tex}
+\immediate\write18{rsync -avu special/before.m .}
+
+
+\ifthenelse{\equal{\fccmdname}{Octave}}{
+  \usepackage[theme=blue]{cosmetic}
+  \colorlet{codecolor}{mypresii}
+}{
+  \usepackage[theme=orange]{cosmetic}
+  \colorlet{codecolor}{mypresi}
+}
+
+%\def\FCTOOLBOXDIR{\fctoolboxdir}
+\input{common_def.tex}
+
+
+%\def\ToolboxName{\fcbench}
+
+\def\ToolboxName{\text{\includegraphics[height=1em]{\fclogoname}\ }}
+
+
+\def\N{\texttt{N}}   % number of matrices
+\def\nr{\texttt{nr}} % number of rows
+\def\nc{\texttt{nc}} % number of column
+\def\values{\texttt{values}} % array of N-by-nr-by-nc values
+
+
+% \newcommand{\fccodedesc}[1]{\colorbox{mypresiii!15}{\lstinline[breaklines=false]{#1}}}
+% \newcommand{\fccodedescbox}[1]{\mbox{\lstinline[breaklines=false]{#1}}}
+% \newcommand{\fccodedesccolor}[2]{\colorbox{#1}{\color{mypresi}\lstinline[breaklines=false]{#2}}}
+% \newcommand{\fccode}[1]{\text{\fccodedesccolor{white}{#1}}}
+% \newcommand{\fcmcode}[1]{\mbox{{\color{mypresi}\lstinline[breaklines=false]{#1}}}}
+% 
+% \renewcommand{\fclstsetmatlab}{
+% \lstset{language=MATLAB,%backgroundcolor=\color{mypresii!5},
+%         frame=bt,
+%         prebreak={ ...},breaklines=true,%
+%         breakatwhitespace=true,
+%         basicstyle=\color{mypresi}\ttfamily,%\small,
+%         captionpos=above,commentstyle={\footnotesize\rmfamily\color{black}\rm},
+%         escapeinside={}}
+% }
+\newcommand{\fccodedesc}[1]{\colorbox{mypresiii!15}{\lstinline[breaklines=false]{#1}}}
+\newcommand{\fccodedescbox}[1]{\mbox{\lstinline[breaklines=false]{#1}}}
+\newcommand{\fccodedesccolor}[2]{\colorbox{#1}{\color{codecolor}\lstinline[breaklines=false]{#2}}}
+\newcommand{\fccode}[1]{\text{\fccodedesccolor{white}{#1}}}
+\newcommand{\fcmcode}[1]{\mbox{{\color{codecolor}\lstinline[breaklines=false]{#1}}}}
+
+\renewcommand{\fclstsetmatlab}{
+\lstset{language=MATLAB,%backgroundcolor=\color{mypresii!5},
+        frame=bt,
+        prebreak={ ...},breaklines=true,%
+        breakatwhitespace=true,
+        basicstyle=\color{codecolor}\ttfamily,%\small,
+        captionpos=above,commentstyle={\footnotesize\rmfamily\color{black}\rm},
+        escapeinside={}}
+}
+
+% \IfFileExists{results/versions_\fccmdname\fccmdversionabr.out}{
+%   \input{results/versions_\fccmdname\fccmdversionabr.out}
+% }{
+%   \newcommand{\fctoolsversion}{'dev'}
+%   \newcommand{\fcbenchversion}{'dev'}
+% }
+
+\title{
+\includegraphics[scale=0.5]{\fclogo}\\ \vspace{2.cm}
+\ToolboxName \fccmdname\ \ToolboxPackageName, User's Guide\footnote{\fctitlefootnote.
+}\\
+\small{version \fctoolboxtag}
+}
+
+\author{François Cuvelier\thanks{LAGA,  UMR 7539, CNRS, Université Paris 13 - Sorbonne Paris Cité, Université Paris 8,
+       99 Avenue J-B Clément, F-93430 Villetaneuse, France, cuvelier@math.univ-paris13.fr
+       \newline \indent \indent This work was partially supported by the ANR project DEDALES under grant ANR-14-CE23-0005.}
+} 
+% 
+% \title{
+% \includegraphics[scale=0.5]{\fclogo}\\ \vspace{2.cm}
+% \ToolboxName
+% \fccmdname\ \ToolboxPackageName, User's Guide
+% \footnote{Compiled with \fccmdname~\fccmdversion, with \ToolboxPackageNames\ \texttt{fc-bench}[\fcbenchversion]\ and \texttt{fc-tools}[\fctoolsversion]}
+% }
+% \author{François Cuvelier\thanks{Universit\'e Paris 13, Sorbonne Paris Cité, LAGA, CNRS UMR 7539,
+%        99 Avenue J-B Clément, F-93430 Villetaneuse, France, cuvelier@math.univ-paris13.fr %} 
+% %\and Gilles Scarella\hspace{0.15mm} \hspace{0.15mm}\thanks{Université Côte d'Azur, CNRS, LJAD, F-06108 Nice, France, 
+% %       gilles.scarella@unice.fr. 
+%       \newline \indent \indent This work was partially supported by the ANR project DEDALES under grant ANR-14-CE23-0005.} 
+% } 
+%\fvset{frame=lines,numbers=left,numbersep=3pt,fontshape=sl,fontsize}
+
+\newcommand{\fcarrayset}[2]{
+  \fcbmatsetdr{#2}{\K}{#1}
+}
+\newcommand{\fcarraysetspace}[3]{
+  \fcbmatsetdr{#2}{#3}{#1}
+}
+
+\newcommand{\FCresize}[1]{
+\par\noparindent
+\begin{center}\fcresize{0.95}{1.4}{#1}
+\end{center}
+}
+
+
+% \newcommand{\DDDarray}{3D-array}
+% \newcommand{\DDDarrays}{3D-arrays}{
+\renewcommand{\fcfnamefont}[1]{\ifmmode \text{\rmfamily\scshape#1}\else \rmfamily\scshape#1 \fi}
+
+
+\newenvironment{fclstresize}{
+  \begin{adjustbox}{width=0.8\textwidth,keepaspectratio}
+  \begin{minipage}{1.2\textwidth}
+  \begin{lstlisting}
+}
+{
+  \end{lstlisting}
+  \end{minipage}
+  \end{adjustbox}
+}
+
+\immediate\write18{mkdir -p codes benchs results figures tabular special}
+
+\setcounter{tocdepth}{2} % part,chapters,sections, subsections
+
+\def\configremote{ssh://lagagit/MCS/Cuvelier/Matlab/fc-config}
+
+\begin{document}
+
+%\immediate\write18{ printf '%s' $(git ls-remote \configremote -g HEAD | cut -f 1)  }
+%\immediate\write18{ echo '\string\\\string\\def\string\\\string\{'$(git ls-remote \configremote -g HEAD | cut -f 1)'\string\\\string\}' > fc-config.tex}
+% \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigcommit\string{$(git ls-remote ssh://lagagit/MCS/Cuvelier/Matlab/fc-config -g HEAD | cut -f 1)\string}" > fc-config.tex} 
+% \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigremote\string{ssh://lagagit/MCS/Cuvelier/Matlab/fc-config\string}" >> fc-config.tex} 
+
+
+
+%%%%%%%%%%%%%%%
+% To initialize title and version of packages
+%   File before.m is create by "make before.m" or "make" command if in development mode
+%   Otherwise it is create when using build_odoc or build_mdoc in fc-config package
+\begin{filecontents*}{after.m}
+\end{filecontents*}
+\begin{filecontents*}{main.m}
+[pkg,pkgs]=fc_tools.packages();
+BuildVersions(pkg,pkgs);
+\end{filecontents*}
+\fcrun{codes/versions}[results/versions]
+\input{results/versions_\fccmdname\fccmdversionabr.out}
+%%%%%%%%%%%%%%%
+
+
+\maketitle
+\hspace{2.cm}
+
+\begin{abstract}
+The \ToolboxName \fccmdname\ \fctoolbox\ contains some basic tools used in my other \fctoolboxes.
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+\newpage
+
+% %>>>%%%% to initialize Matlab or Octave
+% \IfFileExists{before.m}{}{
+% \begin{filecontents*}{before.m}
+% addpath ..
+% fc_bench.init('verbose',0)
+% \end{filecontents*}
+% }
+% %<<<%%%%
+% \IfFileExists{after.m}{}{
+% \begin{filecontents*}{after.m}
+% \end{filecontents*}
+% }
+
+% \begin{filecontents*}{main.m}
+% disp(sprintf('\\newcommand{\\fctoolsversion}{%s}',fc_tools.version()))
+% disp(sprintf('\\newcommand{\\fcbenchversion}{%s}',fc_bench.version()))
+% \end{filecontents*}
+% \fcrun*{codes/versions}[results/versions]
+
+
+\begin{filecontents*}{main.m}
+fid=fopen('special/software.py','w');
+fprintf(fid,'software=''%s''\n',fc_tools.sys.getSoftware());
+fprintf(fid,'release=''%s''\n',fc_tools.sys.getRelease());
+fclose(fid);
+\end{filecontents*}
+\fcrun{codes/software}
+
+\fclstsetmatlab
+
+\section{sys module}
+
+\input{latex/sys.tex}
+
+\section{graphics module}
+
+
+
+\end{document}
+
+\section{Introduction}
+\input{latex/introduction.tex}
+
+\section{Installation}
+\input{latex/TestedOn_\fctoolboxtag_\fccmdname.tex}
+\input{latex/installation_\fctoolboxtag_\fccmdname.tex}
+
+\section[fc\_bench.bench function]{\fccode{fc_bench.bench} function}\label{sec:fc_bench.bench}
+\input{latex/functions/bench.tex}
+
+
+\subsection{Matricial product examples}
+\input{latex/matricial_product.tex}
+
+\subsection{LU factorization examples}
+\input{latex/LU.tex}
+
+\bibliography{biblio}
+\bibliographystyle{plain}
+
+\newpage
+
+\begin{center}
+{\Large\textbf{Informations for git maintainers of the \ToolboxName \fccmdname\ \ToolboxPackageName }}
+\end{center}
+\begin{filecontents*}{main.m}
+Sep=[repmat('-',1,50),'\n'];
+fprintf(Sep)
+fc_tools.git.print_gitinfo(fc_bench.gitinfo())
+fprintf(Sep)
+fc_tools.git.print_gitinfo(fc_tools.gitinfo())
+fprintf(Sep)
+\end{filecontents*}
+\fcrun{codes/gitinfo}[results/gitinfo]
+
+\begin{center}
+    \fbox{
+      \begin{minipage}{0.95\textwidth}
+        \FClistingresize{
+          \lstinputlisting[title={git informations on the \ToolboxPackageNames\ used to build this manual},captionpos={t},frame = single,
+            language={},numbers=none,backgroundcolor=\color{white},identifierstyle=\color{black},
+            basicstyle=\color{black}\small\ttfamily,keywordstyle=\color{black},
+            columns=flexible,
+            breaklines=true
+          ]{results/gitinfo_\fccmdname\fccmdversionabr.out}
+        }
+      \end{minipage}
+    }
+    \fclstsetmatlab
+  \end{center}
+
+\begin{filecontents*}{main.m}
+Sep=[repmat('-',1,50),'\n'];
+fprintf(Sep)
+fc_tools.git.print_gitinfo(fc_tools.git.get_info('/home/cuvelier/texmf/tex/latex/fctools/'))
+fprintf(Sep)
+\end{filecontents*}
+\fcrun{codes/gitinfo_latex}[results/gitinfo_latex]
+
+\begin{center}
+    \fbox{
+      \begin{minipage}{0.95\textwidth}
+        \FClistingresize{
+          \lstinputlisting[title={git informations on the \LaTeX\ package used to build this manual},captionpos={t},frame = single,
+            language={},numbers=none,backgroundcolor=\color{white},identifierstyle=\color{black},
+            basicstyle=\color{black}\small\ttfamily,keywordstyle=\color{black},
+            columns=flexible,
+            breaklines=true
+          ]{results/gitinfo_latex_\fccmdname\fccmdversionabr.out}
+        }
+      \end{minipage}
+    }
+    \fclstsetmatlab
+  \end{center}
+
+% \IfFileExists{./fc-config.tex}{}{
+%   \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigcommit\string{$(git ls-remote ssh://lagagit/MCS/Cuvelier/Matlab/fc-config -g HEAD | cut -f 1)\string}" > fc-config.tex} 
+%   \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigremote\string{ssh://lagagit/MCS/Cuvelier/Matlab/fc-config\string}" >> fc-config.tex} 
+% }
+% \input{fc-config.tex}
+
+\input{latex/build_fcconfig.tex}
+
+Using the remote configuration repository:
+\begin{center}
+    \fbox{
+      %\begin{minipage}{0.95\textwidth}
+        \fcresize{0.93}{1.3}{
+\begin{tabular}{ll}
+ url & \texttt{\fcconfigremote}\\
+ commit& \texttt{\fcconfigcommit}
+\end{tabular}
+}
+    }
+    \fclstsetmatlab
+  \end{center}
+  
+ \end{document}
