@@ -21,6 +21,7 @@
 ./+fc_tools/+graphics/RestoreHold.m
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
 ./+fc_tools/+graphics/selectColors.m
+./+fc_tools/+graphics/display_rgb.m
 ./+fc_tools/+graphics/SetHoldOn.m
 ./+fc_tools/+graphics/view3D.m
 ./+fc_tools/+graphics/+crop/crop.m
@@ -72,7 +73,7 @@
 ./+fc_tools/+graphics/+xcolor/svg.m
 ./+fc_tools/+graphics/+xcolor/val2rgb.m
 ./+fc_tools/+graphics/+xcolor/X11.m
-./+fc_tools/+graphics/+xcolor/display_colors.m
+#./+fc_tools/+graphics/+xcolor/display_colors.m
 ./+fc_tools/+graphics/+xcolor/set_xcolors_varargin.m
 ./+fc_tools/+graphics/+xcolor/colors_replace.m
 ./+fc_tools/+linalg/detVec.m

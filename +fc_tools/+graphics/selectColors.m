@@ -27,7 +27,7 @@ function colors = selectColors(n_colors,varargin)
   x = linspace(0,1,n_grid);
   [R,G,B] = ndgrid(x,x,x);
   rgb = [R(:) G(:) B(:)];
-  if (n_colors > size(rgb,1)/3)
+  if (n_colors > size(rgb,1)/3)  % size(rgb,1)/3==9000 !
     error('You can''t readily distinguish that many colors');
   end
   
