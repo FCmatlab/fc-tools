@@ -39,6 +39,13 @@ function SaveAllFigsAsFiles(file,varargin)
       set(Title,'Visible','off')
     end
     set(h,'Color',[1,1,1]) % white backgroup for print
+    %keyboard
+    if ~fc_tools.sys.isfolder(R.dir)
+      [status, msg, msgid]=mkdir(R.dir);
+      if status==0, error(msg);end
+    else
+      assert(exist(R.dir)==7)
+    end
     if R.tag
       filename=[R.dir,filesep,file,'_fig',figname,'_',Softname,strrep(Release,'.',''),'.',R.format];
     else

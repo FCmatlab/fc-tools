@@ -72,19 +72,10 @@ function vprintf(verbose,level,varargin)
   if verbose>=level, fprintf(varargin{:});end
 end
 
-function options=set_options()
-  options=weboptions; 
-  if isprop(options,'CertificateFilename') 
-    options.CertificateFilename=(''); % Trouble with certificat and some "old" Matlab
-  end
-end
-
 function fulldir=get_inst_fc_gen(name,ver,dir)
-  filename=sprintf('fc_%s-%s.tar.gz',name,ver);
-  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s',name,ver,filename);
+  urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/fc_%s-%s.tar.gz',name,ver,name,ver);
   try
-    outputfilename=websave(filename,urlfile,set_options());
-    untar(outputfilename,dir);
+    untar(urlfile,dir)
   catch
     error('Unable to get :\n  -> %s\n',urlfile);
   end
@@ -100,7 +91,7 @@ function fulldir=get_install(name,ver,dir,varargin)
   mfile=sprintf('mfc_%s_install',name);
   urlfile=sprintf('http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-%s/%s/%s.m',name,ver,mfile);
   try
-    outputfilename=websave([mfile,'.m'],urlfile,set_options());
+    urlwrite(urlfile,[mfile,'.m']);
   catch
     error('Unable to get :\n  -> %s\n',urlfile);
   end

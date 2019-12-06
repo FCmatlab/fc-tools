@@ -16,6 +16,7 @@
 ./+fc_tools/+comp/Parse.m
 ./+fc_tools/+comp/dispobject.m
 ./+fc_tools/+comp/infoobject.m
+#./+fc_tools/+comp/strversion2num.m
 ./+fc_tools/+graphics/colorstr2rgb.m
 ./+fc_tools/+graphics/RestoreHold.m
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
@@ -65,7 +66,7 @@
 ./+fc_tools/+utils/funHandleName.m
 ./+fc_tools/+utils/line_text_delimiter.m
 ./+fc_tools/+utils/replaceValueOfCellOptions.m
-./+fc_tools/+graphics/+xcolor/ColorSelected.m
+#./+fc_tools/+graphics/+xcolor/ColorSelected.m
 ./+fc_tools/+graphics/+xcolor/color_varargin.m
 ./+fc_tools/+graphics/+xcolor/matlab.m
 ./+fc_tools/+graphics/+xcolor/svg.m
@@ -84,6 +85,7 @@
 ./+fc_tools/+sys/getRAM.m
 ./+fc_tools/+sys/getOSinfo.m
 ./+fc_tools/+sys/getCPUinfo.m
+./+fc_tools/+sys/isfolder.m
 ./+fc_tools/+sys/info.m
 ./+fc_tools/+git/get_commit.m
 ./+fc_tools/+git/get_name.m

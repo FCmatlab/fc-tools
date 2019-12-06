@@ -10,7 +10,6 @@ function h=display_colors()
 end
 
 function display(name,rgb)  
-  
   clf
   N=length(name);
   % m~=3/4*n
@@ -51,7 +50,6 @@ function display(name,rgb)
   axis off
   set(gcf(),'visible','on')
 end
-
 
 function ColorSelected(ObjectH, EventData, H)
   fprintf('name= ''%s'';rgb=[%.6f,%.6f,%.6f];\n',H{1},H{2})
