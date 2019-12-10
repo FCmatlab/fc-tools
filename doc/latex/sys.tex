@@ -1,18 +1,18 @@
 
 \begin{itemize}
-\item[$\bullet$] \fccode{fc_tools.sys.getComputerName()} returns the name of the computer as a string.
-\item[$\bullet$] \fccode{fc_tools.sys.getUserName()} returns the name (login) of the current user as a string.
-\item[$\bullet$] \fccode{fc_tools.sys.getRAM()} returns available memory (RAM) in GB of the computer.
-\item[$\bullet$] \fccode{fc_tools.sys.getCPUinfo()} returns CPU(s) informations as a structure.
-\item[$\bullet$] \fccode{fc_tools.sys.getOSinfo()} returns OS informations as a structure.
+\item[$\bullet$] \fcmcode{fc_tools.sys.getComputerName()} returns the name of the computer as a string.
+\item[$\bullet$] \fcmcode{fc_tools.sys.getUserName()} returns the name (login) of the current user as a string.
+\item[$\bullet$] \fcmcode{fc_tools.sys.getRAM()} returns available memory (RAM) in GB of the computer.
+\item[$\bullet$] \fcmcode{fc_tools.sys.getCPUinfo()} returns CPU(s) informations as a structure.
+\item[$\bullet$] \fcmcode{fc_tools.sys.getOSinfo()} returns OS informations as a structure.
 \end{itemize}
 
 In Listing~\ref{lst:sys:01}, some examples are provided.
 \begin{filecontents*}{main.m}
 fprintf('RAM : %.2f GB\n',fc_tools.sys.getRAM())
-CPU=fc_tools.sys.getCPUinfo()
+CPU= fc_tools.sys.getCPUinfo()
 OS=fc_tools.sys.getOSinfo()
 \end{filecontents*}
 \fcrun{codes/sys01}[results/sys01]
-\fcmatlablstwithoutput{example using \fccode{fc_amat.sys} functions\label{lst:sys:01}}%
+\fcmatlablstwithoutput{example using \fcmcode{fc_tools.sys} functions\label{lst:sys:01}}%
                       {codes/sys01_\fccmdname\fccmdversionabr.m}{results/sys01_\fccmdname\fccmdversionabr.out}

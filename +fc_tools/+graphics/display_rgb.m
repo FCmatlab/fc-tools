@@ -1,4 +1,20 @@
-function display_rgb(rgb,name)  
+function display_rgb(rgb,name)
+%  FUNCTION fc_tools.graphics.display_rgb
+%    displays colors of a n-by-3 RGB colors array with their names
+%    if available.
+%  USAGE
+%    fc_tools.graphics.display_rgb(rgb)
+%      displays colors given by rgb a n-by-3 RGB colors array. The i-th color
+%      given by rgb(i,:) is identified by the number i. 
+%    fc_tools.graphics.display_rgb(rgb,name)
+%      displays colors given by rgb a n-by-3 RGB colors array. The i-th color
+%      given by rgb(i,:) is identified by the number i and its name given by 
+%      the string name{i}.
+% SAMPLES
+%   colors=fc_tools.graphics.selectColors(10);
+%   display_rgb(colors)
+%
+% <COPYRIGHT>
   clf
   assert(size(rgb,2)==3)
   N=size(rgb,1);
@@ -16,12 +32,10 @@ function display_rgb(rgb,name)
   else
     fontsize=6;
   end
-  % m~=3/4*n
   n=round(sqrt(4*N/3));
   m=round(3/4*n);
-  % 8-by-10 
-  %m=20; % rows number
-  %n=30; % columns number
+  if (n*m)<N,m=m+1;end
+  
   beta=0.3;alpha=0.3;
   aw=1/(n+alpha*(n+1));sw=alpha*aw;
   ah=1/(m+beta*(m+1));sh=beta*ah;

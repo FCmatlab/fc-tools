@@ -84,6 +84,7 @@ function BuildtexLocal_MatlabArgs()
   echo '\newcommand{\fctoolboxtag}{'$TAG'}' >> $latexfile
   echo '\newcommand{\fctagdoc}{'$TAGDOC'}' >> $latexfile
   echo '\renewcommand{\fcpython}{'$PYRUN'}' >> $latexfile
+  echo "Writing file: $latexfile"
 }
 
 # MATLABVER=$default_MATLABVER

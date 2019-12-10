@@ -9,8 +9,9 @@ DOC_CURRENT_DIR = $(shell pwd)
 ifeq ("$(wildcard special/makefile.auto)","")
 message:
 	@echo "Not yet configured."
-	@echo "  Use ./builtex_python :"
-	@echo "    ./builtex_octave -v 5.1.0 
+	@echo "  Use ./builtex_octave or ./builtex_matlab :"
+	@echo "    ./builtex_octave -v 5.1.0 "
+	@echo "    ./builtex_matlab -v 2018a
 	
 else
 include special/makefile.auto

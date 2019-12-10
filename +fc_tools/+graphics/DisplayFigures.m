@@ -1,15 +1,41 @@
 function varargout=DisplayFigures(varargin)
-  p = inputParser; 
-  p.addParameter('nfig',0,@isscalar); 
-  p.parse(varargin{:});
-  R=p.Results;
+% FUNCTION fc_tools.graphics.DisplayFigures
+%   Regularly distributes the figures on the screen.
+% USAGE
+%   fc_tools.graphics.DisplayFigures()
+%   fc_tools.graphics.DisplayFigures(n)
+%   fc_tools.graphics.DisplayFigures('nfig',n)
+%
+%   Without argument, all figures are regularly distributed on the screen.
+%   Otherwise, empty figures with numbers 1 to n are created and regularly 
+%   distributed on the screen.
+%
+% SAMPLES
+%   fc_tools.graphics.DisplayFigures()
+%   fc_tools.graphics.DisplayFigures(5)
+%   fc_tools.graphics.DisplayFigures('nfig',5)
+%
+%    <COPYRIGHT> 
+
+  if nargin==1 % Compatibilty with old version
+    R.nfig=varargin{1};
+  else
+    p = inputParser; 
+    p.addParameter('nfig',0,@isscalar); 
+    p.parse(varargin{:});
+    R=p.Results;
+  end
   %set(0,'Units','normalized')
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
   if R.nfig<=0 && nargin>0 
-  options=BuildOptions(mFontSize,oFontSize);
-  return;
+    options=BuildOptions(mFontSize,oFontSize);
+    return;
   end
 
+  % For future release ?: 
+  %   r = groot;
+  %   screensize=get(r,'ScreenSize')
+  %   monitorpositions=get(r,'monitorpositions)
   Pos=get(0,'ScreenSize');
   x=Pos(1);y=Pos(2);
   w=min(1920,Pos(3)); % For multiscreen under Octave
