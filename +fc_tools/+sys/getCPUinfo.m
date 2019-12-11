@@ -1,5 +1,15 @@
 function cpu = getCPUinfo()
-
+%  FUNCTION cpu=fc_tools.sys.getCPUinfo()
+%    Return a structure with CPU informations: 
+%      * name            : name of the cpu,
+%      * nprocs          : number of processors
+%      % ncoreperproc    : number of cores per processor
+%      * nthreadspercore : number of threads per core
+%
+%  USAGE
+%    cpu = fc_tools.sys.getCPUinfo();
+%
+% <COPYRIGHT>
  cpu=[];
  if isunix() && ~ismac()
    cpu=getCPUinfo_Unix();
@@ -8,10 +18,6 @@ function cpu = getCPUinfo()
  elseif ispc()
    cpu=getCPUinfo_Windows();
  end
-%  typ = getOStype();
-%  distrib = getOSdistrib();
-%  arch = getOSarch();
-%  OS =struct('type',typ,'distrib',distrib,'arch',arch);
 end
 
 function cpu=getCPUinfo_Unix()

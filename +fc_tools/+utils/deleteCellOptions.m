@@ -1,6 +1,8 @@
 function NewOptions=deleteCellOptions(Options,delOptions)
-% FUNCTION fc_tools.utils.deleteCellOptions
-%   Delete key/value pairs 
+% FUNCTION NewOptions=fc_tools.utils.deleteCellOptions(Options,delOptions)
+%   Delete key/value pairs specified by <delOptions> keys in the cell array 
+%   of key/value pairs <Options>
+%   Usually used with inputParser (i.e. varargin parameter of a function)
 %
 % <COPYRIGHT>
 assert(iscell(Options))

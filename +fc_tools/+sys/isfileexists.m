@@ -1,6 +1,9 @@
 function bool=isfileexists(file)
 % FUNCTION fc_tools.sys.isfileexists
-%   Retuen true if if file exists, false otherwise.
+%   Return true if file exists, false otherwise.
+%
+% USAGE
+%   bool=fc_tools.sys.isfileexists(file)
 %
 % <COPYRIGHT>
   [fid,message]=fopen(file,'r');

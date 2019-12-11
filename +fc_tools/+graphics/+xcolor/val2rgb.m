@@ -34,7 +34,7 @@ function rgb=val2rgb(val,varargin)
 end
 
 function themes=get_themes()
-  themes={'matlab','svg','X11'};
+  themes={'matlab','svg','X11','fullX11'};
 end
 
 function rgb=str2rgb_theme(theme,name)

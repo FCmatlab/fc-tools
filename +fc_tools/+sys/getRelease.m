@@ -1,9 +1,9 @@
 function Release=getRelease()
-% FUNCTION fc_tools.sys.getNumVersion
-%   Returns Matlab or Octave release/version as a scalar
+% FUNCTION Release=fc_tools.sys.getRelease()
+%   Return Matlab or Octave release/version as a string
 %
 % USAGE
-%   NumV=getNumVersion()
+%   Release=fc_tools.sys.getRelease()
 %
 % <COPYRIGHT>
 if fc_tools.comp.isOctave()

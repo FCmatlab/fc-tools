@@ -1,6 +1,11 @@
 function RAM = getRAM()
-% getRAM returns the RAM in Go of the machine
-% RAM = getRAM()
+%  FUNCTION RAM=fc_tools.sys.getRAM()
+%    Return the RAM in GB of the computer
+%
+%  USAGE
+%    RAM = fc_tools.sys.getRAM();
+%
+% <COPYRIGHT>
   RAM=[];
   if isunix() && ~ismac()
     RAM=getRAM_Unix();

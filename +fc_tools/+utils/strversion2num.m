@@ -1,5 +1,6 @@
 function ver=strversion2num(strv)
-% convert version string 
+% FUNCTION ver=strversion2num(strv)
+%   convert a string version in a number as follows:
 %    'x.y.z' -> x*10^6+y*10^3+z
 %    'x.y'   -> x*10^6+y*10^3
 %    'x'     -> x*10^6

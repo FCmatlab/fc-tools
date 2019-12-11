@@ -1,4 +1,17 @@
 function OS = getOSinfo()
+%  FUNCTION OS=fc_tools.sys.getOSinfo()
+%    Return a structure with OS informations: 
+%      * distributor 
+%      * description  
+%      * release      
+%      * codename   
+%      * arch        
+%      * shortname
+%
+%  USAGE
+%    OS = fc_tools.sys.getOSinfo()
+%
+% <COPYRIGHT>
  OS=[];
  if isunix() && ~ismac()
    OS=getOSinfo_Unix();

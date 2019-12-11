@@ -1,12 +1,24 @@
 function h=display_colors()
-  [name,rgb]=fc_tools.graphics.xcolor.X11();
-  figure()
-  display(name,rgb)
-  title('X11 colors')
   [name,rgb]=fc_tools.graphics.xcolor.svg();
   figure()
-  display(name,rgb)
+  fc_tools.graphics.display_rgb(rgb,name)
   title('SVG colors')
+  [name,rgb]=fc_tools.graphics.xcolor.X11();
+  figure()
+  fc_tools.graphics.display_rgb(rgb,name)
+  title('X11 colors')
+  
+  
+  [name,rgb]=fc_tools.graphics.xcolor.fullX11();
+  figure()
+  fc_tools.graphics.display_rgb(rgb(1:270,:),{name{1:270}})
+  title('X11 colors (full: 1/3)')
+  figure()
+  fc_tools.graphics.display_rgb(rgb(271:536,:),{name{271:536}})
+  title('X11 colors (full: 2/3)')
+  figure()
+  fc_tools.graphics.display_rgb(rgb(537:end,:),{name{537:end}})
+  title('X11 colors (full: 3/3)')
 end
 
 function display(name,rgb)  
