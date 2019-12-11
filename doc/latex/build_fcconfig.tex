@@ -1,0 +1,5 @@
+\IfFileExists{./special/fc-config.tex}{}{
+  \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigcommit\string{$(git ls-remote ssh://lagagit/MCS/Cuvelier/Matlab/fc-config -g HEAD | cut -f 1)\string}" > special/fc-config.tex} 
+  \immediate\write18{ echo "\string\\\string\\def\string\\\string\\fcconfigremote\string{ssh://lagagit/MCS/Cuvelier/Matlab/fc-config\string}" >> special/fc-config.tex} 
+}
+\input{special/fc-config.tex}
