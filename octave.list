@@ -76,7 +76,7 @@ DESCRIPTION ## -> root of Octave package
 ./+fc_tools/+graphics/+xcolor/val2rgb.m
 ./+fc_tools/+graphics/+xcolor/X11.m
 ./+fc_tools/+graphics/+xcolor/fullX11.m
-# ./+fc_tools/+graphics/+xcolor/display_colors.m
+./+fc_tools/+graphics/+xcolor/display_colors.m
 ./+fc_tools/+graphics/+xcolor/set_xcolors_varargin.m
 ./+fc_tools/+graphics/+xcolor/colors_replace.m
 ./+fc_tools/+sys/find_keyvalue.m
