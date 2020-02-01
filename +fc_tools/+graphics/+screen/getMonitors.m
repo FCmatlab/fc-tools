@@ -1,6 +1,27 @@
 function Monitors=getMonitors()
+if ismac(), Monitors=getMonitors_mac();return;end
+if isunix(), Monitors=getMonitors_linux();return;end
 
-  Monitors=getMonitors_linux();
+warning('not yet implemented')
+end
+
+function Monitors=getMonitors_mac()
+filename=mfilename('fullpath');
+idx=strfind(filename,filesep);
+directory=filename(1:idx(end));
+cmd=sprintf('osascript %smonitors.osx',directory);
+[status,result]=system(cmd);
+R=strsplit(result,',');
+R=cellfun(@str2num,R);
+assert(rem(size(R,2),4)==0)
+nbMonitors=size(R,2)/4;
+Mon=reshape(R,4,nbMonitors)';  % x y w h
+minX=min(Mon(:,1));
+minY=min(Mon(:,2));
+for i=1:nbMonitors
+% Octave/Matlab position, (x,y)=(1,1) is the lower left virtual screen
+Monitors(i)=struct('x',Mon(i,1),'y',Mon(i,2),'w',Mon(i,3),'h',Mon(i,4));
+end
 end
 
 function Monitors=getMonitors_linux()

@@ -80,15 +80,18 @@ function varargout=DisplayFiguresNew(varargin)
         nfig=figHandles(J(num));
       end
       h=figure(nfig);
+      %set(h,'visible','off');
       set(h,'position',[xp yp wp hp])
+      drawnow % need under MacOS with octave
       PrevPos=get(h,'position');
       xp=PrevPos(1)+PrevPos(3)+window_border;
       num=num+1;
+      %set(h,'visible','on');
       if num>nf, return;end
     end
     yp=PrevPos(2)+PrevPos(4)+toolbar_height+window_border;
   end
-  drawnow
+  %drawnow
   
 end
 
