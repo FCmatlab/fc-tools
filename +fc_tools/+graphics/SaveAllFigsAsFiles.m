@@ -113,7 +113,7 @@ function SaveAllFigsAsFiles(basename,varargin)
       end
     end
     if R.crop
-      fc_tools.graphics.crop.crop(filename);
+      if strcmp(R.format,'png'), fc_tools.graphics.crop.crop(filename);end
     end
     if R.verbose
       fprintf('  Save figure %d in %s\n',nfig,filename);
