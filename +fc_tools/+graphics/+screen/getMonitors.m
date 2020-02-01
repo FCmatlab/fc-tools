@@ -1,8 +1,7 @@
 function Monitors=getMonitors()
-if ismac(), Monitors=getMonitors_mac();return;end
-if isunix(), Monitors=getMonitors_linux();return;end
-
-warning('not yet implemented')
+  if ismac(), Monitors=getMonitors_mac();return;end
+  if isunix(), Monitors=getMonitors_linux();return;end
+  warning('not yet implemented')
 end
 
 function Monitors=getMonitors_mac()

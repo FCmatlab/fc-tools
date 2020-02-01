@@ -22,12 +22,13 @@ function varargout=DisplayFiguresNew(varargin)
   else
     p = inputParser; 
     p.addParameter('nfig',0,@isscalar); 
-    p.addParameter('screen',1,@isscalar); 
+    p.addParameter('screen',1,@isscalar);
+    p.addParameter('cover',3/4,@isscalar);
     p.parse(varargin{:});
     R=p.Results;
   end
   %set(0,'Units','normalized')
-  screen=R.screen;
+screen=R.screen;cover=min(R.cover,1);
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
   if R.nfig<=0 && nargin>0 
     options=BuildOptions(mFontSize,oFontSize);
@@ -55,11 +56,11 @@ function varargout=DisplayFiguresNew(varargin)
   options=BuildOptions(mFontSize,oFontSize);
   if nargout==1,varargout{1}=options;end
 
-  w=3/4*W;h=3/4*H;
-  wp=w/ncol;
-  hp=h/nrow;
+  w=cover*W;h=cover*H;
   toolbar_height = 77;
   if fc_tools.comp.isOctave(), toolbar_height=toolbar_height+60;end
+  wp=w/ncol;
+  hp=h/nrow-toolbar_height;
   window_border  = 5;
 
   % To sort figures
