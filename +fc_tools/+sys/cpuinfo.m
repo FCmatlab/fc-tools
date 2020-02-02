@@ -75,7 +75,6 @@ if numResults>1
     [fields,idx] = unique(fields,'first');
     values = values(idx);
 end
-
 % Convert to a structure
 info = cell2struct( values, fields );
 

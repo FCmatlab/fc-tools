@@ -16,7 +16,6 @@ function varargout=DisplayFiguresNew(varargin)
 %   fc_tools.graphics.DisplayFigures('nfig',5)
 %
 %    <COPYRIGHT> 
-
   if nargin==1 % Compatibilty with old version
     R.nfig=varargin{1};
   else
@@ -37,7 +36,10 @@ function varargout=DisplayFiguresNew(varargin)
   M=fc_tools.graphics.screen.getMonitors();
   X=M(screen).x;Y=M(screen).y;W=M(screen).w;H=M(screen).h;
   
-  for i=1:R.nfig,figure(i);end
+  for i=1:R.nfig
+    hd(i)=figure(i);
+    %set(hd(i),'visible','off'); % BUG with Octave under windows??
+  end
 
   figHandles = get(0,'Children');
   nf=length(figHandles);
@@ -62,7 +64,6 @@ function varargout=DisplayFiguresNew(varargin)
   wp=w/ncol;
   hp=h/nrow-toolbar_height;
   window_border  = 5;
-
   % To sort figures
   if strcmp(class(figHandles(1)),'matlab.ui.Figure')
     I={figHandles(:).Number};
@@ -82,9 +83,17 @@ function varargout=DisplayFiguresNew(varargin)
       end
       h=figure(nfig);
       %set(h,'visible','off');
-      set(h,'position',[xp yp wp hp])
-      drawnow % need under MacOS with octave
-      PrevPos=get(h,'position');
+      set(hd(num),'position',[xp yp wp hp])
+	  if ispc() && fc_tools.comp.isOctave() % !!! need under Windows with octave
+	    %drawnow('expose')
+	    pause(0.2);
+		%set(hd(i),'visible','off');
+		set(hd(num),'position',[xp yp wp hp])
+		%set(hd(i),'visible','on');
+		%refresh(hd(num))
+	  end 
+	  drawnow % need under MacOS with octave
+	  PrevPos=get(hd(num),'position');
       xp=PrevPos(1)+PrevPos(3)+window_border;
       num=num+1;
       %set(h,'visible','on');
@@ -93,7 +102,14 @@ function varargout=DisplayFiguresNew(varargin)
     yp=PrevPos(2)+PrevPos(4)+toolbar_height+window_border;
   end
   %drawnow
-  
+%  for i=1:R.nfig
+%    if ispc() && fc_tools.comp.isOctave() % !!! need under Windows with octave%
+%	  h=figure(i);
+%	else
+%      set(hd(i),'visible','on');
+%	end
+%  end
+%  drawnow
 end
 
 function options=BuildOptions(mFontSize,oFontSize)

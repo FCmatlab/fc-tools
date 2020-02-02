@@ -1,4 +1,4 @@
-function putFiguresOnMonitor(varargin)
+function putFiguresOnMonitor(monitor,varargin)
 % FUNCTION fc_tools.graphics.DisplayFigures
 %   Regularly distributes the figures on the screen.
 % USAGE
@@ -18,17 +18,17 @@ function putFiguresOnMonitor(varargin)
 %    <COPYRIGHT> 
 
   p = inputParser; 
-  p.addParameter('monitor',1,@isscalar);
   p.addParameter('figures',[]); % list of figures numbers, all figures if empty
   p.addParameter('cover',3/4,@isscalar);
   p.parse(varargin{:});
   R=p.Results;
 
-  monitor=R.monitor;cover=min(R.cover,1);
+  cover=min(R.cover,1);
   
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
 
   M=fc_tools.graphics.screen.getMonitors();
+  assert(monitor>=1 && monitor<=length(M))
   X=M(monitor).x;Y=M(monitor).y;W=M(monitor).w;H=M(monitor).h;
   
   figHandles = get(0,'Children');
@@ -75,6 +75,10 @@ function putFiguresOnMonitor(varargin)
       h=figure(nfig);
       %set(h,'visible','off');
       set(h,'position',[xp yp wp hp])
+	  if ispc() && fc_tools.comp.isOctave() % !!! need under Windows with octave
+	    pause(0.2);
+		set(h,'position',[xp yp wp hp])
+	  end 
       drawnow % need under MacOS with octave
       PrevPos=get(h,'position');
       xp=PrevPos(1)+PrevPos(3)+window_border;
