@@ -1,5 +1,12 @@
 // javac Monitors.java
 // jar cvfm Monitors.jar MANIFEST.MF Monitors.class
+
+// in Octave:
+//   javaaddpath('Monitors.jar')
+//   S = javaObject ('Monitors')
+//   S.getNb()
+//   S.getScreen(1)
+
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 import java.awt.Rectangle;
@@ -30,7 +37,7 @@ public class Monitors {
     public int[][] getScreens(){
       int[][] S= new int[devices.length][4];
       for (int i = 0; i < devices.length; i++) {
-        Rectangle bounds = devices[i].getDefaultConfiguration().getBounds();
+        Rectangle bounds = devices[i].getDefaultonfiguration().getBounds();
         S[i][0]=bounds.width;
         S[i][1]=bounds.height;
         S[i][2]=bounds.x;
