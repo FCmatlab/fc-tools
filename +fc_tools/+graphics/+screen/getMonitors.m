@@ -1,26 +1,61 @@
 function Monitors=getMonitors()
-  if ismac(), Monitors=getMonitors_mac();return;end
-  if isunix(), Monitors=getMonitors_linux();return;end
-  warning('not yet implemented')
+  if fc_tools.comp.isOctave()
+    try
+      Monitors=getMonitors_java();return  % failed if Octave compiled with JAVA disabled
+    catch
+      if ismac(), Monitors=getMonitors_mac();return;end
+      if isunix(), Monitors=getMonitors_linux();return;end
+      warning('not yet implemented')
+    end
+  else
+    Monitors=getMonitors_Matlab();
+  end
+end
+
+function Monitors=getMonitors_Matlab()
+  R=get(groot(),'MonitorPositions');
+  nbMonitors=size(R,1);
+  for i=1:nbMonitors
+    Monitors(i)=struct('x',R(i,1),'y',R(i,2),'w',R(i,3),'h',R(i,4));
+  end
+end
+
+function Monitors=getMonitors_java()
+  filename=mfilename('fullpath');
+  idx=strfind(filename,filesep);
+  directory=filename(1:idx(end));
+  jarfile=sprintf('%sMonitors.jar',directory);
+  javaaddpath(jarfile);
+  S = javaObject ('Monitors');
+  nbMonitors=S.getNb();
+  R=zeros(nbMonitors,4);
+  for i=1:nbMonitors
+    R(i,:)=S.getScreen(i-1)'; % w h x y
+  end
+  maxY=max(R(:,4)+R(:,2));
+  for i=1:nbMonitors
+    Monitors(i)=struct('x',R(i,3)+1,'y',maxY-R(i,4)-R(i,2)+1,'w',R(i,1),'h',R(i,2));
+  end
+  javarmpath(jarfile)
 end
 
 function Monitors=getMonitors_mac()
-filename=mfilename('fullpath');
-idx=strfind(filename,filesep);
-directory=filename(1:idx(end));
-cmd=sprintf('osascript %smonitors.osx',directory);
-[status,result]=system(cmd);
-R=strsplit(result,',');
-R=cellfun(@str2num,R);
-assert(rem(size(R,2),4)==0)
-nbMonitors=size(R,2)/4;
-Mon=reshape(R,4,nbMonitors)';  % x y w h
-minX=min(Mon(:,1));
-minY=min(Mon(:,2));
-for i=1:nbMonitors
-% Octave/Matlab position, (x,y)=(1,1) is the lower left virtual screen
-Monitors(i)=struct('x',Mon(i,1),'y',Mon(i,2),'w',Mon(i,3),'h',Mon(i,4));
-end
+  filename=mfilename('fullpath');
+  idx=strfind(filename,filesep);
+  directory=filename(1:idx(end));
+  cmd=sprintf('osascript %smonitors.osx',directory);
+  [status,result]=system(cmd);
+  R=strsplit(result,',');
+  R=cellfun(@str2num,R);
+  assert(rem(size(R,2),4)==0)
+  nbMonitors=size(R,2)/4;
+  Mon=reshape(R,4,nbMonitors)';  % x y w h
+  minX=min(Mon(:,1));
+  minY=min(Mon(:,2));
+  for i=1:nbMonitors
+    % Octave/Matlab position, (x,y)=(1,1) is the lower left virtual screen
+    Monitors(i)=struct('x',Mon(i,1),'y',Mon(i,2),'w',Mon(i,3),'h',Mon(i,4));
+  end
 end
 
 function Monitors=getMonitors_linux()

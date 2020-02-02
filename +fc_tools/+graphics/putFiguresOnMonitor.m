@@ -1,4 +1,4 @@
-function varargout=DisplayFiguresNew(varargin)
+function putFiguresOnMonitor(varargin)
 % FUNCTION fc_tools.graphics.DisplayFigures
 %   Regularly distributes the figures on the screen.
 % USAGE
@@ -17,35 +17,40 @@ function varargout=DisplayFiguresNew(varargin)
 %
 %    <COPYRIGHT> 
 
-  if nargin==1 % Compatibilty with old version
-    R.nfig=varargin{1};
-  else
-    p = inputParser; 
-    p.addParameter('nfig',0,@isscalar); 
-    p.addParameter('screen',1,@isscalar);
-    p.addParameter('cover',3/4,@isscalar);
-    p.parse(varargin{:});
-    R=p.Results;
-  end
-  %set(0,'Units','normalized')
-  screen=R.screen;cover=min(R.cover,1);
-  mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
-  if R.nfig<=0 && nargin>0 
-    options=BuildOptions(mFontSize,oFontSize);
-    return;
-  end
-  M=fc_tools.graphics.screen.getMonitors();
-  X=M(screen).x;Y=M(screen).y;W=M(screen).w;H=M(screen).h;
-  
-  for i=1:R.nfig,figure(i);end
+  p = inputParser; 
+  p.addParameter('monitor',1,@isscalar);
+  p.addParameter('figures',[]); % list of figures numbers, all figures if empty
+  p.addParameter('cover',3/4,@isscalar);
+  p.parse(varargin{:});
+  R=p.Results;
 
+  monitor=R.monitor;cover=min(R.cover,1);
+  
+  mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
+
+  M=fc_tools.graphics.screen.getMonitors();
+  X=M(monitor).x;Y=M(monitor).y;W=M(monitor).w;H=M(monitor).h;
+  
   figHandles = get(0,'Children');
   nf=length(figHandles);
+  if nf==0, return;end
+  % To sort figures
+  if strcmp(class(figHandles(1)),'matlab.ui.Figure')
+    J=sort([figHandles(:).Number]);
+  else
+    J=sort(figHandles);
+  end
+  if isempty(R.figures)
+    figures=J;
+  else
+    figures=intersect(R.figures,J);
+  end
+  nf=length(figures);
 
-  if nf<=1,return;end
-  if nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
-  elseif nf<=6, nrow=2;ncol=3;oFontSize=[12,10,10,10];
-  elseif nf<=9, nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
+  if     nf<=1,  nrow=1;ncol=1;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
+  elseif nf<=4,  nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
+  elseif nf<=6,  nrow=2;ncol=3;oFontSize=[12,10,10,10];
+  elseif nf<=9,  nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
   elseif nf<=12, nrow=3;ncol=4;
   elseif nf<=16, nrow=4;ncol=4;
   elseif nf<=20, nrow=4;ncol=5;
@@ -54,7 +59,6 @@ function varargout=DisplayFiguresNew(varargin)
   elseif nf<=36, nrow=6;ncol=6;
   else, error('to many figures');end
   options=BuildOptions(mFontSize,oFontSize);
-  if nargout==1,varargout{1}=options;end
 
   w=cover*W;h=cover*H;
   toolbar_height = 77;
@@ -62,24 +66,12 @@ function varargout=DisplayFiguresNew(varargin)
   wp=w/ncol;
   hp=h/nrow-toolbar_height;
   window_border  = 5;
-
-  % To sort figures
-  if strcmp(class(figHandles(1)),'matlab.ui.Figure')
-    I={figHandles(:).Number};
-    [~,J]=sort(cell2mat(I));
-  else
-    if fc_tools.comp.isOctave(),J=nf:-1:1;else, J=1:nf;end
-  end
-  %get(figHandles(1),'position')
+  
   num=1;yp=Y+20;
   for i=1:nrow
     xp=X+50;
     for j=1:ncol
-      if strcmp(class(figHandles(1)),'matlab.ui.Figure')
-        nfig=figHandles(J(num)).Number;
-      else % old version
-        nfig=figHandles(J(num));
-      end
+      nfig=figures(num);
       h=figure(nfig);
       %set(h,'visible','off');
       set(h,'position',[xp yp wp hp])
@@ -92,8 +84,6 @@ function varargout=DisplayFiguresNew(varargin)
     end
     yp=PrevPos(2)+PrevPos(4)+toolbar_height+window_border;
   end
-  %drawnow
-  
 end
 
 function options=BuildOptions(mFontSize,oFontSize)
