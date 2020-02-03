@@ -77,6 +77,13 @@
 ./+fc_tools/+graphics/+xcolor/display_colors.m
 ./+fc_tools/+graphics/+xcolor/set_xcolors_varargin.m
 ./+fc_tools/+graphics/+xcolor/colors_replace.m
+./+fc_tools/+graphics/+monitors/get.m
+./+fc_tools/+graphics/+monitors/Monitors.jar
+./+fc_tools/+graphics/+monitors/monitors.osx
+./+fc_tools/+graphics/+monitors/number.m
+./+fc_tools/+graphics/+monitors/onGrid.m
+./+fc_tools/+graphics/+monitors/setGrid.m
+./+fc_tools/+graphics/+monitors/show.m
 ./+fc_tools/+linalg/detVec.m
 ./+fc_tools/+sys/find_keyvalue.m
 ./+fc_tools/+sys/sec_system.m
@@ -104,6 +111,5 @@
 ./+fc_tools/+git/str_gitinfo.m
 ./+fc_tools/+git/get_info.m
 ./+fc_tools/+git/get_remotecommit.m
-
 
 ./COPYING
