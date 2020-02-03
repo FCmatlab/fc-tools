@@ -1,4 +1,4 @@
-function nS=number()
-  Screens=fc_tools.graphics.screen.get();
-  nS=size(Screens,1);
+function nM=number()
+  M=fc_tools.graphics.monitors.get();
+  nM=size(M,1);
 end

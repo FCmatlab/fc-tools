@@ -1,11 +1,11 @@
 function show()
-  Screens=fc_tools.graphics.screen.get();
-  nS=size(Screens,1);
+  Monitors=fc_tools.graphics.monitors.get();
+  nS=size(Monitors,1);
   figure()
   hold on
   for i=1:nS
-    x=Screens(i,1);y=Screens(i,2);
-    w=Screens(i,3);h=Screens(i,4);
+    x=Monitors(i,1);y=Monitors(i,2);
+    w=Monitors(i,3);h=Monitors(i,4);
     fill([x,x+w,x+w,x],[y,y,y+h,y+h],fc_tools.graphics.xcolor.val2rgb('LightGray'),'edgecolor','k')
     ht=text(x+w/2,y+h/2,num2str(i));
     res=sprintf('%dx%d',w,h);
