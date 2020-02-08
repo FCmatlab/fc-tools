@@ -28,7 +28,7 @@ function varargout=DisplayFigures(varargin)
   %set(0,'Units','normalized')
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
   if R.nfig<=0 && nargin>0 
-    options=BuildOptions(mFontSize,oFontSize);
+    varargout{1}=BuildOptions(mFontSize,oFontSize);
     return;
   end
 
