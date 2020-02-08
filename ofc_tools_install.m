@@ -12,7 +12,7 @@ function ofc_tools_install(varargin)
   pkg='tools'; % automaticaly written by setpackages.py script
   pkgs={}; % automaticaly written by setpackages.py script
   pkgs_version={}; % automaticaly written by setpackages.py script
-  pkg_version='0.0.29'; % automaticaly written by setpackages.py script
+  pkg_version='0.0.30'; % automaticaly written by setpackages.py script
   
   p = inputParser; 
   p.addParamValue('dir', ['./fc-',pkg,'-full'], @ischar );
