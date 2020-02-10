@@ -4,7 +4,7 @@ function G=setGrid(m,n,varargin)
      'topleft','northwest','top','north','topright','northwest'};
   p = inputParser; 
   p.addParameter('monitor',1,@isscalar);
-  p.addParameter('cover',3/4,@(x) isscalar(x) && (x>0) && (x<=1));
+  p.addParameter('covers',3/4,@(x) isscalar(x) && (x>0) && (x<=1));
   p.addParameter('location','center',@(x) ismember(lower(x),L));
   p.addParameter('trans',[0,0],@(x) all(size(x)==[1,2])); % grid translation
   p.parse(varargin{:});
@@ -18,7 +18,7 @@ function G=setGrid(m,n,varargin)
   G=zeros(4,m,n);
   X=Monitors(monitor,1);Y=Monitors(monitor,2);W=Monitors(monitor,3);H=Monitors(monitor,4);
   
-  w=W*R.cover;h=H*R.cover;
+  w=W*R.covers;h=H*R.covers;
   wl=fix(w/n);hl=fix(h/m);
   x=X;y=Y; % lowerleft
   switch lower(R.location)
@@ -27,7 +27,7 @@ function G=setGrid(m,n,varargin)
       y=Y+(H-h)/2;
     case {'left','west'}
       y=Y+(H-h)/2;
-      x=X+(W-w)/2;
+      x=X;
     case {'right','east'} % and 
       x=X+W-n*wl;  
       y=Y+(H-h)/2;
@@ -46,7 +46,7 @@ function G=setGrid(m,n,varargin)
     case {'top','north'}
       x=X+(W-w)/2;
       y=Y+H-m*hl;
-    case {'topright','northwest'}  
+    case {'topright','northeast'}  
       x=X+W-n*wl;
       y=Y+H-m*hl;
   end

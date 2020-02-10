@@ -27,25 +27,40 @@ function putFiguresOnMonitor(monitor,varargin)
   
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
 
-  M=fc_tools.graphics.screen.getMonitors();
-  assert(monitor>=1 && monitor<=length(M))
+  M=fc_tools.graphics.monitors.getMonitors();
+  assert(monitor>=1 && monitor<=length(M),'Only %d monitor(s) detected',length(M))
   X=M(monitor).x;Y=M(monitor).y;W=M(monitor).w;H=M(monitor).h;
   
-  figHandles = get(0,'Children');
-  nf=length(figHandles);
-  if nf==0, return;end
-  % To sort figures
-  if strcmp(class(figHandles(1)),'matlab.ui.Figure')
-    J=sort([figHandles(:).Number]);
-  else
-    J=sort(figHandles);
-  end
   if isempty(R.figures)
-    figures=J;
+    figHandles = get(0,'Children');
+    if strcmp(class(figHandles(1)),'matlab.ui.Figure')
+      J=sort([figHandles(:).Number]);
+    else
+      J=sort(figHandles);
+    end
+    if isempty(R.figures)
+      figures=J;
+    else
+      figures=intersect(R.figures,J);
+    end
+    nf=length(figures);
   else
-    figures=intersect(R.figures,J);
+    figures=R.figures;
+    nf=length(R.figures);
   end
-  nf=length(figures);
+%    if nf==0, return;end
+%    % To sort figures
+%    if strcmp(class(figHandles(1)),'matlab.ui.Figure')
+%      J=sort([figHandles(:).Number]);
+%    else
+%      J=sort(figHandles);
+%    end
+%    if isempty(R.figures)
+%      figures=J;
+%    else
+%      figures=intersect(R.figures,J);
+%    end
+%    nf=length(figures);
 
   if     nf<=1,  nrow=1;ncol=1;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
   elseif nf<=4,  nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
