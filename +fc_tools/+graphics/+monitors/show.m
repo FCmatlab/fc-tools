@@ -7,7 +7,7 @@ function show(varargin)
     x=Monitors(i,1);y=Monitors(i,2);
     w=Monitors(i,3);h=Monitors(i,4);
     fill([x,x+w,x+w,x],[y,y,y+h,y+h],fc_tools.graphics.xcolor.val2rgb('LightGray'),'edgecolor','k')
-    ht=text(x+w/2,y+h/2,num2str(i));
+    ht=text(x+w/2,y+h/2,num2str(i),'HorizontalAlignment','center');
     res=sprintf('%dx%d',w,h);
     text(x+w/10,y+h/10,res,'Fontsize',get(ht,'FontSize')-2,'FontAngle','italic');
   end
@@ -38,6 +38,6 @@ function show(varargin)
     assert(ismember(k,1:m*n))
     x=G(1,i,j);y=G(2,i,j);w=G(3,i,j);h=G(4,i,j);
     fill([x,x+w,x+w,x],[y,y,y+h,y+h],Color,'edgecolor',Color,'facecolor','none')
-    ht=text(x+w/2,y+h/2,num2str(k),'color',Color);
+    ht=text(x+w/2,y+h/2,num2str(k),'color',Color,'HorizontalAlignment','center');
   end
 end
