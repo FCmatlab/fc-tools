@@ -31,7 +31,7 @@ function Monitors=getMonitors_java()
   maxY=max(R(:,4)+R(:,2));
   Monitors=zeros(nbMonitors,4);
   for i=1:nbMonitors
-    Monitors(i,:)=[R(i,3)+1,maxY-R(i,4)-R(i,2)+1,R(i,1),R(i,2)];
+    Monitors(i,:)=[R(i,3)+1,maxY-R(i,4)-R(i,2)+1,R(i,1),R(i,2)]; % x y w h
   end
   javarmpath(jarfile)
 end

@@ -1,0 +1,63 @@
+\subsection{monitors submodule}
+
+\subsubsection[fc\_tools.graphics.monitors.onGrid function]{\fcmcode{fc_tools.graphics.monitors.onGrid} function}
+The \fcmcode{fc_tools.graphics.monitors.onGrid} displays figures on a virtual \fcmcode{m}-by-\fcmcode{n} grid 
+(as \fcmcode{subplot} command with axes) positioned on a selected monitor. 
+\paragraph{Syntaxe}
+\begin{syntaxe}
+fc_tools.graphics.monitors.onGrid(n,m)
+fc_tools.graphics.monitors.onGrid(n,m, key,value, ...)
+\end{syntaxe}
+
+\paragraph{Description}
+\begin{description}
+\item \fbox{\fcmcode{fc_tools.graphics.monitors.onGrid(n,m)}}\\
+A virtual \fcmcode{m}-by-\fcmcode{n} grid is created on the first monitor and the figures numbered from 1 to \fcmcode{m*n}
+are moved or created (if it doesn't exist) respectively to the position given by an index (default is the figure number).
+This index runs row-wise; all columns of the first row are numbered from left to right and so on with rows $2$ to $\fcmcode{m}.$ 
+%
+\item \fbox{\fcmcode{fc_tools.graphics.monitors.onGrid(n,m, key,value)}}
+specifies function options using one or more \fcmcode{key},\fcmcode{value} pair 
+arguments. Options are
+\begin{itemize}
+\item[$\bullet$] \texttt{'figures'} : specifies the numbers of the figures to be used. 
+Default is \fcmcode{1:m*n}.
+\item[$\bullet$] \texttt{'positions'} : specifies the index on the grid corresponding to the \texttt{'figures'} option.
+Default is \fcmcode{1:m*n}.
+\end{itemize}
+\end{description}
+
+\begin{filecontents*}{main.m}
+fc_tools.graphics.monitors.onGrid(2,3)
+\end{filecontents*}
+\begin{filecontents*}{after.m}
+fc_tools.graphics.SaveAllFigsAsFiles('selectColors', SaveOptions{:})
+\end{filecontents*}
+\fcrun{figures/selectColors}
+
+
+\subsubsection[fc\_tools.graphics.monitors.show function]{\fcmcode{fc_tools.graphics.monitors.show} function}
+The \fcmcode{fc_tools.graphics.monitors.show} displays monitors with their resolution, position and number on
+a virtual screen.
+\paragraph{Syntaxe}
+\begin{syntaxe}
+fc_tools.graphics.monitors.show()
+fc_tools.graphics.monitors.show(n,m)
+fc_tools.graphics.monitors.show(n,m, key,value, ...)
+\end{syntaxe}
+
+\begin{filecontents*}{main.m}
+fc_tools.graphics.display_rgb(rand(40,3))
+\end{filecontents*}
+\begin{filecontents*}{after.m}
+fc_tools.graphics.SaveAllFigsAsFiles('display_rgb', SaveOptions{:})
+\end{filecontents*}
+\fcrun{figures/display_rgb}
+
+\begin{center}
+\fbox{\begin{minipage}{0.95\textwidth}
+\fcimagec{figures/display_rgb_fig1_\fccmdname\fccmdversionabr}{0.7\textwidth}
+\par\noparindent\FClistingresize{\lstinputlisting[caption={\fcmcode{fc_tools.graphics.display_rgb} function \label{Lst:display_rgb}}]
+{figures/display_rgb_\fccmdname\fccmdversionabr.m}}
+\end{minipage}}
+\end{center}

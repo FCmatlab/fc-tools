@@ -1,4 +1,5 @@
 function show(varargin)
+%
   Monitors=fc_tools.graphics.monitors.get();
   nS=size(Monitors,1);
   figure()

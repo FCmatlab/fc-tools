@@ -65,6 +65,12 @@ function Monitors=getMonitors_linux()
 %      'Monitors: 2
 %        0: +*DP-3 1920/382x1080/215+0+1080  DP-3
 %        1: +DP-5 3840/953x2160/543+1920+0  DP-5
+%      '
+%   or
+%      'Monitors: 3
+%        0: +*VGA-0 1920/521x1080/293+1920+0  VGA-0
+%        1: +DP-0 1920/521x1080/293+3840+0  DP-0
+%        2: +DP-3 1920/350x1080/190+0+189  DP-3
 %       '
 %    =>  N: <connect> W/?xH/?+X+Y
 %     N, screen number
