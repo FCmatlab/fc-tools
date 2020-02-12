@@ -1,4 +1,6 @@
 function Monitors=get()
+  % 
+  %  for i-th monitor,  x y w h are in Monitors(i,:)
   if fc_tools.comp.isOctave()
     try
       Monitors=getMonitors_java();return  % failed if Octave compiled with JAVA disabled
