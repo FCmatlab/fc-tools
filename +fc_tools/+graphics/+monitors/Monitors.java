@@ -6,10 +6,14 @@
 //   S = javaObject ('Monitors')
 //   S.getNb()
 //   S.getScreen(1)
-
+import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class Monitors {
 
@@ -33,20 +37,32 @@ public class Monitors {
         return(S);
       }
     }
-    
-    public int[][] getScreens(){
-      int[][] S= new int[devices.length][4];
-      for (int i = 0; i < devices.length; i++) {
-        Rectangle bounds = devices[i].getDefaultonfiguration().getBounds();
-        S[i][0]=bounds.width;
-        S[i][1]=bounds.height;
-        S[i][2]=bounds.x;
-        S[i][3]=bounds.y;
+
+    public void screenshot(int num, String filename)
+    {
+      try 
+      {
+        if ( num>=0 &&  num< devices.length) {
+          Rectangle bounds = devices[num].getDefaultConfiguration().getBounds();
+          BufferedImage screencapture = new Robot().createScreenCapture( bounds );
+          File file = new File(filename);
+          try{
+          ImageIO.write(screencapture, "png", file);
+          }catch(IOException eio){
+            eio.printStackTrace();
+          }
+          
+          //System.out.println("save in : " + filename);
+        }
+      } 
+      catch (AWTException e)
+      {
+        e.printStackTrace();
       }
-      return(S);
     }
  
-    public static void main(String[] args){
+    public static void main(String[] args) 
+    {
       GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
       GraphicsDevice[] devices = g.getScreenDevices();
 
