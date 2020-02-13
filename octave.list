@@ -79,6 +79,8 @@ DESCRIPTION ## -> root of Octave package
 ./+fc_tools/+graphics/+xcolor/display_colors.m
 ./+fc_tools/+graphics/+xcolor/set_xcolors_varargin.m
 ./+fc_tools/+graphics/+xcolor/colors_replace.m
+./+fc_tools/+graphics/+monitors/autoGrid.m
+./+fc_tools/+graphics/+monitors/autoGridSize.m
 ./+fc_tools/+graphics/+monitors/get.m
 ./+fc_tools/+graphics/+monitors/Monitors.jar
 ./+fc_tools/+graphics/+monitors/monitors.osx
