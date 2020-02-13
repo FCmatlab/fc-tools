@@ -1,4 +1,4 @@
-function [varargout]=AutoGridSize(nf)
+function [varargout]=autoGridSize(nf)
   %nf: number of figures
   assert(ismember(nargout,[2,3]))
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
