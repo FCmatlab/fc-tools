@@ -1,4 +1,4 @@
-\def\logo{ofc-toolsv3}
+\def\logo{ofc-tools}
 \def\logoname{ofc-tools-name}
 \immediate\write18{mkdir -p \OHTDIR}
 \immediate\write18{rsync -av \IHTDIR/logo/\logo_400.png \OHTDIR/}
@@ -43,13 +43,12 @@ This package needs \textbf{Octave} version greater or equal to \textbf{4.2.0}.
 to do!
 }
 
-\def\fcTBversion{0.0.29}
+\def\fcTBversion{0.0.30}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{install} & \textbf{User guide} \\ \hline
-\fcConfigInsertOctaveVersion*{tools}{0.0.29}{December 6, 2019}{zbook17}{5.1.0}{a}
-\\ \hline
+\fcConfigInsertOctaveVersion*{tools}{0.0.30}{February 13, 2020}{zbook17}{5.1.0}\\ \hline
 \end{tabular}
 
 
@@ -58,11 +57,11 @@ to do!
 \begin{itemize}
 \item Download the packages. For example, in a terminal:
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.29/fc-tools-0.0.29.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.30/fc-tools-0.0.30.tar.gz
 \end{verbatim}
 \item Under Octave :
 \begin{verbatim}
->> pkg install fc-tools-0.0.29.tar.gz
+>> pkg install fc-tools-0.0.30.tar.gz
 \end{verbatim}
 \item Now to use \texttt{fc-tools} in any Octave session, it is necessary to load the package:
 \begin{verbatim}
@@ -87,25 +86,26 @@ The installation process follows:
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.29/fc_tools-0.0.29.tar.gz
-$ tar zxvf fc_tools-0.0.29.tar.gz
-fc_tools-0.0.29/
-fc_tools-0.0.29/DESCRIPTION
-fc_tools-0.0.29/COPYING
-fc_tools-0.0.29/+fc_tools/
-fc_tools-0.0.29/+fc_tools/init.m
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Octave/fc-tools/0.0.30/fc_tools-0.0.30.tar.gz
+$ tar zxvf fc_tools-0.0.30.tar.gz
+fc_tools-0.0.30/
+fc_tools-0.0.30/DESCRIPTION
+fc_tools-0.0.30/COPYING
+fc_tools-0.0.30/+fc_tools/
+fc_tools-0.0.30/+fc_tools/init.m
 ...
 $
 \end{verbatim}
-Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.29} full path:
+Then under Octave, one can use \texttt{addpath} command with the \texttt{fc_tools-0.0.30} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/fc_tools-0.0.29')
+>> addpath('<FULL PATH>/fc_tools-0.0.30')
 \end{verbatim}
  
  
 \subsubsection{Version history}
 
 \begin{itemize}
+\item 0.0.30 (February 13, 2020): Adding \verb+fc_tools.graphics.monitors+ submodule.
 \item 0.0.29 (December 6, 2019):
 \item 0.0.27 (March 22, 2018): modifying installation procedure and \verb+fc_tools.utils.strversion2num+ function, adding \verb+fc_tools.comp.dispobject+
 and \verb+fc_tools.comp.infoobject+
@@ -155,6 +155,7 @@ to do!
 \begin{tabular}{|M|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{package} & \textbf{archives} & \textbf{install} & \textbf{User guide} \\ \hline
+\fcConfigInsertOctaveVersion{tools}{0.0.29}{December 6, 2019}{zbook17}{5.1.0}{a}\\ \hline
 \fcConfigInsertOctaveVersion{tools}{0.0.27}{March 22, 2019}{cosmos}{5.1.0}\\ \hline
 \fcConfigInsertOctaveVersion{tools}{0.0.25}{March 6, 2019}{cosmos}{5.1.0}\\ \hline
 \fcConfigInsertOctaveVersion{tools}{0.0.23}{May 14, 2018}{cosmos}{4.4.0}

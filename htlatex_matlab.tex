@@ -38,13 +38,12 @@ The \ToolboxName Matlab toolbox contains some functions used in various packages
 to do!
 }
 
-\def\fcTBversion{0.0.29}
+\def\fcTBversion{0.0.30}
 \immediate\write18{mkdir -p \OHTDIR/\fcTBversion}
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{install} & \textbf{User guide}\\ \hline
-\fcConfigInsertMatlabVersion*{tools}{0.0.29}{December 6, 2019}{zbook17}{2019a}{a} 
-\\ \hline
+\fcConfigInsertMatlabVersion*{tools}{0.0.30}{February 13, 2020}{zbook17}{2019a} \\ \hline
 \end{tabular}
 
 %This package was tested under Ubuntu 14.04 LTS with Matlab release 2015a to 2016b.
@@ -59,17 +58,18 @@ The toolbox archives are proposed in three formats zip, 7z and tar.gz. The insta
 
 For example, with the tar.gz file, downloading and uncompressing are done by 
 \begin{verbatim}
-$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.29/fc-tools-0.0.29.tar.gz
-$ tar zxf fc-tools-0.0.29.tar.gz
+$ wget http://www.math.univ-paris13.fr/~cuvelier/software/codes/Matlab/fc-tools/0.0.30/fc-tools-0.0.30.tar.gz
+$ tar zxf fc-tools-0.0.30.tar.gz
 \end{verbatim}
-Then under Matlab, one can use \texttt{addpath} command with the \texttt{fc-tools-0.0.29} full path:
+Then under Matlab, one can use \texttt{addpath} command with the \texttt{fc-tools-0.0.30} full path:
 \begin{verbatim}
->> addpath('<FULL PATH>/fc-tools-0.0.29')
+>> addpath('<FULL PATH>/fc-tools-0.0.30')
 \end{verbatim}
 
 \subsubsection{Version history}
 
 \begin{itemize}
+\item 0.0.30 (February 13, 2020): Adding \verb+fc_tools.graphics.monitors+ submodule.
 \item 0.0.29 (December 6, 2019):  
 \item 0.0.27 (March 22, 2018): modifying installation procedure and \verb+fc_tools.utils.strversion2num+ function, adding \verb+fc_tools.comp.dispobject+
 and \verb+fc_tools.comp.infoobject+
@@ -95,6 +95,7 @@ and \verb+fc_tools.comp.infoobject+
 \begin{tabular}{|M|M|M|M|M|}
 \hline \\ 
 \textbf{Version} & \textbf{date} & \textbf{archives} & \textbf{install} & \textbf{User guide}\\ \hline
+\fcConfigInsertMatlabVersion{tools}{0.0.29}{December 6, 2019}{zbook17}{2019a}{a} \\ \hline
 \fcConfigInsertMatlabVersion{tools}{0.0.27}{March 22, 2018}{cosmos}{2017a} \\ \hline 
 \fcConfigInsertMatlabVersion{tools}{0.0.25}{March 6, 2018}{cosmos}{2017a} \\ \hline
 \fcConfigInsertMatlabVersion{tools}{0.0.23}{May 14, 2018}{cosmos}{2017a} 
