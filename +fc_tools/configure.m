@@ -25,7 +25,7 @@ function varargout=configure(varargin)
   R=p.Results;verbose=R.verbose;
   
   for i=1:n_pkgs
-    pkgs_dir{i}=eval(sprintf('get_tbxpath(''%s'',''%s'',R.fc_%s_dir);',pkgs{i},pkg,pkgs{i}));
+    pkgs_dir{i}=eval(sprintf('get_tbxpath(''%s'',''%s'',R.fc_%s_dir,''verbose'',%d);',pkgs{i},pkg,pkgs{i},verbose));
   end
   A=sprintf(' ''%s'', ',pkgs{:});A(1)='{';A(end-1)='}';
   A=['pkgs=',A];
