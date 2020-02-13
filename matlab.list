@@ -84,6 +84,9 @@
 ./+fc_tools/+graphics/+monitors/onGrid.m
 ./+fc_tools/+graphics/+monitors/setGrid.m
 ./+fc_tools/+graphics/+monitors/show.m
+./+fc_tools/+graphics/+monitors/+demos/demo01.m
+./+fc_tools/+graphics/+monitors/+demos/demo02.m
+./+fc_tools/+graphics/+monitors/+demos/demo03.m
 ./+fc_tools/+linalg/detVec.m
 ./+fc_tools/+sys/find_keyvalue.m
 ./+fc_tools/+sys/sec_system.m

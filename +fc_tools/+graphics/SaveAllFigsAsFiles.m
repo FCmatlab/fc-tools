@@ -46,6 +46,7 @@ function SaveAllFigsAsFiles(basename,varargin)
   p.addParamValue('dir','.',@ischar);
   p.addParamValue('pdfcrop',false,@islogical); % experimental use pdfcrop command under linux
   p.addParamValue('crop',false,@islogical); % experimental 
+  p.addParamValue('cropmargin',0); % experimental 
   p.addParamValue('pause',2,@isscalar);
   p.addParamValue('size',[800,600]);
   p.addParamValue('visible','off');
@@ -54,6 +55,9 @@ function SaveAllFigsAsFiles(basename,varargin)
   p.parse(varargin{:});
   R=p.Results;
   varargin=fc_tools.utils.deleteCellOptions(varargin,p.Parameters);
+  
+  assert(all(size(R.cropmargin)==[1,1]) || all(size(R.cropmargin)==[1,4]))
+  
   if R.tag, [Softname,Release]=fc_tools.sys.getSoftware();end
   %if isOctave, more off;end  
   figHandles = get(0,'Children');
@@ -108,9 +112,15 @@ function SaveAllFigsAsFiles(basename,varargin)
       set(Title,'Visible',R.visible)
     end
     if R.pdfcrop
-      if ~fc_tools.comp.isOctave()
-      system(sprintf('pdfcrop %s %s',filename,filename));   
+      %if ~fc_tools.comp.isOctave()
+      % size(R.cropmargin)==[1,1] or size(R.cropmargin)==[1,4]
+      if isempty(R.cropmargin)
+        system(sprintf('pdfcrop %s %s',filename,filename));
+      else
+        
+        system(sprintf('pdfcrop --margin "%s" %s %s',num2str(R.cropmargin),filename,filename));
       end
+      %end
     end
     if R.crop
       if strcmp(R.format,'png'), fc_tools.graphics.crop.crop(filename);end

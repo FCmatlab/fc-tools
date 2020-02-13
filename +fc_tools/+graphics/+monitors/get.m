@@ -28,7 +28,8 @@ function Monitors=getMonitors_java()
   nbMonitors=S.getNb();
   R=zeros(nbMonitors,4);
   for i=1:nbMonitors
-    R(i,:)=S.getScreen(i-1)'; % w h x y
+    Si=S.getScreen(i-1)';
+    R(i,:)=Si(1:4); % w h x y
   end
   maxY=max(R(:,4)+R(:,2));
   Monitors=zeros(nbMonitors,4);

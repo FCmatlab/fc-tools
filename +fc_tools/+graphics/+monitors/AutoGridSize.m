@@ -3,7 +3,8 @@ function [varargout]=AutoGridSize(nf)
   assert(ismember(nargout,[2,3]))
   mFontSize=[8,6,6,6];oFontSize=[8,6,6,6]; %default
   if nf<=1,return;end
-  if nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
+  if nf==2, nrow=1;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
+  elseif nf<=4, nrow=2;ncol=2;mFontSize=[10,8,8,8];oFontSize=[16,14,14,14];
   elseif nf<=6, nrow=2;ncol=3;oFontSize=[12,10,10,10];
   elseif nf<=9, nrow=3;ncol=3;mFontSize=[8,5,6,6];oFontSize=[12,10,10,10];
   elseif nf<=12, nrow=3;ncol=4;

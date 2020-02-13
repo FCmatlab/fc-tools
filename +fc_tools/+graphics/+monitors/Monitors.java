@@ -26,11 +26,15 @@ public class Monitors {
     public int[] getScreen(int num){
       if ( num>=0 &&  num< devices.length) {
         Rectangle bounds = devices[num].getDefaultConfiguration().getBounds();
-        int[] S= new int[4];
+        int width = devices[num].getDisplayMode().getWidth();
+        int height = devices[num].getDisplayMode().getHeight();
+        int[] S= new int[6];
         S[0]=bounds.width;
         S[1]=bounds.height;
         S[2]=bounds.x;
         S[3]=bounds.y;
+        S[4]=width;
+        S[5]=height;
         return(S);
       }else{
         int[] S = {};

@@ -1,5 +1,5 @@
 \subsection{monitors submodule}
-
+%This module is \textbf{experimental} and can be used under \textbf{Linux} computer.
 \subsubsection[fc\_tools.graphics.monitors.onGrid function]{\fcmcode{fc_tools.graphics.monitors.onGrid} function}
 The \fcmcode{fc_tools.graphics.monitors.onGrid} displays figures on a virtual \fcmcode{m}-by-\fcmcode{n} grid 
 (as \fcmcode{subplot} command with axes) positioned on a selected monitor. 
@@ -27,18 +27,23 @@ Default is \fcmcode{1:m*n}.
 \end{itemize}
 \end{description}
 
-\begin{filecontents*}{main.m}
-fc_tools.graphics.monitors.onGrid(2,3)
-\end{filecontents*}
-\begin{filecontents*}{after.m}
-fc_tools.graphics.SaveAllFigsAsFiles('selectColors', SaveOptions{:})
-\end{filecontents*}
-\fcrun{figures/selectColors}
+\begin{center}
+\fbox{\begin{minipage}{0.95\textwidth}
+\fcdblfigure{figures/monitors1_demo02_before_\fccmdname\fccmdversionabr.png}{figures/monitors1_demo02_after_\fccmdname\fccmdversionabr.png}
+\par\noparindent\FClistingresize{
+\lstinputlisting[caption={Using \fcmcode{fc_tools.graphics.monitors.onGrid} function, part of \fcmcode{fc_tools.graphics.monitors.demos.demo02} function. 
+Figures are screenshot taken at line 15 (left) and after last line (right).
+\label{Lst:onGrid}
+},linerange={3-17,24-24},numbers=left]
+{\fctoolboxdir/+fc_tools/+graphics/+monitors/+demos/demo02.m}}
+\end{minipage}}
+\end{center}
 
 
 \subsubsection[fc\_tools.graphics.monitors.show function]{\fcmcode{fc_tools.graphics.monitors.show} function}
-The \fcmcode{fc_tools.graphics.monitors.show} displays monitors with their resolution, position and number on
-a virtual screen.
+The \fcmcode{fc_tools.graphics.monitors.show} displays monitors with their resolution, position and number on a figure. 
+When arguments are provided, they are those of the \fcmcode{fc_tools.graphics.monitors.onGrid}
+function and then the grid is also drawn with the indices of the positions of the grid elements. 
 \paragraph{Syntaxe}
 \begin{syntaxe}
 fc_tools.graphics.monitors.show()
@@ -46,18 +51,41 @@ fc_tools.graphics.monitors.show(n,m)
 fc_tools.graphics.monitors.show(n,m, key,value, ...)
 \end{syntaxe}
 
-\begin{filecontents*}{main.m}
-fc_tools.graphics.display_rgb(rand(40,3))
-\end{filecontents*}
-\begin{filecontents*}{after.m}
-fc_tools.graphics.SaveAllFigsAsFiles('display_rgb', SaveOptions{:})
-\end{filecontents*}
-\fcrun{figures/display_rgb}
+\paragraph{Description}
+\begin{description}
+\item \fbox{\fcmcode{fc_tools.graphics.monitors.show()}}\\
+Displays monitors with their resolution, position and number on a figure.
+%
+\item \fbox{\fcmcode{fc_tools.graphics.monitors.show(n,m)}}\\
+Add the \fcmcode{m}-by-\fcmcode{n} grid on the figure created by the \fcmcode{fc_tools.graphics.monitors.show()} command to
+to preview positions of figures created or moved by the \fcmcode{fc_tools.graphics.monitors.onGrid(n,m)} command.
+\item \fbox{\fcmcode{fc_tools.graphics.monitors.show(n,m, key,value)}}\\
+specifies function options using one or more \fcmcode{key},\fcmcode{value} pair 
+arguments. Options are those of the \fcmcode{fc_tools.graphics.monitors.onGrid} function.
+\end{description}
 
 \begin{center}
 \fbox{\begin{minipage}{0.95\textwidth}
-\fcimagec{figures/display_rgb_fig1_\fccmdname\fccmdversionabr}{0.7\textwidth}
-\par\noparindent\FClistingresize{\lstinputlisting[caption={\fcmcode{fc_tools.graphics.display_rgb} function \label{Lst:display_rgb}}]
-{figures/display_rgb_\fccmdname\fccmdversionabr.m}}
+\fcdblfigure{figures/monitors2_demo03_crop_fig1_\fccmdname\fccmdversionabr.pdf}{figures/monitors2_demo03_crop_fig2_\fccmdname\fccmdversionabr.pdf}
+\par\noparindent\FClistingresize{
+\lstinputlisting[caption={Using \fcmcode{fc_tools.graphics.monitors.show} function, part of \fcmcode{fc_tools.graphics.monitors.demos.demo03} function
+on a computer with two monitors. 
+%figure $1$ (left) and figure $2$ (right).
+\label{Lst:onGrid}
+},linerange={2-13},numbers=left]
+{\fctoolboxdir/+fc_tools/+graphics/+monitors/+demos/demo03.m}}
+\end{minipage}}
+\end{center}
+
+\begin{center}
+\fbox{\begin{minipage}{0.95\textwidth}
+\fctrifigure{figures/monitors_demo03_crop_fig1_\fccmdname\fccmdversionabr.pdf}
+            {figures/monitors_demo03_crop_fig2_\fccmdname\fccmdversionabr.pdf}
+            {figures/monitors_demo03_crop_fig3_\fccmdname\fccmdversionabr.pdf}
+\par\noparindent\FClistingresize{
+\lstinputlisting[caption={Using \fcmcode{fc_tools.graphics.monitors.show} function, part of \fcmcode{fc_tools.graphics.monitors.demos.demo03} function
+on a computer with three monitors.\label{Lst:onGrid}
+},linerange={2-13},numbers=left]
+{\fctoolboxdir/+fc_tools/+graphics/+monitors/+demos/demo03.m}}
 \end{minipage}}
 \end{center}

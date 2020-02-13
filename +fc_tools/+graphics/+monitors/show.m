@@ -2,7 +2,7 @@ function show(varargin)
 %
   Monitors=fc_tools.graphics.monitors.get();
   nS=size(Monitors,1);
-  figure()
+%  figure()
   hold on
   for i=1:nS
     x=Monitors(i,1);y=Monitors(i,2);
