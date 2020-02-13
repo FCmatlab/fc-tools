@@ -46,7 +46,7 @@ function SaveAllFigsAsFiles(basename,varargin)
   p.addParamValue('dir','.',@ischar);
   p.addParamValue('pdfcrop',false,@islogical); % experimental use pdfcrop command under linux
   p.addParamValue('crop',false,@islogical); % experimental 
-  p.addParamValue('cropmargin',0); % experimental 
+  p.addParamValue('cropmargins',0); % experimental 
   p.addParamValue('pause',2,@isscalar);
   p.addParamValue('size',[800,600]);
   p.addParamValue('visible','off');
@@ -56,7 +56,7 @@ function SaveAllFigsAsFiles(basename,varargin)
   R=p.Results;
   varargin=fc_tools.utils.deleteCellOptions(varargin,p.Parameters);
   
-  assert(all(size(R.cropmargin)==[1,1]) || all(size(R.cropmargin)==[1,4]))
+  assert(all(size(R.cropmargins)==[1,1]) || all(size(R.cropmargins)==[1,4]))
   
   if R.tag, [Softname,Release]=fc_tools.sys.getSoftware();end
   %if isOctave, more off;end  
@@ -114,11 +114,10 @@ function SaveAllFigsAsFiles(basename,varargin)
     if R.pdfcrop
       %if ~fc_tools.comp.isOctave()
       % size(R.cropmargin)==[1,1] or size(R.cropmargin)==[1,4]
-      if isempty(R.cropmargin)
+      if isempty(R.cropmargins)
         system(sprintf('pdfcrop %s %s',filename,filename));
       else
-        
-        system(sprintf('pdfcrop --margin "%s" %s %s',num2str(R.cropmargin),filename,filename));
+        system(sprintf('pdfcrop --margins "%s" %s %s',num2str(R.cropmargins),filename,filename));
       end
       %end
     end

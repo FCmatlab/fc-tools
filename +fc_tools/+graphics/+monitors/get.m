@@ -36,6 +36,7 @@ function Monitors=getMonitors_java()
   for i=1:nbMonitors
     Monitors(i,:)=[R(i,3)+1,maxY-R(i,4)-R(i,2)+1,R(i,1),R(i,2)]; % x y w h
   end
+  clear S;
   javarmpath(jarfile)
 end
 

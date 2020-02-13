@@ -12,6 +12,7 @@ function demo03()
     fc_tools.graphics.monitors.show(3,2,'monitor',3, 'location','topleft','covers',3/4)
   end
   fc_tools.graphics.monitors.onGrid(2,2,'figures',1:min([nM,3]))
+  pause(5)
   basename=sprintf('monitors%d_demo03',nM);
   fc_tools.graphics.SaveAllFigsAsFiles([basename,'_crop'],'format','pdf','pdfcrop',true,'cropmargin',5, 'dir',[fc_tools.path,'/doc/figures'],'tag',true,'verbose',true)
   fc_tools.graphics.SaveAllFigsAsFiles(basename,'format','pdf','dir',[fc_tools.path,'/doc/figures'],'tag',true,'verbose',true)

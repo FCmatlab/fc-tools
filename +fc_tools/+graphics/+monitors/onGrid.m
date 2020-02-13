@@ -15,43 +15,37 @@ function onGrid(m,n,varargin)
   else
     assert(length(R.positions)==length(R.figures))
   end
-  I=repmat(1:m,n,1);I=I(:)';
-  if fc_tools.comp.isOctave()
-    hh=figure();%set(hh,'visible','off');
-    refresh(hh)
-    drawnow
-    pos=get(hh,'position');
-    opos=get(hh,'outerposition');
-    wo=opos(3)-pos(3);
-    ho=opos(4)-pos(4);
-    close(hh)
-    ho=113;wo=0;
-  else
-    wo=0;ho=0;
-  end
+  
+  if fc_tools.comp.isOctave(), ho=113;wo=0;else, wo=0;ho=0; end
     
-  %I=repmat(1:m,1,n);
-  %J=repmat(1:n,m,1);J=J(:)';
+  dispatch(m,n,R,G,wo,ho)
+  drawnow;
+  if fc_tools.comp.isOctave() % Bug with MacOS: 1st figure not inplace 
+    pause(0.5)
+    dispatch(m,n,R,G,wo,ho)
+    drawnow;pause(0.5)
+  end
+end
+
+function dispatch(m,n,R,G,wo,ho)
+  I=repmat(1:m,n,1);I=I(:)';
   J=repmat(1:n,1,m);
   for s=1:length(R.figures)
     numfig=R.figures(s);
     k=R.positions(s);
     assert(ismember(k,1:m*n))
     i=I(k);j=J(k);
-    hdl=figure(numfig);
     if fc_tools.comp.isOctave() % BUG: 'outerposition' Octave option not as in Matlab
-      set(hdl,'position',G(:,i,j)'-[0,0,wo,ho]);%,'visible','off') % 'visible' used to put figures in foreground
-      % -> BUG: Sometimes, some figures are not correctly drawn. So I add:
-      refresh(hdl)
-      shg()
-      set(hdl,'position',G(:,i,j)'-[0,0,wo,ho]);%,'visible','on') % 
-%        refresh(hdl)
-%        shg()
-%        pause(0.1) 
-      % <-
+      outerposition=G(:,i,j)';
+      position=G(:,i,j)'-[0,0,wo,ho];
+      hdl=figure(numfig);
+      drawnow
+      set(hdl,'position',position,'outerposition',outerposition);%,'visible','off') % 'visible' used to put figures in foreground
     else
+      hdl=figure(numfig);
+      drawnow
       set(hdl,'outerposition',G(:,i,j)')
     end
-    drawnow
-  end
+    %drawnow
+  end  
 end
