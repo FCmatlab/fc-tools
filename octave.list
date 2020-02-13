@@ -24,6 +24,7 @@ DESCRIPTION ## -> root of Octave package
 ./+fc_tools/+graphics/SaveAllFigsAsFiles.m
 ./+fc_tools/+graphics/selectColors.m
 ./+fc_tools/+graphics/display_rgb.m
+./+fc_tools/+graphics/getNbfigs.m
 ./+fc_tools/+graphics/SetHoldOn.m
 ./+fc_tools/+graphics/view3D.m
 ./+fc_tools/+graphics/+crop/crop.m
