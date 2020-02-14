@@ -10,6 +10,7 @@ function onGrid(m,n,varargin)
   nf=length(R.figures);
   assert(nf<=m*n,'Grid too small')
   G=fc_tools.graphics.monitors.setGrid(m,n,varargin{:});
+  if isempty(G),fprintf('fc_tools.graphics.monitors.%s: function disabled\n',mfilename());return;end
   if isempty(R.positions)
     R.positions=1:length(R.figures);
   else

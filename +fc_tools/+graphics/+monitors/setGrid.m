@@ -11,6 +11,8 @@ function G=setGrid(m,n,varargin)
   R=p.Results;
   monitor=R.monitor;trans=R.trans;
   Monitors=fc_tools.graphics.monitors.get();
+  G=[];
+  if isempty(Monitors),fprintf('fc_tools.graphics.monitors.%s: function disabled\n',mfilename());return;end
   if ~ismember(R.monitor,1:size(Monitors,1))
     R.monitor=1;
     warning('Force monitor number to 1')

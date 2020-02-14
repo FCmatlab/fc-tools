@@ -1,6 +1,7 @@
 function show(varargin)
 %
   Monitors=fc_tools.graphics.monitors.get();
+  if isempty(Monitors),fprintf('fc_tools.graphics.monitors.%s: function disabled\n',mfilename());;return;end
   nS=size(Monitors,1);
 %  figure()
   hold on

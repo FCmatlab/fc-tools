@@ -1,13 +1,14 @@
 function Monitors=get()
   % 
   %  for i-th monitor,  x y w h are in Monitors(i,:)
+  Monitors=[];
   if fc_tools.comp.isOctave()
     try
       Monitors=getMonitors_java();return  % failed if Octave compiled with JAVA disabled
     catch
       if ismac(), Monitors=getMonitors_mac();return;end
       if isunix(), Monitors=getMonitors_linux();return;end
-      warning('not yet implemented')
+      fprintf('fc_tools.graphics.monitors.%s:\n   not yet implemented or java missing with Octave\n',mfilename())
     end
   else
     Monitors=getMonitors_Matlab();
