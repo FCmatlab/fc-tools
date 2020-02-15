@@ -93,7 +93,7 @@ function tbxpath=get_tbxpath(tbxname,tbxfrom,givenpath,varargin) % tbxname is th
   end
   failed=false;
   try % check if the toolbox is in current Matlab path
-    eval(sprintf('fc_%s.version();',tbxname))
+    eval(sprintf('tbxpath=fc_%s.path();',tbxname))
   catch
     vprintf(verbose,2,'[fc-%s] Unable to load the fc-%s toolbox/package in current path\n',tbxfrom,tbxname)
     failed=true;
@@ -108,6 +108,10 @@ function tbxpath=get_tbxpath(tbxname,tbxfrom,givenpath,varargin) % tbxname is th
   C=arrayfun(@(x) x.name,lstdir, 'UniformOutput', false);
   I=strfind(C,['fc-',tbxname]);
   i=find(cellfun(@(x) ~isempty(x),I)==1);
+  if isempty(i)
+    I=strfind(C,['fc_',tbxname]);
+    i=find(cellfun(@(x) ~isempty(x),I)==1);
+  end
   if ~isempty(i)
     k=1;
     while k<=length(i)
