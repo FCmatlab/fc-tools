@@ -20,10 +20,10 @@ GIT_MATLAB_REP=ssh://lagagit/MCS/Cuvelier/Matlab
 #COMPUTERSERVER=hercule
 COMPUTERSERVER=zbook17
 
-
-COMPUTERSERVER_DIR=${COMPUTERSERVER}/Travail/Recherch/Matlab/fc-config/build
+COMPUTERSERVER_DIR=/home/cuvelier/Travail/Recherch/Matlab/fc-config/build
 COMPUTERSERVER_DOC_DIR=${COMPUTERSERVER_DIR}/doc
 COMPUTERSERVER_DIST_DIR=${COMPUTERSERVER_DIR}/dist
+
 
 
 WEBSERVER=macoui
